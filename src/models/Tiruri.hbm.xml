@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated May 12, 2022 5:57:09 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class name="models.Tir" optimistic-lock="version" schema="FANA" table="TIRURI">
+    <id name="id" type="int">
+      <column name="ID"/>
+      <generator class="identity"/>
+    </id>
+    <property name="idMarca" type="int">
+      <column name="MARCA" not-null="true"/>
+    </property>
+    <property name="model" type="string">
+      <column length="100" name="MODEL" not-null="true"/>
+    </property>
+    <property name="nrInmatriculare" type="string">
+      <column length="7" name="NR_INMATRICULARE" not-null="true" unique="true"/>
+    </property>
+    <property name="idStare" type="int">
+      <column name="STARE" not-null="true"/>
+    </property>
+    <many-to-one class="models.Marca" fetch="select" insert="false" name="marca" update="false">
+      <column name="MARCA" not-null="true"/>
+    </many-to-one>
+    <many-to-one class="models.Stare" fetch="select" insert="false" name="stare" update="false">
+      <column name="STARE" not-null="true"/>
+    </many-to-one>
+    <set fetch="select" inverse="true" lazy="false" name="soferiTiruri" table="SOFERI_TIRURI">
+      <key>
+        <column name="TIR" not-null="true"/>
+      </key>
+      <one-to-many class="models.SoferiTiruri"/>
+    </set>
+  </class>
+</hibernate-mapping>

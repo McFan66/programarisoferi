@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated May 12, 2022 5:57:09 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class name="models.Marca" optimistic-lock="version" schema="FANA" table="MARCA">
+    <id name="id" type="int">
+      <column name="ID"/>
+      <generator class="identity"/>
+    </id>
+    <property name="nume" type="string">
+      <column length="100" name="NUME" not-null="true" unique="true"/>
+    </property>
+    <property name="activa" type="int">
+      <column name="ACTIVA" not-null="true"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="false" name="tiruri" table="TIRURI">
+      <key>
+        <column name="MARCA" not-null="true"/>
+      </key>
+      <one-to-many class="models.Tir"/>
+    </set>
+  </class>
+</hibernate-mapping>

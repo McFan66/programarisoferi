@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated May 12, 2022 5:57:09 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class name="models.Inregistrare" optimistic-lock="version" schema="FANA" table="INREGISTRARI">
+    <id name="id" type="int">
+      <column name="ID"/>
+      <generator class="identity"/>
+    </id>
+    <property name="idSoferiTiruri" type="int">
+      <column name="SOFERI_TIRURI" not-null="true"/>
+    </property>
+    <property name="dataSosire" type="date">
+      <column length="10" name="DATA_SOSIRE" not-null="true"/>
+    </property>
+    <property name="dataPlecare" type="date">
+      <column length="10" name="DATA_PLECARE"/>
+    </property>
+    <many-to-one class="models.SoferiTiruri" fetch="select" insert="false" name="soferTir" update="false">
+      <column name="SOFERI_TIRURI" not-null="true"/>
+    </many-to-one>
+  </class>
+</hibernate-mapping>
