@@ -1,6 +1,7 @@
 package models;
 // Generated May 12, 2022 5:57:09 PM by Hibernate Tools 4.3.1
 
+import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -76,8 +77,18 @@ public class Sofer  implements java.io.Serializable {
     }
     
 
+    public File getPoza(){
+        return new File(String.format("./poze/soferi/%s",this.getImagepath()));
+    }
+    
+    public void setPoza(File poza){
+        this.imagepath=String.format("%s", poza.getName());
+    }
 
-
+    @Override
+    public String toString() {
+        return "Sofer{" + "id=" + id + ", nume=" + nume + ", prenume=" + prenume + ", cnp=" + cnp + ", imagepath=" + imagepath + '}';
+    }
 
 }
 
