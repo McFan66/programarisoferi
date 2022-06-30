@@ -26,12 +26,10 @@ public class CellRendererImage implements TableCellRenderer {
             boolean hasFocus,
             int row,
             int column) {
-        table.setRowHeight(70);
-        if (column == 4) {
+        if (column == 1) {
             TableColumn tb = table.getColumnModel().getColumn(column);
-            tb.setMaxWidth(100);
-            tb.setMinWidth(100);
             JLabel imageLabel = new JLabel();
+            System.out.println("sall");
             ImageIcon imageicon = new ImageIcon(value.toString());
             Image img = imageicon.getImage().getScaledInstance(100, 70, Image.SCALE_SMOOTH);
             imageLabel.setIcon(new ImageIcon(img));

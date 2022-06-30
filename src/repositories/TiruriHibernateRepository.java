@@ -7,6 +7,7 @@ package repositories;
 
 import java.util.ArrayList;
 import models.Marca;
+import models.Model;
 import models.Stare;
 import models.Tir;
 import org.hibernate.Query;
@@ -24,30 +25,31 @@ public class TiruriHibernateRepository implements TiruriRepository {
     public TiruriHibernateRepository() {
         this.session = HibernateUtil.getSessionFactory().openSession();
     }
-    
-    
-    
+
     @Override
     public boolean adaugaTir(Tir tir) {
         org.hibernate.Transaction tx = session.beginTransaction();
-       
-        if (tir!=null && tir.getId()>0){
+
+        if (tir != null && tir.getId() > 0) {
             session.saveOrUpdate(tir);
             tx.commit();
             return true;
         }
         int id = (int) session.save(tir);
         tir.setId(id);
+
         if (id > 0) {
             tx.commit();
         } else {
             tx.rollback();
         }
-        return id > 0; 
+        session.clear();
+        return id > 0;
     }
 
     @Override
     public void stergeTir(Tir tir) {
+        session.clear();
         org.hibernate.Transaction tx = session.beginTransaction();
         session.delete(tir);
         tx.commit();
@@ -65,12 +67,19 @@ public class TiruriHibernateRepository implements TiruriRepository {
 
     @Override
     public ArrayList<Tir> getTirByMarca(Marca marca) {
+        ArrayList<Model> listaModele = new ArrayList<>();
         ArrayList<Tir> listaTiruri = new ArrayList<>();
         org.hibernate.Transaction tx = session.beginTransaction();
-        Tir t = new Tir();
-        t.setMarca(marca);
-        Query q = session.createQuery("from Tir where marca= :marca").setProperties(t);
-        listaTiruri = (ArrayList<Tir>) q.list();
+        Model model = new Model();
+        model.setMarca(marca);
+        Query q = session.createQuery("from Modele where marca= :marca").setProperties(model);
+        listaModele = (ArrayList<Model>) q.list();
+        for (Model m : listaModele) {
+            Tir tir = new Tir();
+            tir.setModel(m);
+            Query qq = session.createQuery("from Tiruri where model= :model").setProperties(tir);
+            listaTiruri = (ArrayList<Tir>) qq.list();
+        }
         tx.commit();
         return listaTiruri;
     }
@@ -98,14 +107,14 @@ public class TiruriHibernateRepository implements TiruriRepository {
         tx.commit();
         return listaTiruri;
     }
-    
+
     public static void main(String[] args) {
         TiruriRepository tiruriRepository = new TiruriHibernateRepository();
-        Stare s = new Stare();
-        Marca marca = new Marca();
-        marca.setId(1);
-        s.setId(1);
-        System.out.println(tiruriRepository.getTirByStare(s));
+        Tir t = new Tir();
+        t.setIdModel(1);
+        t.setIdStare(4);
+        t.setNrInmatriculare("CL65POP");
+        tiruriRepository.adaugaTir(t);
     }
-    
+
 }

@@ -7,10 +7,7 @@
       <column name="ID"/>
       <generator class="identity"/>
     </id>
-    <property name="idMarca" type="int">
-      <column name="MARCA" not-null="true"/>
-    </property>
-    <property name="model" type="string">
+    <property name="idModel" type="int">
       <column length="100" name="MODEL" not-null="true"/>
     </property>
     <property name="nrInmatriculare" type="string">
@@ -19,8 +16,8 @@
     <property name="idStare" type="int">
       <column name="STARE" not-null="true"/>
     </property>
-    <many-to-one class="models.Marca" fetch="select" insert="false" name="marca" update="false">
-      <column name="MARCA" not-null="true"/>
+    <many-to-one class="models.Model" fetch="select" insert="false" name="model" update="false">
+        <column name="MODEL" not-null="true" />
     </many-to-one>
     <many-to-one class="models.Stare" fetch="select" insert="false" name="stare" update="false">
       <column name="STARE" not-null="true"/>

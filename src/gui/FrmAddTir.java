@@ -5,6 +5,7 @@
  */
 package gui;
 
+import controllers.TirController;
 import java.awt.Image;
 import java.awt.event.ItemEvent;
 import java.io.File;
@@ -14,19 +15,18 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import models.Marca;
-//import models.Model;
 import models.Tir;
 
-public class FrmDateMasina extends javax.swing.JDialog {
+public class FrmAddTir extends javax.swing.JDialog {
 
     /**
      * Creates new form FrmDateMasina
@@ -39,20 +39,21 @@ public class FrmDateMasina extends javax.swing.JDialog {
     private OnTirSaved onTirSaved;
     //private Model selectatiModelul;
     private Marca selectareMarca;
-    
-    
+
+    private TirController tirController;
+
     private DefaultComboBoxModel modelMarci;
     private DefaultComboBoxModel modelModele;
 ///    private List<Model> modele;
 
-    public FrmDateMasina(java.awt.Frame parent, boolean modal, Tir... tirSelectat) {
+    public FrmAddTir(JDialog parent, boolean modal, Tir... tirSelectat) {
         super(parent, modal);
         this.listaPoze = new ArrayList<>();
         this.listaFisiere = new ArrayList<>();
         this.listaPozeDeAfisat = new ArrayList<>();
         this.curImageIndex = 0;
         initComponents();
-        
+
         modelMarci = new DefaultComboBoxModel();
         modelModele = new DefaultComboBoxModel();
         List<Marca> marci = new ArrayList<Marca>();
@@ -83,12 +84,12 @@ public class FrmDateMasina extends javax.swing.JDialog {
         if (tirSelectat.length > 0) {
             this.tirSelectat = tirSelectat[0];
             txtNrInmatriculare.setText(this.tirSelectat.getNrInmatriculare());
-            dropDownMarca.setSelectedItem(this.tirSelectat.getMarca());
-            dropDownModel.setSelectedItem(this.tirSelectat.getModel());
+            cmbMarca.setSelectedItem(this.tirSelectat.getModel().getMarca());
+            cmbModel.setSelectedItem(this.tirSelectat.getModel());
 //            for(File f : this.tirSelectat.getPoze()) {
 //                listaFisiere.add(f);
 //            }
-            for(File f : listaFisiere) {
+            for (File f : listaFisiere) {
                 listaPoze.add(new ImageIcon(new ImageIcon(f.getAbsolutePath()).getImage().getScaledInstance(lblPoze.getWidth(), lblPoze.getHeight(), Image.SCALE_SMOOTH)));
             }
             this.curImageIndex = 0;
@@ -96,6 +97,34 @@ public class FrmDateMasina extends javax.swing.JDialog {
             lblPoze.setText("");
             modificaCntPoze();
         }
+    }
+
+    public JComboBox<String> getCmbMarca() {
+        return cmbMarca;
+    }
+
+    public JComboBox<String> getCmbModel() {
+        return cmbModel;
+    }
+
+    public JTextField getTxtNrInmatriculare() {
+        return txtNrInmatriculare;
+    }
+
+    public void setTirController(TirController tirController) {
+        this.tirController = tirController;
+    }
+
+    public JFileChooser getFileChooserPozeMasina() {
+        return fileChooserPozeMasina;
+    }
+
+    public JLabel getLblPoze() {
+        return lblPoze;
+    }
+
+    public JLabel getLblCnt() {
+        return lblCnt;
     }
 
     /**
@@ -120,8 +149,8 @@ public class FrmDateMasina extends javax.swing.JDialog {
         lblCnt = new javax.swing.JLabel();
         btnAddPoza = new javax.swing.JButton();
         btnDeletePoza = new javax.swing.JButton();
-        dropDownMarca = new javax.swing.JComboBox<>();
-        dropDownModel = new javax.swing.JComboBox<>();
+        cmbMarca = new javax.swing.JComboBox<>();
+        cmbModel = new javax.swing.JComboBox<>();
 
         fileChooserPozeMasina.setAcceptAllFileFilterUsed(false);
         fileChooserPozeMasina.setFileFilter(new FileNameExtensionFilter("Images", "jpg", "png", "gif", "bmp"));
@@ -196,9 +225,14 @@ public class FrmDateMasina extends javax.swing.JDialog {
             }
         });
 
-        dropDownMarca.addItemListener(new java.awt.event.ItemListener() {
+        cmbMarca.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                dropDownMarcaItemStateChanged(evt);
+                cmbMarcaItemStateChanged(evt);
+            }
+        });
+        cmbMarca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbMarcaActionPerformed(evt);
             }
         });
 
@@ -217,14 +251,14 @@ public class FrmDateMasina extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(txtNrInmatriculare)
-                            .addComponent(dropDownMarca, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(dropDownModel, javax.swing.GroupLayout.Alignment.LEADING, 0, 240, Short.MAX_VALUE))
+                            .addComponent(cmbMarca, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmbModel, javax.swing.GroupLayout.Alignment.LEADING, 0, 240, Short.MAX_VALUE))
                         .addGap(0, 11, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnDeletePoza, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAddPoza))
+                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnDeletePoza, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAddPoza, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(86, 86, 86)))
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(lblPoze, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -235,22 +269,32 @@ public class FrmDateMasina extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblCnt)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnNext)))
                 .addGap(9, 9, 9))
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
+                .addContainerGap(18, Short.MAX_VALUE)
+                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panelPrincipalLayout.createSequentialGroup()
+                        .addComponent(lblPoze, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblCnt)
+                            .addComponent(btnNext)
+                            .addComponent(btnPrevious))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSalveaza)
+                        .addContainerGap())
+                    .addGroup(panelPrincipalLayout.createSequentialGroup()
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblMarca)
-                            .addComponent(dropDownMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cmbMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblModel)
-                            .addComponent(dropDownModel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cmbModel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(9, 9, 9)
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtNrInmatriculare, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -259,17 +303,7 @@ public class FrmDateMasina extends javax.swing.JDialog {
                         .addComponent(btnAddPoza)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnDeletePoza)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
-                        .addComponent(lblPoze, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCnt)
-                    .addComponent(btnNext)
-                    .addComponent(btnPrevious))
-                .addGap(18, 18, 18)
-                .addComponent(btnSalveaza)
-                .addContainerGap())
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -309,34 +343,6 @@ public class FrmDateMasina extends javax.swing.JDialog {
         }
     }
 
-    private File makeFolderPoze() {
-        File dirCur = new File(".");
-        File folder = new File(dirCur, "poze");
-        if (!folder.exists()) {
-            folder.mkdir();
-        }
-
-        File tiruri = new File(folder, "Tiruri");
-        if (!tiruri.exists()) {
-            tiruri.mkdir();
-        }
-
-        return tiruri;
-    }
-
-    private void makeFile(File file, File dest) {
-        UUID uuidPoza = UUID.randomUUID();
-        String extension = file.getName().substring(file.getName().lastIndexOf("."));
-
-        File poza = new File(dest, String.format("%s%s", uuidPoza.toString(), extension));
-        listaPozeDeAfisat.add(poza);
-        try {
-            copyFile(file, poza);
-        } catch (IOException ex) {
-            Logger.getLogger(FrmDateMasina.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     private void modificaCntPoze() {
         lblCnt.setText(String.format("%s/%s", curImageIndex + 1, listaPoze.size()));
     }
@@ -347,70 +353,72 @@ public class FrmDateMasina extends javax.swing.JDialog {
 
     private void btnSalveazaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalveazaActionPerformed
         // TODO add your handling code here:
-        try {
-            if (dropDownMarca.getSelectedItem().equals(this.selectareMarca)) {
-                throw new Error("Va rog sa selectati o marca");
-            }
-//            if (dropDownModel.getSelectedItem().equals(this.selectatiModelul)) {
-//                throw new Error("Va rog sa selectati un model");
+        tirController.saveTir();
+//        try {
+//            if (cmbMarca.getSelectedItem()!=null && cmbMarca.getSelectedItem().equals(this.selectareMarca)) {
+//                throw new Error("Va rog sa selectati o marca");
 //            }
-            if (listaPoze.isEmpty()) {
-                throw new Error("Va rog sa adaugati macar o poza");
-            }
-            if(txtNrInmatriculare.getText() == null) {
-                throw new Error("Va rog sa introduceti numarul de inmatriculare");
-            }
-            
-            File tiruri = makeFolderPoze();
+////            if (dropDownModel.getSelectedItem().equals(this.selectatiModelul)) {
+////                throw new Error("Va rog sa selectati un model");
+////            }
+//            if (listaPoze.isEmpty()) {
+//                throw new Error("Va rog sa adaugati macar o poza");
+//            }
+//            if(txtNrInmatriculare.getText() == null) {
+//                throw new Error("Va rog sa introduceti numarul de inmatriculare");
+//            }
 
-            File pozeTir = new File(tiruri, txtNrInmatriculare.getText());
-            if (!pozeTir.exists()) {
-                pozeTir.mkdir();
-            }
-
-            for (File pozaDeSalvat : listaFisiere) {
-                makeFile(pozaDeSalvat, pozeTir);
-            }
-
-            Tir tir = new Tir();
-            tir.setId((int) (Math.random() * 10000));
-            if (tirSelectat != null) {
-                tir.setId(tirSelectat.getId());
-            }
-            tir.setMarca((Marca) dropDownMarca.getSelectedItem());
-            //tir.setModel((Model) dropDownModel.getSelectedItem());
-            tir.setNrInmatriculare(txtNrInmatriculare.getText());
-            //tir.setPoze(listaPozeDeAfisat);
-            //tir.setFolderPoze(pozeTir);
-
-            if (onTirSaved != null) {
-                onTirSaved.saveTir(tir);
-            }
-
-            this.dispose();
-        } catch (Error err) {
-            JOptionPane.showMessageDialog(this, err.getMessage());
-        }
+//            File tiruri = makeFolderPoze();
+//
+//            File pozeTir = new File(tiruri, txtNrInmatriculare.getText());
+//            if (!pozeTir.exists()) {
+//                pozeTir.mkdir();
+//            }
+//
+//            for (File pozaDeSalvat : listaFisiere) {
+//                makeFile(pozaDeSalvat, pozeTir);
+//            }
+//
+//            Tir tir = new Tir();
+//            tir.setId((int) (Math.random() * 10000));
+//            if (tirSelectat != null) {
+//                tir.setId(tirSelectat.getId());
+//            }
+//            tir.setModel((Model) cmbModel.getSelectedItem());
+//            tir.setNrInmatriculare(txtNrInmatriculare.getText());
+//            tir.setPoze(listaPozeDeAfisat);
+//            tir.setFolderPoze(pozeTir);
+//
+//            if (onTirSaved != null) {
+//                onTirSaved.saveTir(tir);
+//            }
+//
+//            this.dispose();
+//        } catch (Error err) {
+//            JOptionPane.showMessageDialog(this, err.getMessage());
+//        }
     }//GEN-LAST:event_btnSalveazaActionPerformed
 
     private void btnPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousActionPerformed
         // TODO add your handling code here:
-        if (curImageIndex > 0 && curImageIndex < listaPoze.size()) {
-            curImageIndex--;
-            lblPoze.setIcon(listaPoze.get(curImageIndex));
-            modificaCntPoze();
-        }
-        System.out.println(curImageIndex);
+        tirController.anterioaraImagine();
+//        if (curImageIndex > 0 && curImageIndex < listaPoze.size()) {
+//            curImageIndex--;
+//            lblPoze.setIcon(listaPoze.get(curImageIndex));
+//            modificaCntPoze();
+//        }
+//        System.out.println(curImageIndex);
     }//GEN-LAST:event_btnPreviousActionPerformed
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
         // TODO add your handling code here:
-        if (curImageIndex >= 0 && curImageIndex < listaPoze.size() - 1) {
-            curImageIndex++;
-            lblPoze.setIcon(listaPoze.get(curImageIndex));
-            modificaCntPoze();
-        }
-        System.out.println(curImageIndex);
+        tirController.urmatoareaImagine();
+//        if (curImageIndex >= 0 && curImageIndex < listaPoze.size() - 1) {
+//            curImageIndex++;
+//            lblPoze.setIcon(listaPoze.get(curImageIndex));
+//            modificaCntPoze();
+//        }
+//        System.out.println(curImageIndex);
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void txtNrInmatriculareKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNrInmatriculareKeyTyped
@@ -421,52 +429,55 @@ public class FrmDateMasina extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNrInmatriculareKeyTyped
 
     private void btnAddPozaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPozaActionPerformed
-        // TODO add your handling code here:
-        int returnVal = fileChooserPozeMasina.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooserPozeMasina.getSelectedFile();
-            listaFisiere.add(file);
-
-            ImageIcon imageIcon = new ImageIcon(new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(lblPoze.getWidth(), lblPoze.getHeight(), Image.SCALE_SMOOTH));
-
-            lblPoze.setIcon(imageIcon);
-            lblPoze.setText(null);
-            listaPoze.add(imageIcon);
-            curImageIndex = listaPoze.indexOf(imageIcon);
-            modificaCntPoze();
-
-        } else {
-            System.out.println("File access cancelled by user");
-        }
+//        // TODO add your handling code here:
+        tirController.selecteazaImagini();
+//        int returnVal = fileChooserPozeMasina.showOpenDialog(this);
+//        if (returnVal == JFileChooser.APPROVE_OPTION) {
+//            File file = fileChooserPozeMasina.getSelectedFile();
+//            listaFisiere.add(file);
+//
+//            ImageIcon imageIcon = new ImageIcon(new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(lblPoze.getWidth(), lblPoze.getHeight(), Image.SCALE_SMOOTH));
+//
+//            lblPoze.setIcon(imageIcon);
+//            lblPoze.setText(null);
+//            listaPoze.add(imageIcon);
+//            curImageIndex = listaPoze.indexOf(imageIcon);
+//            modificaCntPoze();
+//
+//        } else {
+//            System.out.println("File access cancelled by user");
+//        }
     }//GEN-LAST:event_btnAddPozaActionPerformed
 
     private void btnDeletePozaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletePozaActionPerformed
         // TODO add your handling code here:
-        try {
-            if (listaPoze.isEmpty()) {
-                throw new Error("Nu aveti poze adaugate");
-            }
-            if (listaPoze.size() == 1) {
-                listaPoze.remove(0);
-                lblPoze.setIcon(null);
-                listaFisiere.remove(0);
-                curImageIndex--;
-                modificaCntPoze();
-            }
-            if (listaPoze.size() > 1) {
-                listaPoze.remove(curImageIndex);
-                listaFisiere.remove(curImageIndex);
-                curImageIndex--;
-                lblPoze.setIcon(listaPoze.get(curImageIndex));
-                modificaCntPoze();
-            }
-        } catch (Error err) {
-            System.err.println(err.getMessage());
-        }
+        tirController.stergeImagine();
+//        try {
+//            if (listaPoze.isEmpty()) {
+//                throw new Error("Nu aveti poze adaugate");
+//            }
+//            if (listaPoze.size() == 1) {
+//                listaPoze.remove(0);
+//                lblPoze.setIcon(null);
+//                listaFisiere.remove(0);
+//                curImageIndex--;
+//                modificaCntPoze();
+//            }
+//            if (listaPoze.size() > 1) {
+//                listaPoze.remove(curImageIndex);
+//                listaFisiere.remove(curImageIndex);
+//                curImageIndex--;
+//                lblPoze.setIcon(listaPoze.get(curImageIndex));
+//                modificaCntPoze();
+//            }
+//        } catch (Error err) {
+//            System.err.println(err.getMessage());
+//        }
     }//GEN-LAST:event_btnDeletePozaActionPerformed
 
-    private void dropDownMarcaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_dropDownMarcaItemStateChanged
-        if (evt.getStateChange() == ItemEvent.SELECTED) {
+    private void cmbMarcaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbMarcaItemStateChanged
+        tirController.marcaHasChanged(evt);
+//    if (evt.getStateChange() == ItemEvent.SELECTED) {
 //            Model selectatiModelul = (Model) modelModele.getElementAt(0);
 //            modelModele.removeAllElements();
 //            Marca marcaSelectata = (Marca) dropDownMarca.getSelectedItem();
@@ -476,8 +487,12 @@ public class FrmDateMasina extends javax.swing.JDialog {
 //                    modelModele.addElement(m);
 //                }
 //            }
-        }
-    }//GEN-LAST:event_dropDownMarcaItemStateChanged
+     //   }
+    }//GEN-LAST:event_cmbMarcaItemStateChanged
+
+    private void cmbMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMarcaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbMarcaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -496,14 +511,20 @@ public class FrmDateMasina extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmDateMasina.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAddTir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmDateMasina.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAddTir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmDateMasina.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAddTir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmDateMasina.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAddTir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
@@ -511,7 +532,7 @@ public class FrmDateMasina extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                FrmDateMasina dialog = new FrmDateMasina(new javax.swing.JFrame(), true);
+                FrmAddTir dialog = new FrmAddTir(new JDialog(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -528,6 +549,7 @@ public class FrmDateMasina extends javax.swing.JDialog {
     }
 
     public interface OnTirSaved {
+
         void saveTir(Tir tir);
     }
 
@@ -537,8 +559,8 @@ public class FrmDateMasina extends javax.swing.JDialog {
     private javax.swing.JButton btnNext;
     private javax.swing.JButton btnPrevious;
     private javax.swing.JButton btnSalveaza;
-    private javax.swing.JComboBox<String> dropDownMarca;
-    private javax.swing.JComboBox<String> dropDownModel;
+    private javax.swing.JComboBox<String> cmbMarca;
+    private javax.swing.JComboBox<String> cmbModel;
     private javax.swing.JFileChooser fileChooserPozeMasina;
     private javax.swing.JLabel lblCnt;
     private javax.swing.JLabel lblMarca;

@@ -78,11 +78,19 @@ public class Sofer  implements java.io.Serializable {
     
 
     public File getPoza(){
-        return new File(String.format("./poze/soferi/%s",this.getImagepath()));
+        File currentDirectory=new File(".");
+        if(this.getImagepath()!=null){
+            return new File(currentDirectory,String.format("/poze/soferi/%s",this.getImagepath()));
+        }
+       return new File(currentDirectory,String.format("/poze/no-image-icon.png"));
     }
     
     public void setPoza(File poza){
         this.imagepath=String.format("%s", poza.getName());
+    }
+    
+    public String getNumeComplet(){
+        return String.format("%s %s", this.nume, this.prenume);
     }
 
     @Override

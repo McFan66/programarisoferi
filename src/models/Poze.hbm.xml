@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="models.Poza" table="POZE" schema="FANA">
+      <id name="id" type="int">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="tipObiect" type="int">
+            <column name="TIP_OBIECT" not-null="true" />
+        </property>
+        <property name="idObiect" type="int">
+            <column name="ID_OBIECT" not-null="true" />
+        </property>
+        <property name="imagePath" type="string">
+            <column name="IMAGEPATH" length="100" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

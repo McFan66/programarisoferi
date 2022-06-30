@@ -91,7 +91,7 @@ public class SoferiTiruriHibernateRepository implements SoferiTiruriRepository {
         SoferiTiruriRepository soferiTiruriRepository = new SoferiTiruriHibernateRepository();
         Tir t = new Tir();
         t.setId(1);
-        System.out.println(soferiTiruriRepository.getAll());
+        System.out.println(soferiTiruriRepository.getSoferiTiruriByTir(t));
     }
     
 }

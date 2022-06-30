@@ -13,7 +13,7 @@ import models.Sofer;
 public class TableModelSoferi extends AbstractTableModel {
 
     private List<Sofer> listaSoferi;
-    private String[] columnNames = new String[]{"Id", "Nume", "Prenume", "Cnp", "Poza"};
+    private String[] columnNames = new String[]{"Nume si prenume", "Poza"};
 
     public TableModelSoferi() {
         listaSoferi=new ArrayList<>();
@@ -43,14 +43,8 @@ public class TableModelSoferi extends AbstractTableModel {
         Sofer sofer = listaSoferi.get(rowIndex);
         switch (columnIndex) {
             case 0:
-                return sofer.getId();
+                return new String(String.format("%s %s", sofer.getNume(), sofer.getPrenume()));
             case 1:
-                return sofer.getNume();
-            case 2:
-                return sofer.getPrenume();
-            case 3:
-                return sofer.getCnp();
-            case 4:
               //  System.out.println(sofer.getPoza().toString());
                 return sofer.getPoza();
             default:
@@ -81,5 +75,6 @@ public class TableModelSoferi extends AbstractTableModel {
         this.listaSoferi = listaSoferi;
         fireTableDataChanged();
     }
+    
     
 }

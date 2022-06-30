@@ -46,13 +46,13 @@ public class TabelModelTiruri extends AbstractTableModel {
             case 0:
                 return tir.getId();
             case 1:
-                return tir.getMarca();
+                return tir.getModel().getMarca();
             case 2:
                 return tir.getModel();
             case 3:
                 return tir.getNrInmatriculare();
 //            case 4:
-//                return tir.getPoze().get(0);
+//               return tir.getPoze().get(0);
             default:
                 return "Nespecificat";
         }

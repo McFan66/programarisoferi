@@ -16,7 +16,7 @@ public class Marca  implements java.io.Serializable {
      private int id;
      private String nume;
      private int activa;
-     private Set<Tir> tiruri = new HashSet<Tir>(0);
+     private Set modele = new HashSet(0);
 
     public Marca() {
     }
@@ -56,18 +56,19 @@ public class Marca  implements java.io.Serializable {
         this.activa = activa;
     }
 
-    public Set<Tir> getTiruri() {
-        return tiruri;
-    }
-
-    public void setTiruri(Set<Tir> tiruri) {
-        this.tiruri = tiruri;
-    }
 
     @Override
     public int hashCode() {
         int hash = 5;
         return hash;
+    }
+
+    public Set getModele() {
+        return modele;
+    }
+
+    public void setModele(Set modele) {
+        this.modele = modele;
     }
 
     @Override

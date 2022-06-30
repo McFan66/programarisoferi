@@ -4,17 +4,28 @@
  * and open the template in the editor.
  */
 package gui;
+
+import controllers.ApplicationController;
+import controllers.SoferController;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import models.Sofer;
 import models.Tir;
 import renderers.CellRendererImage;
 
-public class Administrare extends javax.swing.JFrame implements FrmDateSofer.OnSoferSaved , FrmDateMasina.OnTirSaved{
-    
-    public Administrare() {
+public class FrmAdministrare extends javax.swing.JFrame implements FrmAddSofer.OnSoferSaved, FrmAddTir.OnTirSaved {
+
+    private ApplicationController applicationController = new ApplicationController();
+    private SoferController soferController = new SoferController();
+
+    public FrmAdministrare() {
         initComponents();
         tabelSoferi.getColumnModel().getColumn(4).setCellRenderer(new CellRendererImage());
 //        tabelTiruri.getColumnModel().getColumn(4).setCellRenderer(new CellRendererImage());
+    }
+
+    public void setApplicationController(ApplicationController applicationController) {
+        this.applicationController = applicationController;
     }
 
     /**
@@ -124,6 +135,10 @@ public class Administrare extends javax.swing.JFrame implements FrmDateSofer.OnS
         tabelSoferi.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         tabelSoferi.setModel(tableModelSoferi1);
         jScrollPane2.setViewportView(tabelSoferi);
+        if (tabelSoferi.getColumnModel().getColumnCount() > 0) {
+            tabelSoferi.getColumnModel().getColumn(0).setHeaderValue("Nume si prenume");
+            tabelSoferi.getColumnModel().getColumn(1).setHeaderValue("Poza");
+        }
 
         javax.swing.GroupLayout panelPaginaTabelSoferiLayout = new javax.swing.GroupLayout(panelPaginaTabelSoferi);
         panelPaginaTabelSoferi.setLayout(panelPaginaTabelSoferiLayout);
@@ -163,39 +178,38 @@ public class Administrare extends javax.swing.JFrame implements FrmDateSofer.OnS
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-  
+
     private void btnAdaugaTiruriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdaugaTiruriActionPerformed
-        FrmDateMasina f = new FrmDateMasina(new javax.swing.JFrame(), true);
-        f.setOnTirSaved(this);
-        f.setVisible(true);
+//        FrmAddTir f = new FrmAddTir(new javax.swing.JFrame(), true);
+//        f.setOnTirSaved(this);
+//        f.setVisible(true);
     }//GEN-LAST:event_btnAdaugaTiruriActionPerformed
 
     private void btnEditeazaTiruriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditeazaTiruriActionPerformed
         int index = tabelTiruri.convertRowIndexToModel(tabelTiruri.getSelectedRow());
-        if(index == -1) {
+        if (index == -1) {
             JOptionPane.showMessageDialog(this, "Va rog selectati un tir");
             return;
         }
-        FrmDateMasina f = new FrmDateMasina(new javax.swing.JFrame(), true , tabelModelTiruri1.getTirAtIndex(index));
-        
+//        FrmAddTir f = new FrmAddTir(new javax.swing.JFrame(), true, tabelModelTiruri1.getTirAtIndex(index));
+
 //        for(File file : tabelModelTiruri1.getTirAtIndex(index).getPoze()) {
 //            file.delete();
 //        }
 //        
 //        tabelModelTiruri1.getTirAtIndex(index).getFolderPoze().delete();
-        
-        f.setOnTirSaved(this);
-        f.setVisible(true);
+//        f.setOnTirSaved(this);
+//        f.setVisible(true);
     }//GEN-LAST:event_btnEditeazaTiruriActionPerformed
 
     private void btnStergeTiruriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStergeTiruriActionPerformed
         int index = tabelTiruri.convertRowIndexToModel(tabelTiruri.getSelectedRow());
-        if(index == -1) {
+        if (index == -1) {
             JOptionPane.showMessageDialog(this, "Va rog sa selectati un tir");
             return;
-        } 
-        int confirmValue = JOptionPane.showConfirmDialog(this, "Esti sigur ca vrei sa stergi linia?", "Confirm",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if(confirmValue == JOptionPane.YES_OPTION) {
+        }
+        int confirmValue = JOptionPane.showConfirmDialog(this, "Esti sigur ca vrei sa stergi linia?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (confirmValue == JOptionPane.YES_OPTION) {
 //            for(File f : tabelModelTiruri1.getTirAtIndex(index).getPoze()) {
 //                f.delete();
 //            }
@@ -205,33 +219,33 @@ public class Administrare extends javax.swing.JFrame implements FrmDateSofer.OnS
     }//GEN-LAST:event_btnStergeTiruriActionPerformed
 
     private void btnAdaugaSoferiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdaugaSoferiActionPerformed
-        FrmDateSofer f = new FrmDateSofer(new javax.swing.JFrame(), true);
-        f.setOnSoferSaved(this);
-        f.setVisible(true);
+//        FrmDateSofer f = new FrmDateSofer(new javax.swing.JFrame(), true);
+//        f.setOnSoferSaved(this);
+//        f.setVisible(true);
     }//GEN-LAST:event_btnAdaugaSoferiActionPerformed
 
     private void btnEditeazaSoferiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditeazaSoferiActionPerformed
-        int index=tabelSoferi.convertRowIndexToModel(tabelSoferi.getSelectedRow());
-        if(index==-1){
+        int index = tabelSoferi.convertRowIndexToModel(tabelSoferi.getSelectedRow());
+        if (index == -1) {
             JOptionPane.showMessageDialog(this, "Va rog selectati un sofer!");
             return;
         }
 //        tableModelSoferi1.getSoferAtIdex(index).getPoza().delete();
-        FrmDateSofer f = new FrmDateSofer(new javax.swing.JFrame(), true,tableModelSoferi1.getSoferAtIdex(index));
-        
+        FrmAddSofer f = new FrmAddSofer(new JDialog(), true, tableModelSoferi1.getSoferAtIdex(index));
+
         f.setOnSoferSaved(this);
-        f.setVisible(true);      
+        f.setVisible(true);
     }//GEN-LAST:event_btnEditeazaSoferiActionPerformed
 
     private void btnStergeSoferiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStergeSoferiActionPerformed
         int index = tabelSoferi.convertRowIndexToModel(tabelSoferi.getSelectedRow());
-        if(index == -1) {
+        if (index == -1) {
             JOptionPane.showMessageDialog(this, "Va rog selectati un sofer!");
             return;
         }
-        
-        int confirmValue = JOptionPane.showConfirmDialog(this, "Esti sigur ca vrei sa stergi linia?", "Confirm",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if(confirmValue == JOptionPane.YES_OPTION) {
+
+        int confirmValue = JOptionPane.showConfirmDialog(this, "Esti sigur ca vrei sa stergi linia?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (confirmValue == JOptionPane.YES_OPTION) {
 //            tableModelSoferi1.getSoferAtIdex(index).getPoza().delete();
             tableModelSoferi1.getListaSoferi().remove(index);
             tableModelSoferi1.fireTableDataChanged();
@@ -255,20 +269,21 @@ public class Administrare extends javax.swing.JFrame implements FrmDateSofer.OnS
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Administrare.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAdministrare.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Administrare.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAdministrare.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Administrare.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAdministrare.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Administrare.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAdministrare.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Administrare().setVisible(true);
+                new FrmAdministrare().setVisible(true);
             }
         });
     }

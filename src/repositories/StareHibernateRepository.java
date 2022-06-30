@@ -63,7 +63,10 @@ public class StareHibernateRepository implements StareRepository {
     
     public static void main(String[] args) {
         StareRepository stareRepository = new StareHibernateRepository();
-        System.out.println(stareRepository.getAll());
+        Stare s = new Stare();
+        s.setValid(1);
+        s.setNume("Service");
+        stareRepository.adaugaStare(s);
     }
     
 }

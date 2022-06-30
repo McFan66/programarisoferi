@@ -42,9 +42,11 @@ Contributor(s):
 <hibernate-reverse-engineering>
   <schema-selection match-schema="FANA"/>
   <table-filter match-name="MARCA"/>
+  <table-filter match-name="MODELE"/>
   <table-filter match-name="TIRURI"/>
   <table-filter match-name="STARI"/>
   <table-filter match-name="SOFERI"/>
   <table-filter match-name="INREGISTRARI"/>
   <table-filter match-name="SOFERI_TIRURI"/>
+  <table-filter match-name="POZE" />
 </hibernate-reverse-engineering>

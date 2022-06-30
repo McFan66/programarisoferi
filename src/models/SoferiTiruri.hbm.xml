@@ -1,29 +1,30 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated May 12, 2022 5:57:09 PM by Hibernate Tools 4.3.1 -->
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 2, 2022 6:30:51 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-  <class name="models.SoferiTiruri" optimistic-lock="version" schema="FANA" table="SOFERI_TIRURI">
-    <id name="id" type="int">
-      <column name="ID"/>
-      <generator class="identity"/>
-    </id>
-    <property name="idSofer" type="int">
-      <column name="SOFER" not-null="true"/>
-    </property>
-    <property name="idTir" type="int">
-      <column name="TIR" not-null="true"/>
-    </property>
-    <many-to-one class="models.Sofer" fetch="select" insert="false" name="sofer" update="false">
-      <column name="SOFER" not-null="true"/>
-    </many-to-one>
-    <many-to-one class="models.Tir" fetch="select" insert="false" name="tir" update="false">
-      <column name="TIR" not-null="true"/>
-    </many-to-one>
-    <set fetch="select" inverse="true" lazy="false" name="inregistrari" table="INREGISTRARI">
-      <key>
-        <column name="SOFERI_TIRURI" not-null="true"/>
-      </key>
-      <one-to-many class="models.Inregistrare"/>
-    </set>
-  </class>
+    <class name="models.SoferiTiruri" table="SOFERI_TIRURI" schema="FANA">
+        <id name="id" type="int">
+            <column name="ID" />
+            <generator class="identity"></generator>
+        </id>
+        <property name="idSofer" type="int">
+            <column name="SOFER" not-null="true" />
+        </property>
+        <property name="idTir" type="int">
+            <column name="TIR" not-null="true" />
+        </property>
+        <many-to-one name="sofer" class="models.Sofer" update="false" insert="false" fetch="select">
+            <column name="SOFER" not-null="true" />
+        </many-to-one>
+        <many-to-one name="tir" class="models.Tir" update="false" insert="false" fetch="select">
+            <column name="TIR" not-null="true" />
+        </many-to-one>
+        <set name="inregistrari" table="INREGISTRARI" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="SOFERI_TIRURI" not-null="true" />
+            </key>
+            <one-to-many class="models.Inregistrare" />
+        </set>
+    </class>
 </hibernate-mapping>

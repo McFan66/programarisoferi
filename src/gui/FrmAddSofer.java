@@ -5,23 +5,18 @@
  */
 package gui;
 
-import administrare.CnpValidator;
+import controllers.SoferController;
 import java.awt.Image;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.channels.FileChannel;
-import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import models.Sofer;
 
-public class FrmDateSofer extends javax.swing.JDialog {
+public class FrmAddSofer extends javax.swing.JDialog {
 
     /**
      * Creates new form FrmDateSofer
@@ -29,8 +24,9 @@ public class FrmDateSofer extends javax.swing.JDialog {
     private File pozaSelectata = null;
     private OnSoferSaved onSoferSaved;
     private Sofer soferSelectat;
+    private SoferController soferController = new SoferController();
 
-    public FrmDateSofer(java.awt.Frame parent, boolean modal, Sofer... soferSelectat) {
+    public FrmAddSofer(JDialog parent, boolean modal, Sofer... soferSelectat) {
         super(parent, modal);
         initComponents();
         if (soferSelectat.length > 0) {
@@ -43,6 +39,34 @@ public class FrmDateSofer extends javax.swing.JDialog {
 
         }
     }
+
+    public CustomTextField getTxtNume() {
+        return txtNume;
+    }
+
+    public CustomTextField getTxtPrenume() {
+        return txtPrenume;
+    }
+
+    public JTextField getTxtCNP() {
+        return txtCNP;
+    }
+
+    public void setSoferController(SoferController soferController) {
+        this.soferController = soferController;
+    }
+
+    public JFileChooser getFileChooserPoza() {
+        return fileChooserPoza;
+    }
+
+    public JLabel getLblPoza() {
+        return lblPoza;
+    }
+    
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -166,73 +190,73 @@ public class FrmDateSofer extends javax.swing.JDialog {
 
     private void lblPozaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPozaMouseClicked
         // TODO add your handling code here:
-
-        int returnVal = fileChooserPoza.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooserPoza.getSelectedFile();
-            this.pozaSelectata = file;
-            ImageIcon imageIcon = new ImageIcon(new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(lblPoza.getWidth(), lblPoza.getHeight(), Image.SCALE_SMOOTH));
-
-            lblPoza.setIcon(imageIcon);
-
-        } else {
-            System.out.println("File access cancelled by user");
-        }
+    soferController.selecteazaImaginea();
+//        int returnVal = fileChooserPoza.showOpenDialog(this);
+//        if (returnVal == JFileChooser.APPROVE_OPTION) {
+//            File file = fileChooserPoza.getSelectedFile();
+//            this.pozaSelectata = file;
+//            ImageIcon imageIcon = new ImageIcon(new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(lblPoza.getWidth(), lblPoza.getHeight(), Image.SCALE_SMOOTH));
+//
+//            lblPoza.setIcon(imageIcon);
+//
+//        } else {
+//            System.out.println("File access cancelled by user");
+//        }
     }//GEN-LAST:event_lblPozaMouseClicked
 
     private void btnSalveazaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalveazaActionPerformed
         // TODO add your handling code here:
-        try {
-            CnpValidator c = new CnpValidator();
-            if(pozaSelectata == null) {
-                throw new Error("Va rugam sa adaugati o poza");
-            }
-            if(!c.validate(txtCNP.getText())) {
-                throw new Error("CNP incorect");
-            }
-            if(txtNume.getText().trim().length() < 2 || txtPrenume.getText().trim().length() < 2) {
-                throw new Error("Numele si prenumele trebuie sa aiba minim 2 caractere");
-            }
-
-            File dirCur = new File(".");
-            File folder = new File(dirCur, "poze");
-            if (!folder.exists()) {
-                folder.mkdir();
-            }
-
-            File pozeSofer = new File(folder, "soferi");
-            if (!pozeSofer.exists()) {
-                pozeSofer.mkdir();
-            }
-
-            UUID uuidPoza = UUID.randomUUID();
-
-            String extension = pozaSelectata.getName().substring(pozaSelectata.getName().lastIndexOf("."));
-
-            File poza = new File(pozeSofer, String.format("%s%s", uuidPoza.toString(), extension));
-
-            try {
-                copyFile(pozaSelectata, poza);
-            } catch (IOException ex) {
-                Logger.getLogger(FrmDateSofer.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            Sofer sofer = new Sofer();
-            sofer.setId((int) (Math.random() * 10000));
-            if(soferSelectat!=null){
-                sofer.setId(soferSelectat.getId());
-            }
-            sofer.setNume(txtNume.getText().trim());
-            sofer.setPrenume(txtPrenume.getText().trim());
-            sofer.setCnp(txtCNP.getText().trim());
-            sofer.setPoza(poza);
-            if (onSoferSaved != null) {
-                onSoferSaved.saveSofer(sofer);
-            }
-            this.dispose();
-        } catch (Error err) {
-            JOptionPane.showMessageDialog(this, err.getMessage());
-        }
+        soferController.saveSofer();
+//        try {
+//            CnpValidator c = new CnpValidator();
+//            if(pozaSelectata == null) {
+//                throw new Error("Va rugam sa adaugati o poza");
+//            }
+//            if(!c.validate(txtCNP.getText())) {
+//                throw new Error("CNP incorect");
+//            }
+//            if(txtNume.getText().trim().length() < 2 || txtPrenume.getText().trim().length() < 2) {
+//                throw new Error("Numele si prenumele trebuie sa aiba minim 2 caractere");
+//            }
+//            File dirCur = new File(".");
+//            File folder = new File(dirCur, "poze");
+//            if (!folder.exists()) {
+//                folder.mkdir();
+//            }
+//
+//            File pozeSofer = new File(folder, "soferi");
+//            if (!pozeSofer.exists()) {
+//                pozeSofer.mkdir();
+//            }
+//
+//            UUID uuidPoza = UUID.randomUUID();
+//
+//            String extension = pozaSelectata.getName().substring(pozaSelectata.getName().lastIndexOf("."));
+//
+//            File poza = new File(pozeSofer, String.format("%s%s", uuidPoza.toString(), extension));
+//
+//            try {
+//                copyFile(pozaSelectata, poza);
+//            } catch (IOException ex) {
+//                Logger.getLogger(FrmDateSofer.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            
+//            Sofer sofer = new Sofer();
+//            sofer.setId((int) (Math.random() * 10000));
+//            if(soferSelectat!=null){
+//                sofer.setId(soferSelectat.getId());
+//            }
+//            sofer.setNume(txtNume.getText().trim());
+//            sofer.setPrenume(txtPrenume.getText().trim());
+//            sofer.setCnp(txtCNP.getText().trim());
+//            sofer.setPoza(poza);
+//            if (onSoferSaved != null) {
+//                onSoferSaved.saveSofer(sofer);
+//            }
+//            this.dispose();
+//        } catch (Error err) {
+//            JOptionPane.showMessageDialog(this, err.getMessage());
+//        }
     }//GEN-LAST:event_btnSalveazaActionPerformed
 
     private void txtCNPKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCNPKeyTyped
@@ -240,27 +264,27 @@ public class FrmDateSofer extends javax.swing.JDialog {
 
     }//GEN-LAST:event_txtCNPKeyTyped
 
-    public static void copyFile(File sourceFile, File destFile) throws IOException {
-        if (!destFile.exists()) {
-            destFile.createNewFile();
-        }
-
-        FileChannel source = null;
-        FileChannel destination = null;
-
-        try {
-            source = new FileInputStream(sourceFile).getChannel();
-            destination = new FileOutputStream(destFile).getChannel();
-            destination.transferFrom(source, 0, source.size());
-        } finally {
-            if (source != null) {
-                source.close();
-            }
-            if (destination != null) {
-                destination.close();
-            }
-        }
-    }
+//    public static void copyFile(File sourceFile, File destFile) throws IOException {
+//        if (!destFile.exists()) {
+//            destFile.createNewFile();
+//        }
+//
+//        FileChannel source = null;
+//        FileChannel destination = null;
+//
+//        try {
+//            source = new FileInputStream(sourceFile).getChannel();
+//            destination = new FileOutputStream(destFile).getChannel();
+//            destination.transferFrom(source, 0, source.size());
+//        } finally {
+//            if (source != null) {
+//                source.close();
+//            }
+//            if (destination != null) {
+//                destination.close();
+//            }
+//        }
+//    }
 
     /**
      * @param args the command line arguments
@@ -279,21 +303,23 @@ public class FrmDateSofer extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmDateSofer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAddSofer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmDateSofer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAddSofer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmDateSofer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAddSofer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmDateSofer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAddSofer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FrmDateSofer dialog = new FrmDateSofer(new javax.swing.JFrame(), true);
+                FrmAddSofer dialog = new FrmAddSofer(new JDialog(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
