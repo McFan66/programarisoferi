@@ -5,6 +5,8 @@
  */
 package gui;
 
+import controllers.MarcaController;
+import controllers.ModelController;
 import controllers.SoferController;
 import controllers.TirController;
 import java.awt.Image;
@@ -21,6 +23,8 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
 
     private SoferController soferController = new SoferController();
     private TirController tirController = new TirController();
+    private MarcaController marcaController = new MarcaController();
+    private ModelController modelController = new ModelController();
     
     public FrmMeniuPrincipal() throws IOException {
         ImageIcon i = new ImageIcon("src/resources/soferIcon.png");
@@ -49,6 +53,8 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         meniuAdministrare = new javax.swing.JMenu();
         btnAdministrareSoferi = new javax.swing.JMenuItem();
         btnAdministrareTiruri = new javax.swing.JMenuItem();
+        btnAdministrareMarci = new javax.swing.JMenuItem();
+        btnAdministrareModele = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -69,6 +75,22 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
             }
         });
         meniuAdministrare.add(btnAdministrareTiruri);
+
+        btnAdministrareMarci.setText("Administrare Marci");
+        btnAdministrareMarci.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdministrareMarciActionPerformed(evt);
+            }
+        });
+        meniuAdministrare.add(btnAdministrareMarci);
+
+        btnAdministrareModele.setText("Administrare Modele");
+        btnAdministrareModele.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdministrareModeleActionPerformed(evt);
+            }
+        });
+        meniuAdministrare.add(btnAdministrareModele);
 
         meniu.add(meniuAdministrare);
 
@@ -96,6 +118,15 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         tirController.actionIndex(this);
     }//GEN-LAST:event_btnAdministrareTiruriActionPerformed
 
+    private void btnAdministrareMarciActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministrareMarciActionPerformed
+        marcaController.actionIndex(this);
+    }//GEN-LAST:event_btnAdministrareMarciActionPerformed
+
+    private void btnAdministrareModeleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministrareModeleActionPerformed
+        modelController.actionIndex(this);
+    }//GEN-LAST:event_btnAdministrareModeleActionPerformed
+
+    
     /**
      * @param args the command line arguments
      */
@@ -136,6 +167,8 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem btnAdministrareMarci;
+    private javax.swing.JMenuItem btnAdministrareModele;
     private javax.swing.JMenuItem btnAdministrareSoferi;
     private javax.swing.JMenuItem btnAdministrareTiruri;
     private javax.swing.JMenuBar meniu;

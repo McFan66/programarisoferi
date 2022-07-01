@@ -16,6 +16,7 @@ public class Model  implements java.io.Serializable {
      private String nume;
      private int idMarca;
      private Marca marca;
+     private boolean activ;
      private Set tiruri = new HashSet(0);
 
     public Model() {
@@ -65,8 +66,33 @@ public class Model  implements java.io.Serializable {
         this.idMarca = idMarca;
     }
 
+    public void setActiv(boolean activ) {
+        this.activ = activ;
+    }
 
+    public boolean isActiv() {
+        return activ;
+    }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Model other = (Model) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
+    }
+
+    
 
 }
 

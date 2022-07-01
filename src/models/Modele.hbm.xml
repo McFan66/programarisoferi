@@ -14,6 +14,9 @@
         <property name="idMarca" type="int">
             <column name="MARCA" not-null="true" />
         </property>
+        <property name="activ" type="boolean">
+            <column name="ACTIV" not-null="true" />
+        </property>
         <many-to-one class="models.Marca" fetch="select" insert="false" name="marca" update="false">
             <column name="MARCA" not-null="true" />
         </many-to-one>

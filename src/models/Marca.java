@@ -56,13 +56,6 @@ public class Marca  implements java.io.Serializable {
         this.activa = activa;
     }
 
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        return hash;
-    }
-
     public Set getModele() {
         return modele;
     }

@@ -27,7 +27,7 @@ public class ModelHibernateRepository implements ModelRepository{
     @Override
     public boolean adaugaModel(Model model) {
         org.hibernate.Transaction tx = session.beginTransaction();
-
+        session.clear();
         if (model != null && model.getId() > 0) {
             session.saveOrUpdate(model);
             tx.commit();
@@ -40,11 +40,13 @@ public class ModelHibernateRepository implements ModelRepository{
         } else {
             tx.rollback();
         }
+        session.clear();
         return id > 0;
     }
 
     @Override
     public void stergeModel(Model model) {
+        session.clear();
         org.hibernate.Transaction tx = session.beginTransaction();
         session.delete(model);
         tx.commit();
