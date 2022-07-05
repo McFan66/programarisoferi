@@ -46,7 +46,15 @@ public class TableModelMarci extends AbstractTableModel{
     public int getColumnCount() {
         return columnNames.length;
     }
-    
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        if(listaMarci.isEmpty()) {
+            return Object.class;
+        }
+        return getValueAt(0, columnIndex).getClass();
+    }
+        
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Marca marca = listaMarci.get(rowIndex);

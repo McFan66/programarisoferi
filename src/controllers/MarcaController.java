@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import models.Marca;
+import renderers.MarciModeleColorCellRenderer;
 import services.MarcaService;
 import services.MarcaServiceImpl;
 import tablemodels.TableModelMarci;
@@ -48,10 +49,13 @@ public class MarcaController {
     
     public void updateAndSetModelToTable() {
         JTable tblMarci = frmAdministrareMarci.getTblMarci();
+        tblMarci.setAutoCreateRowSorter(true);
         listaMarci = marcaService.getAll();
         tableModelMarci.setListaMarci(listaMarci);
         tableModelMarci.fireTableDataChanged();
         tblMarci.setModel(tableModelMarci);
+        tblMarci.getColumnModel().getColumn(2).setCellRenderer(new MarciModeleColorCellRenderer());
+
     }
     
     public void actionEdit(JFrame parent) {

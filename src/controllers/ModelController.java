@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import models.Marca;
 import models.Model;
 import renderers.ItemMarcaRenderer;
+import renderers.MarciModeleColorCellRenderer;
 import services.MarcaService;
 import services.MarcaServiceImpl;
 import services.ModelService;
@@ -68,6 +69,8 @@ public class ModelController {
         tableModelModele.setListaModele(listaModele);
         tableModelModele.fireTableDataChanged();
         tblModele.setModel(tableModelModele);
+        tblModele.setAutoCreateRowSorter(true);
+        tblModele.getColumnModel().getColumn(3).setCellRenderer(new MarciModeleColorCellRenderer());
     }   
     
     public void actionIndex(JFrame parent) {
