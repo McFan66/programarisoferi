@@ -62,6 +62,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         btnAdministrareTiruri = new javax.swing.JMenuItem();
         btnAdministrareMarci = new javax.swing.JMenuItem();
         btnAdministrareModele = new javax.swing.JMenuItem();
+        btnAdministrareSoferiTiruri = new javax.swing.JMenuItem();
         meniuCreare = new javax.swing.JMenu();
         btnInregistrareNoua = new javax.swing.JMenuItem();
 
@@ -182,6 +183,9 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         });
         meniuAdministrare.add(btnAdministrareModele);
 
+        btnAdministrareSoferiTiruri.setText("Administrare Soferi-Tiruri");
+        meniuAdministrare.add(btnAdministrareSoferiTiruri);
+
         meniu.add(meniuAdministrare);
 
         meniuCreare.setText("New");
@@ -278,6 +282,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem btnAdministrareMarci;
     private javax.swing.JMenuItem btnAdministrareModele;
     private javax.swing.JMenuItem btnAdministrareSoferi;
+    private javax.swing.JMenuItem btnAdministrareSoferiTiruri;
     private javax.swing.JMenuItem btnAdministrareTiruri;
     private javax.swing.JMenuItem btnInregistrareNoua;
     private javax.swing.JLabel jLabel1;

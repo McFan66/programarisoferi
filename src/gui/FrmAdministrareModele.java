@@ -50,7 +50,7 @@ public class FrmAdministrareModele extends javax.swing.JFrame {
         btnEditeaza = new javax.swing.JButton();
         btnToggleActiva = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         tblModele.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
