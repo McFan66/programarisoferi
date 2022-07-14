@@ -21,4 +21,5 @@ public interface TiruriRepository {
     public ArrayList<Tir> getTirByMarca(Marca marca);
     public ArrayList<Tir> getTirByStare(Stare stare);
     public ArrayList<Tir> getTirByNumarInmatriculare(String nrInmatriculare);
+    public ArrayList<Tir> getTirByValid(boolean valid);
 }

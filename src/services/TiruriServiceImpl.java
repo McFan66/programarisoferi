@@ -49,5 +49,10 @@ public class TiruriServiceImpl implements TiruriService {
     public ArrayList<Tir> getTirByNumarInmatriculare(String nrInmatriculare) {
         return tiruriRepository.getTirByNumarInmatriculare(nrInmatriculare);
     }
+
+    @Override
+    public ArrayList<Tir> getTirByValid(boolean valid) {
+        return tiruriRepository.getTirByValid(valid);
+    }
     
 }

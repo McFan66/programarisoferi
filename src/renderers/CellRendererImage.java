@@ -30,9 +30,9 @@ public class CellRendererImage implements TableCellRenderer {
             TableColumn tb = table.getColumnModel().getColumn(column);
             JLabel imageLabel = new JLabel();
             System.out.println("sall");
-            ImageIcon imageicon = new ImageIcon(value.toString());
-            Image img = imageicon.getImage().getScaledInstance(100, 70, Image.SCALE_SMOOTH);
-            imageLabel.setIcon(new ImageIcon(img));
+//            ImageIcon imageicon = new ImageIcon(value.toString());
+//            Image img = imageicon.getImage().getScaledInstance(100, 70, Image.SCALE_SMOOTH);
+//            imageLabel.setIcon(new ImageIcon(img));
             return imageLabel;
         }
         return (Component) value;

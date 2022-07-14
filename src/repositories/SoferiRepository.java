@@ -16,4 +16,5 @@ public interface SoferiRepository {
     public boolean adaugaSofer(Sofer sofer);
     public void stergeSofer(Sofer sofer);
     public ArrayList<Sofer> getAll();
+    public ArrayList<Sofer> getSoferByValid(boolean valid);
 }

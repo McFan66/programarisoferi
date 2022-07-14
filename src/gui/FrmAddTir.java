@@ -81,22 +81,22 @@ public class FrmAddTir extends javax.swing.JDialog {
 //        dropDownModel.setModel(modelModele);
 
         //Editare
-        if (tirSelectat.length > 0) {
-            this.tirSelectat = tirSelectat[0];
-            txtNrInmatriculare.setText(this.tirSelectat.getNrInmatriculare());
-            cmbMarca.setSelectedItem(this.tirSelectat.getModel().getMarca());
-            cmbModel.setSelectedItem(this.tirSelectat.getModel());
-//            for(File f : this.tirSelectat.getPoze()) {
-//                listaFisiere.add(f);
+//        if (tirSelectat.length > 0) {
+//            this.tirSelectat = tirSelectat[0];
+//            txtNrInmatriculare.setText(this.tirSelectat.getNrInmatriculare());
+//            cmbMarca.setSelectedItem(this.tirSelectat.getModel().getMarca());
+//            cmbModel.setSelectedItem(this.tirSelectat.getModel());
+////            for(File f : this.tirSelectat.getPoze()) {
+////                listaFisiere.add(f);
+////            }
+//            for (File f : listaFisiere) {
+//                listaPoze.add(new ImageIcon(new ImageIcon(f.getAbsolutePath()).getImage().getScaledInstance(lblPoze.getWidth(), lblPoze.getHeight(), Image.SCALE_SMOOTH)));
 //            }
-            for (File f : listaFisiere) {
-                listaPoze.add(new ImageIcon(new ImageIcon(f.getAbsolutePath()).getImage().getScaledInstance(lblPoze.getWidth(), lblPoze.getHeight(), Image.SCALE_SMOOTH)));
-            }
-            this.curImageIndex = 0;
-            lblPoze.setIcon(listaPoze.get(0));
-            lblPoze.setText("");
-            modificaCntPoze();
-        }
+//            this.curImageIndex = 0;
+//            lblPoze.setIcon(listaPoze.get(0));
+//            lblPoze.setText("");
+//            modificaCntPoze();
+//        }
     }
 
     public JComboBox<String> getCmbMarca() {

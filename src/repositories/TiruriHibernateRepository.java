@@ -117,4 +117,14 @@ public class TiruriHibernateRepository implements TiruriRepository {
         tiruriRepository.adaugaTir(t);
     }
 
+    @Override
+    public ArrayList<Tir> getTirByValid(boolean valid) {
+        ArrayList<Tir> listaTiruri = new ArrayList<>();
+        org.hibernate.Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from Tir where valid= :valid").setParameter("valid", valid);
+        listaTiruri = (ArrayList<Tir>) q.list();
+        tx.commit();
+        return listaTiruri;
+    }
+
 }

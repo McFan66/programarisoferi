@@ -16,4 +16,5 @@ public interface PozaService {
     public boolean adaugaPoza(Poza poza);
     public void stergePoza(Poza poza);
     public ArrayList<Poza> getAll();
+    public ArrayList<Poza> getPozaByTipAndObiect(int tip, int id);
 }

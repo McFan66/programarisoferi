@@ -130,7 +130,7 @@ public class SoferiTiruriController {
         dropDownTiruri.setRenderer(tirRenderer);
         
         if(soferiTiruriSelectat == null) {
-            this.selectatiSoferul = new Sofer(-1, "--Selectati Soferul--", "", "", "");
+            this.selectatiSoferul = new Sofer(-1, "--Selectati Soferul--", "", "");
             this.selectatiTirul = new Tir(new Model(-1, "", new Marca(-1, "", 0)), "--Selectati Tirul--", -1, null);
             
             cmbModelSoferi.addElement(selectatiSoferul);

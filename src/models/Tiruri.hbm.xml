@@ -16,6 +16,9 @@
     <property name="idStare" type="int">
       <column name="STARE" not-null="true"/>
     </property>
+    <property name="valid" type="boolean">
+        <column name="VALID" not-null="true" />
+    </property>
     <many-to-one class="models.Model" fetch="select" insert="false" name="model" update="false">
         <column name="MODEL" not-null="true" />
     </many-to-one>
