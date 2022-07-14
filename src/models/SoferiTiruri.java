@@ -3,6 +3,7 @@ package models;
 
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -79,9 +80,25 @@ public class SoferiTiruri  implements java.io.Serializable {
         this.inregistrari = inregistrari;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final SoferiTiruri other = (SoferiTiruri) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
+    }
 
-
-
+    
 }
 
 

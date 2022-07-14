@@ -48,6 +48,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Administrare Soferi-Tiruri"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAdministrareSoferiTiruriActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

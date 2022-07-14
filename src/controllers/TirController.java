@@ -39,6 +39,7 @@ import models.Model;
 import models.Poza;
 import models.Sofer;
 import models.SoferiTiruri;
+import models.Stare;
 import models.Tir;
 import org.hibernate.Session;
 import org.hibernate.metamodel.source.annotations.JPADotNames;
@@ -279,7 +280,10 @@ public class TirController {
                 listaFisiereNoua.add(pozaCreeata);
             }
             Tir tir = new Tir();
-            tir.setIdStare(2);
+            Stare s = new Stare();
+            s.setId(3);
+            tir.setStare(s);
+            tir.setIdStare(3);
             Model m = (Model) cmbModel.getSelectedItem();
             tir.setIdModel(m.getId());
             tir.setNrInmatriculare(txtNrInmatriculare.getText());

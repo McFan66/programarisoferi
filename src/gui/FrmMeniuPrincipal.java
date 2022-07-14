@@ -8,6 +8,7 @@ package gui;
 import controllers.MarcaController;
 import controllers.ModelController;
 import controllers.SoferController;
+import controllers.SoferiTiruriController;
 import controllers.TirController;
 import java.awt.Image;
 import java.io.IOException;
@@ -25,6 +26,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     private TirController tirController = new TirController();
     private MarcaController marcaController = new MarcaController();
     private ModelController modelController = new ModelController();
+    private SoferiTiruriController soferiTiruriController = new SoferiTiruriController();
     
     public FrmMeniuPrincipal() throws IOException {
         ImageIcon i = new ImageIcon("src/resources/soferIcon.png");
@@ -184,6 +186,11 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         meniuAdministrare.add(btnAdministrareModele);
 
         btnAdministrareSoferiTiruri.setText("Administrare Soferi-Tiruri");
+        btnAdministrareSoferiTiruri.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdministrareSoferiTiruriActionPerformed(evt);
+            }
+        });
         meniuAdministrare.add(btnAdministrareSoferiTiruri);
 
         meniu.add(meniuAdministrare);
@@ -237,6 +244,11 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     private void btnInregistrareNouaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInregistrareNouaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnInregistrareNouaActionPerformed
+
+    private void btnAdministrareSoferiTiruriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministrareSoferiTiruriActionPerformed
+        // TODO add your handling code here:
+        soferiTiruriController.actionIndex(this);
+    }//GEN-LAST:event_btnAdministrareSoferiTiruriActionPerformed
 
     
     /**

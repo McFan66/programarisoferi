@@ -29,6 +29,7 @@ public class SoferiTiruriHibernateRepository implements SoferiTiruriRepository {
 
     @Override
     public boolean adaugaSoferTir(SoferiTiruri soferTir) {
+        session.clear();
         org.hibernate.Transaction tx = session.beginTransaction();
 
         if (soferTir != null && soferTir.getId() > 0) {
@@ -43,6 +44,7 @@ public class SoferiTiruriHibernateRepository implements SoferiTiruriRepository {
         } else {
             tx.rollback();
         }
+        session.clear();
         return id > 0;
     }
 
@@ -51,6 +53,7 @@ public class SoferiTiruriHibernateRepository implements SoferiTiruriRepository {
         org.hibernate.Transaction tx = session.beginTransaction();
         session.delete(soferTir);
         tx.commit();
+        session.clear();
     }
 
     @Override
