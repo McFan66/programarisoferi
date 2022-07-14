@@ -10,6 +10,7 @@ import static gui.FrmAddTir.copyFile;
 import gui.FrmAdministrareTiruri;
 import gui.FrmAfisareDetaliiTir;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ItemEvent;
@@ -70,6 +71,7 @@ public class TirController {
     private ArrayList<File> listaFisiere = new ArrayList<>();
     private ArrayList<ImageIcon> listaPoze = new ArrayList<>();
     private int curImageIndex;
+    private int indexPozaCurenta;
     private ArrayList<File> listaPozeDeAfisat = new ArrayList<>();
     private TiruriService tiruriService = new TiruriServiceImpl();
     private MarcaService marcaService = new MarcaServiceImpl();
@@ -83,6 +85,7 @@ public class TirController {
     private JComboBox cmbModel;
     private ArrayList<Tir> listaTiruri;
     private File pozaCreeata;
+    private ArrayList<Poza> pozeTir;
 
     private JTable tblTiruri;
     private Object[][] data;
@@ -110,8 +113,121 @@ public class TirController {
         frmAddTir.setVisible(true);
     }
 
+    public void actionEdit(JDialog parent) {
+        int index = tblTiruri.convertRowIndexToModel(tblTiruri.getSelectedRow());
+        if (index == -1) {
+            JOptionPane.showMessageDialog(frmAdministrareTiruri, "Va rugam sa selectati un tir.");
+            return;
+        }
+        listaTiruri = tiruriService.getAll();
+        Tir t = listaTiruri.get(index);
+        this.tirSelectat = t;
+        frmAddTir = new FrmAddTir(parent, true, tirSelectat);
+        frmAddTir.setTirController(this);
+        cmbMarca = frmAddTir.getCmbMarca();
+        cmbMarca.setRenderer(new ItemMarcaRenderer());
+        cmbModel = frmAddTir.getCmbModel();
+        cmbModel.setRenderer(new ItemModelRenderer());
+        ArrayList<Marca> listaMarci = marcaService.getAll();
+        modelCmbMarci.removeAllElements();
+        Marca marcaTest = new Marca();
+        marcaTest.setNume("--Selectati marca--");
+        modelCmbMarci.addElement(marcaTest);
+        for (Marca m : listaMarci) {
+            modelCmbMarci.addElement(m);
+        }
+
+        cmbMarca.setModel(modelCmbMarci);
+        cmbModel.setModel(modelCmbModele);
+        frmAddTir.getCmbMarca().setSelectedItem(tirSelectat.getModel().getMarca());
+        frmAddTir.getCmbModel().setSelectedItem(tirSelectat.getModel());
+        frmAddTir.getTxtNrInmatriculare().setText(tirSelectat.getNrInmatriculare());
+        frmAddTir.setLocationRelativeTo(parent);
+        frmAddTir.setVisible(true);
+    }
+
+    public void actionDelete() {
+        int index = tblTiruri.convertRowIndexToModel(tblTiruri.getSelectedRow());
+        if (index == -1) {
+            JOptionPane.showMessageDialog(frmAdministrareTiruri, "Va rugam sa selectati un tir.");
+            return;
+        }
+        listaTiruri = tiruriService.getAll();
+        Tir t = listaTiruri.get(index);
+        int raspuns = JOptionPane.showConfirmDialog(frmAdministrareTiruri, "Sunteti sigur ca vreti sa stergeti tirul selectat?", "Stergere tir", JOptionPane.YES_NO_OPTION);
+//        if (raspuns == JOptionPane.YES_OPTION) {
+//            ArrayList<Poza> pozeDeSters = pozaService.getPozaByTipAndObiect(1, t.getId());
+//            if (pozeDeSters.isEmpty()) {
+//                tiruriService.stergeTir(t);
+//                updateAndSetModelToTable();
+//                return;
+//            }
+//            tiruriService.stergeTir(t);
+//            for (Poza pozaDeSters : pozeDeSters) {
+//                pozaService.stergePoza(pozaDeSters);
+//            }
+//        }
+        if (raspuns == JOptionPane.YES_OPTION) {
+            if (t.isValid()) {
+                t.setValid(false);
+                tiruriService.adaugaTir(t);
+                updateAndSetModelToTable();
+            } else if (!t.isValid()) {
+                t.setValid(true);
+                tiruriService.adaugaTir(t);
+                updateAndSetModelToTable();
+            }
+        }
+    }
+
+    public void saveTir() {
+        if (isFormValid()) {
+            File tiruri = makeFolderPoze();
+            File pozeTir = new File(tiruri, frmAddTir.getTxtNrInmatriculare().getText());
+            if (!pozeTir.exists()) {
+                pozeTir.mkdir();
+            }
+            if (tirSelectat == null) {
+                tirSelectat = new Tir();
+                Model m = (Model) cmbModel.getSelectedItem();
+                tirSelectat.setIdModel(m.getId());
+                tirSelectat.setNrInmatriculare(frmAddTir.getTxtNrInmatriculare().getText());
+                tirSelectat.setIdStare(2);
+                tirSelectat.setValid(true);
+                tiruriService.adaugaTir(tirSelectat);
+            } else {
+                Model m = (Model) cmbModel.getSelectedItem();
+                tirSelectat.setIdModel(m.getId());
+                tirSelectat.setNrInmatriculare(frmAddTir.getTxtNrInmatriculare().getText());
+                tirSelectat.setIdStare(tirSelectat.getIdStare());
+                tiruriService.adaugaTir(tirSelectat);
+                ArrayList<Poza> pozeDeSters = pozaService.getPozaByTipAndObiect(1, tirSelectat.getId());
+                for (Poza pozaDeSters : pozeDeSters) {
+                    pozaService.stergePoza(pozaDeSters);
+                }
+            }
+
+            ArrayList<File> listaFisiereNoua = new ArrayList<>();
+            for (File pozaDeSalvat : listaFisiere) {
+                makeFile(pozaDeSalvat, pozeTir);
+                listaFisiereNoua.add(pozaCreeata);
+            }
+            for (File pozaDeSalvat : listaFisiereNoua) {
+                Poza p = new Poza();
+                p.setTipObiect(1);
+                p.setIdObiect(tirSelectat.getId());
+                p.setImagePath(pozaDeSalvat.getName());
+                pozaService.adaugaPoza(p);
+            }
+            JOptionPane.showMessageDialog(frmAddTir, "Tirul a fost salvat cu succes.");
+            frmAddTir.dispose();
+            updateAndSetModelToTable();
+        }
+    }
+
     public void actionIndex(java.awt.Frame parent) {
         frmAdministrareTiruri = new FrmAdministrareTiruri(parent, true);
+        frmAdministrareTiruri.getRdbToate().setSelected(true);
         updateAndSetModelToTable();
         tblTiruri.addMouseListener(new MouseAdapter() {
             @Override
@@ -126,9 +242,29 @@ public class TirController {
         frmAdministrareTiruri.setVisible(true);
     }
 
-    private void updateAndSetModelToTable() {
-        tblTiruri = frmAdministrareTiruri.getTblTiruri();
+    public void itemSelected() {
+        int index = tblTiruri.convertRowIndexToModel(tblTiruri.getSelectedRow());
         listaTiruri = tiruriService.getAll();
+        Tir t = listaTiruri.get(index);
+        if (t.isValid()) {
+            frmAdministrareTiruri.getBtnSterge().setText("Dezactiveaza");
+        } else if (!t.isValid()) {
+            frmAdministrareTiruri.getBtnSterge().setText("Activeaza");
+        }
+    }
+
+    public void updateAndSetModelToTable() {
+        tblTiruri = frmAdministrareTiruri.getTblTiruri();
+        if (frmAdministrareTiruri.getRdbToate().isSelected()) {
+            listaTiruri = tiruriService.getAll();
+            frmAdministrareTiruri.getBtnSterge().setText("Dezactiveaza");
+        } else if (frmAdministrareTiruri.getRdbActive().isSelected()) {
+            listaTiruri = tiruriService.getTirByValid(true);
+            frmAdministrareTiruri.getBtnSterge().setText("Dezactiveaza");
+        } else if (frmAdministrareTiruri.getRdbInactive().isSelected()) {
+            listaTiruri = tiruriService.getTirByValid(false);
+            frmAdministrareTiruri.getBtnSterge().setText("Activeaza");
+        }
         data = new Object[listaTiruri.size()][5];
         int x = 0;
         for (Tir t : listaTiruri) {
@@ -222,17 +358,75 @@ public class TirController {
         frmAfisareDetaliiTir.getLblNrInmatriculare().setText(String.format("%s %s %s", allMatches.get(0), allMatches.get(1), allMatches.get(2)));
         ArrayList<SoferiTiruri> listaSoferiTiruri = soferiTiruriService.getSoferiTiruriByTir(tirSelectat);
         ArrayList<Sofer> listaSoferi = new ArrayList<>();
-        for (SoferiTiruri st:listaSoferiTiruri){
+        for (SoferiTiruri st : listaSoferiTiruri) {
             listaSoferi.add(st.getSofer());
         }
         DefaultListModel defaultListModel = new DefaultListModel();
-        for (Sofer s:listaSoferi){
+        for (Sofer s : listaSoferi) {
             defaultListModel.addElement(s.getNumeComplet());
         }
         frmAfisareDetaliiTir.getLstSoferi().setModel(defaultListModel);
+        indexPozaCurenta = 0;
+        pozeTir = pozaService.getPozaByTipAndObiect(1, tirSelectat.getId());
+        if (pozeTir.size() == 0) {
+            frmAfisareDetaliiTir.getLblCnt().setText("0 / " + pozeTir.size());
+        } else {
+            frmAfisareDetaliiTir.getLblCnt().setText("1 / " + pozeTir.size());
+        }
+
+        JLabel lblPoze = frmAfisareDetaliiTir.getLblPoze();
+        lblPoze.setMinimumSize(new Dimension(lblPoze.getWidth(), lblPoze.getHeight()));
+        lblPoze.setPreferredSize(new Dimension(lblPoze.getWidth(), lblPoze.getHeight()));
+        lblPoze.setMaximumSize(new Dimension(lblPoze.getWidth(), lblPoze.getHeight()));
+        File currentDirectory = new File(".");
+        File file = new File(currentDirectory + "/poze/tiruri/" + tirSelectat.getNrInmatriculare() + "/" + pozeTir.get(0).getImagePath());
+        lblPoze.setIcon(new ImageIcon(new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(lblPoze.getWidth(), lblPoze.getHeight(), Image.SCALE_SMOOTH)));
+
         frmAfisareDetaliiTir.setTirController(this);
         frmAfisareDetaliiTir.setLocationRelativeTo(frmAdministrareTiruri);
         frmAfisareDetaliiTir.setVisible(true);
+    }
+
+    public void nextImageDetalii() {
+        JLabel lblPoze = frmAfisareDetaliiTir.getLblPoze();
+        if (indexPozaCurenta >= 0 && indexPozaCurenta < pozeTir.size() - 1) {
+            indexPozaCurenta++;
+            File currentDirectory = new File(".");
+            File file = new File(currentDirectory + "/poze/tiruri/" + tirSelectat.getNrInmatriculare() + "/" + pozeTir.get(indexPozaCurenta).getImagePath());
+            lblPoze.setIcon(new ImageIcon(new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(lblPoze.getWidth(), lblPoze.getHeight(), Image.SCALE_SMOOTH)));
+            frmAfisareDetaliiTir.getLblCnt().setText(indexPozaCurenta + 1 + " / " + pozeTir.size());
+        }
+    }
+
+    public void previousImageDetalii() {
+        JLabel lblPoze = frmAfisareDetaliiTir.getLblPoze();
+        if (indexPozaCurenta > 0 && indexPozaCurenta < pozeTir.size()) {
+            indexPozaCurenta--;
+            File currentDirectory = new File(".");
+            File file = new File(currentDirectory + "/poze/tiruri/" + tirSelectat.getNrInmatriculare() + "/" + pozeTir.get(indexPozaCurenta).getImagePath());
+            lblPoze.setIcon(new ImageIcon(new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(lblPoze.getWidth(), lblPoze.getHeight(), Image.SCALE_SMOOTH)));
+            frmAfisareDetaliiTir.getLblCnt().setText(indexPozaCurenta + 1 + " / " + pozeTir.size());
+        }
+    }
+
+    public void anterioaraImagine() {
+        JLabel lblPoze = frmAddTir.getLblPoze();
+
+        if (curImageIndex > 0 && curImageIndex < listaPoze.size()) {
+            curImageIndex--;
+            lblPoze.setIcon(listaPoze.get(curImageIndex));
+            modificaCntPoze();
+        }
+    }
+
+    public void urmatoareaImagine() {
+        JLabel lblPoze = frmAddTir.getLblPoze();
+
+        if (curImageIndex >= 0 && curImageIndex < listaPoze.size() - 1) {
+            curImageIndex++;
+            lblPoze.setIcon(listaPoze.get(curImageIndex));
+            modificaCntPoze();
+        }
     }
 
     public void modService() {
@@ -260,60 +454,6 @@ public class TirController {
                 Color darkGreen = new Color(0, 153, 0);
                 frmAfisareDetaliiTir.getLblStatus().setForeground(darkGreen);
             }
-        }
-    }
-
-    public void saveTir() {
-        if (isFormValid()) {
-            JTextField txtNrInmatriculare = frmAddTir.getTxtNrInmatriculare();
-
-            File tiruri = makeFolderPoze();
-
-            File pozeTir = new File(tiruri, txtNrInmatriculare.getText());
-            if (!pozeTir.exists()) {
-                pozeTir.mkdir();
-            }
-            ArrayList<File> listaFisiereNoua = new ArrayList<>();
-            for (File pozaDeSalvat : listaFisiere) {
-                makeFile(pozaDeSalvat, pozeTir);
-                listaFisiereNoua.add(pozaCreeata);
-            }
-            Tir tir = new Tir();
-            tir.setIdStare(2);
-            Model m = (Model) cmbModel.getSelectedItem();
-            tir.setIdModel(m.getId());
-            tir.setNrInmatriculare(txtNrInmatriculare.getText());
-            tiruriService.adaugaTir(tir);
-            for (File pozaDeSalvat : listaFisiereNoua) {
-                Poza p = new Poza();
-                p.setTipObiect(1);
-                p.setIdObiect(tir.getId());
-                p.setImagePath(pozaDeSalvat.getName());
-                pozaService.adaugaPoza(p);
-            }
-            JOptionPane.showMessageDialog(frmAddTir, "Tirul a fost salvat cu succes.");
-            frmAddTir.dispose();
-            updateAndSetModelToTable();
-        }
-    }
-
-    public void anterioaraImagine() {
-        JLabel lblPoze = frmAddTir.getLblPoze();
-
-        if (curImageIndex > 0 && curImageIndex < listaPoze.size()) {
-            curImageIndex--;
-            lblPoze.setIcon(listaPoze.get(curImageIndex));
-            modificaCntPoze();
-        }
-    }
-
-    public void urmatoareaImagine() {
-        JLabel lblPoze = frmAddTir.getLblPoze();
-
-        if (curImageIndex >= 0 && curImageIndex < listaPoze.size() - 1) {
-            curImageIndex++;
-            lblPoze.setIcon(listaPoze.get(curImageIndex));
-            modificaCntPoze();
         }
     }
 
@@ -385,7 +525,7 @@ public class TirController {
 
     private void modificaCntPoze() {
         JLabel lblCnt = frmAddTir.getLblCnt();
-        System.out.println("aici:"+curImageIndex + " "+listaPoze.size());
+        System.out.println("aici:" + curImageIndex + " " + listaPoze.size());
         lblCnt.setText(String.format("%s/%s", curImageIndex + 1, listaPoze.size()));
     }
 

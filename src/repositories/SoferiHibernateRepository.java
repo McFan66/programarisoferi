@@ -63,5 +63,15 @@ public class SoferiHibernateRepository implements SoferiRepository {
         SoferiRepository soferiRepository = new SoferiHibernateRepository();
         System.out.println(soferiRepository.getAll());
     }
+
+    @Override
+    public ArrayList<Sofer> getSoferByValid(boolean valid) {
+        ArrayList<Sofer> listaSoferi = new ArrayList<>();
+        org.hibernate.Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from Sofer where valid = :valid").setParameter("valid", valid);
+        listaSoferi = (ArrayList<Sofer>) q.list();
+        tx.commit();
+        return listaSoferi;
+    }
     
 }

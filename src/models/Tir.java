@@ -19,6 +19,7 @@ public class Tir  implements java.io.Serializable {
      private int idStare;
      private Stare stare;
      private Model model;
+     private boolean valid;
   //   private ArrayList<File> poze;
   //   private File folderPoze;
      private Set soferiTiruri = new HashSet(0);
@@ -107,6 +108,14 @@ public class Tir  implements java.io.Serializable {
 //    public void setFolderPoze(File folderPoze) {
 //        this.folderPoze = folderPoze;
 //    }
+
+    public boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
+    }
 
 
 

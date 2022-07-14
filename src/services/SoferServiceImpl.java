@@ -32,5 +32,10 @@ public class SoferServiceImpl implements SoferService{
     public ArrayList<Sofer> getAll() {
         return soferiRepository.getAll();
     }
+
+    @Override
+    public ArrayList<Sofer> getSoferByValid(boolean valid) {
+        return soferiRepository.getSoferByValid(valid);
+    }
     
 }

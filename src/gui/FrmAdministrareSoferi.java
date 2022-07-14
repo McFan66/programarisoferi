@@ -6,6 +6,8 @@
 package gui;
 
 import controllers.SoferController;
+import javax.swing.JButton;
+import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import tablemodels.TableModelSoferi;
 
@@ -37,6 +39,22 @@ public class FrmAdministrareSoferi extends javax.swing.JDialog {
         return tableModelSoferi1;
     }
 
+    public JRadioButton getRdbActiv() {
+        return rdbActiv;
+    }
+
+    public JRadioButton getRdbInactiv() {
+        return rdbInactiv;
+    }
+
+    public JRadioButton getRdbToate() {
+        return rdbToate;
+    }
+
+    public JButton getBtnSterge() {
+        return btnSterge;
+    }
+
     
     
     /**
@@ -49,11 +67,15 @@ public class FrmAdministrareSoferi extends javax.swing.JDialog {
     private void initComponents() {
 
         tableModelSoferi1 = new tablemodels.TableModelSoferi();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSoferi = new javax.swing.JTable();
         btnAdauga = new javax.swing.JButton();
         btnEditeaza = new javax.swing.JButton();
         btnSterge = new javax.swing.JButton();
+        rdbToate = new javax.swing.JRadioButton();
+        rdbActiv = new javax.swing.JRadioButton();
+        rdbInactiv = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -65,6 +87,11 @@ public class FrmAdministrareSoferi extends javax.swing.JDialog {
                 "Nume si prenume", "Poza"
             }
         ));
+        tblSoferi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblSoferiMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblSoferi);
         if (tblSoferi.getColumnModel().getColumnCount() > 0) {
             tblSoferi.getColumnModel().getColumn(1).setResizable(false);
@@ -92,6 +119,30 @@ public class FrmAdministrareSoferi extends javax.swing.JDialog {
             }
         });
 
+        buttonGroup1.add(rdbToate);
+        rdbToate.setText("Toate");
+        rdbToate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbToateActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(rdbActiv);
+        rdbActiv.setText("Activ");
+        rdbActiv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbActivActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(rdbInactiv);
+        rdbInactiv.setText("Inactiv");
+        rdbInactiv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbInactivActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -99,6 +150,13 @@ public class FrmAdministrareSoferi extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(rdbToate)
+                        .addGap(18, 18, 18)
+                        .addComponent(rdbActiv)
+                        .addGap(18, 18, 18)
+                        .addComponent(rdbInactiv)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnAdauga, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -116,8 +174,13 @@ public class FrmAdministrareSoferi extends javax.swing.JDialog {
                     .addComponent(btnAdauga)
                     .addComponent(btnEditeaza)
                     .addComponent(btnSterge))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rdbToate)
+                    .addComponent(rdbActiv)
+                    .addComponent(rdbInactiv))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -135,6 +198,22 @@ public class FrmAdministrareSoferi extends javax.swing.JDialog {
     private void btnStergeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStergeActionPerformed
         soferController.actionDelete(this);
     }//GEN-LAST:event_btnStergeActionPerformed
+
+    private void rdbToateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbToateActionPerformed
+        soferController.updateAndSetModelToTable();
+    }//GEN-LAST:event_rdbToateActionPerformed
+
+    private void rdbActivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbActivActionPerformed
+        soferController.updateAndSetModelToTable();
+    }//GEN-LAST:event_rdbActivActionPerformed
+
+    private void rdbInactivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbInactivActionPerformed
+        soferController.updateAndSetModelToTable();
+    }//GEN-LAST:event_rdbInactivActionPerformed
+
+    private void tblSoferiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSoferiMouseClicked
+        soferController.itemSelected();
+    }//GEN-LAST:event_tblSoferiMouseClicked
 
     /**
      * @param args the command line arguments
@@ -182,7 +261,11 @@ public class FrmAdministrareSoferi extends javax.swing.JDialog {
     private javax.swing.JButton btnAdauga;
     private javax.swing.JButton btnEditeaza;
     private javax.swing.JButton btnSterge;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JRadioButton rdbActiv;
+    private javax.swing.JRadioButton rdbInactiv;
+    private javax.swing.JRadioButton rdbToate;
     private tablemodels.TableModelSoferi tableModelSoferi1;
     private javax.swing.JTable tblSoferi;
     // End of variables declaration//GEN-END:variables

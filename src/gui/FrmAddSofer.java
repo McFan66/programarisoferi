@@ -29,15 +29,15 @@ public class FrmAddSofer extends javax.swing.JDialog {
     public FrmAddSofer(JDialog parent, boolean modal, Sofer... soferSelectat) {
         super(parent, modal);
         initComponents();
-        if (soferSelectat.length > 0) {
-            this.soferSelectat = soferSelectat[0];
-            txtNume.setText(this.soferSelectat.getNume());
-            txtPrenume.setText(this.soferSelectat.getPrenume());
-            txtCNP.setText(this.soferSelectat.getCnp());
-            this.pozaSelectata = this.soferSelectat.getPoza();
-            lblPoza.setIcon(new ImageIcon(new ImageIcon(this.soferSelectat.getPoza().getAbsolutePath()).getImage().getScaledInstance(lblPoza.getWidth(), lblPoza.getHeight(), Image.SCALE_SMOOTH)));
-
-        }
+//        if (soferSelectat.length > 0) {
+//            this.soferSelectat = soferSelectat[0];
+//            txtNume.setText(this.soferSelectat.getNume());
+//            txtPrenume.setText(this.soferSelectat.getPrenume());
+//            txtCNP.setText(this.soferSelectat.getCnp());
+//            this.pozaSelectata = this.soferSelectat.getPoza();
+//            lblPoza.setIcon(new ImageIcon(new ImageIcon(this.soferSelectat.getPoza().getAbsolutePath()).getImage().getScaledInstance(lblPoza.getWidth(), lblPoza.getHeight(), Image.SCALE_SMOOTH)));
+//
+//        }
     }
 
     public CustomTextField getTxtNume() {

@@ -16,8 +16,8 @@
     <property name="cnp" type="string">
       <column length="13" name="CNP" not-null="true" unique="true"/>
     </property>
-    <property name="imagepath" type="string">
-      <column length="100" name="IMAGEPATH" not-null="true"/>
+    <property name="valid" type="boolean">
+        <column name="VALID" not-null="true" />
     </property>
     <set fetch="select" inverse="true" lazy="false" name="soferiTiruri" table="SOFERI_TIRURI">
       <key>

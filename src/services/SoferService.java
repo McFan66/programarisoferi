@@ -16,4 +16,5 @@ public interface SoferService {
     public boolean salveazaSofer(Sofer sofer);
     public void stergeSofer(Sofer sofer);
     public ArrayList<Sofer> getAll();
+    public ArrayList<Sofer> getSoferByValid(boolean valid);
 }

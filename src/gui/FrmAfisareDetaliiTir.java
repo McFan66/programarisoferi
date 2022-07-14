@@ -54,6 +54,14 @@ public class FrmAfisareDetaliiTir extends javax.swing.JDialog {
     public JList<String> getLstSoferi() {
         return lstSoferi;
     }
+
+    public JLabel getLblCnt() {
+        return lblCnt;
+    }
+
+    public JLabel getLblPoze() {
+        return lblPoze;
+    }
     
     
 
@@ -232,25 +240,11 @@ public class FrmAfisareDetaliiTir extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousActionPerformed
-        // TODO add your handling code here:
-        //   tirController.anterioaraImagine();
-        //        if (curImageIndex > 0 && curImageIndex < listaPoze.size()) {
-        //            curImageIndex--;
-        //            lblPoze.setIcon(listaPoze.get(curImageIndex));
-        //            modificaCntPoze();
-        //        }
-        //        System.out.println(curImageIndex);
+        tirController.previousImageDetalii();
     }//GEN-LAST:event_btnPreviousActionPerformed
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
-        // TODO add your handling code here:
-        //   tirController.urmatoareaImagine();
-        //        if (curImageIndex >= 0 && curImageIndex < listaPoze.size() - 1) {
-        //            curImageIndex++;
-        //            lblPoze.setIcon(listaPoze.get(curImageIndex));
-        //            modificaCntPoze();
-        //        }
-        //        System.out.println(curImageIndex);
+        tirController.nextImageDetalii();
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void btnModServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModServiceActionPerformed

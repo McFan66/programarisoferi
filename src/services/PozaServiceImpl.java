@@ -32,6 +32,11 @@ public class PozaServiceImpl implements PozaService{
     public ArrayList<Poza> getAll() {
         return pozaRepository.getAll();
     }
+
+    @Override
+    public ArrayList<Poza> getPozaByTipAndObiect(int tip, int id) {
+        return pozaRepository.getPozeByTipAndId(tip, id);
+    }
     
     
     
