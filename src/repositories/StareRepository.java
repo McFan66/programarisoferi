@@ -16,4 +16,5 @@ public interface StareRepository {
     public boolean adaugaStare(Stare stare);
     public void stergeStare(Stare stare);
     public ArrayList<Stare> getAll();
+    public Stare getStareByNume(String nume);
 }

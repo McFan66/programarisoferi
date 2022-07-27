@@ -68,7 +68,30 @@ public class Inregistrare  implements java.io.Serializable {
         this.soferTir = soferTir;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Inregistrare other = (Inregistrare) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
+    }
 
+    @Override
+    public String toString() {
+        return "Inregistrare{" + "id=" + id + ", idSoferiTiruri=" + idSoferiTiruri + ", dataSosire=" + dataSosire + ", dataPlecare=" + dataPlecare + ", soferTir=" + soferTir + '}';
+    }
+
+    
 
 
 }

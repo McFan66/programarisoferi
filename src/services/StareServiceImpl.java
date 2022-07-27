@@ -32,5 +32,10 @@ public class StareServiceImpl implements StareService {
     public ArrayList<Stare> getAll() {
         return stareRepository.getAll();
     }
+
+    @Override
+    public Stare getStareByNume(String nume) {
+        return stareRepository.getStareByNume(nume);
+    }
     
 }

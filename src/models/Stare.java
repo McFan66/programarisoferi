@@ -20,7 +20,8 @@ public class Stare  implements java.io.Serializable {
     }
 
 	
-    public Stare(String nume, int valid) {
+    public Stare(int id,String nume, int valid) {
+        this.id = id;
         this.nume = nume;
         this.valid = valid;
     }

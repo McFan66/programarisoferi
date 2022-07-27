@@ -173,7 +173,7 @@ public class SoferController {
             }
         }
     }
-
+    
     public void saveSofer() {
         if (isFormValid()) {
             File dirCur = new File(".");

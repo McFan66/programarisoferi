@@ -12,9 +12,18 @@ import controllers.SoferiTiruriController;
 import controllers.TirController;
 import java.awt.Image;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Box;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JList;
+import models.Stare;
+import models.Tir;
+import services.StareServiceImpl;
+import services.TiruriService;
+import services.TiruriServiceImpl;
 
 /**
  *
@@ -28,7 +37,12 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     private ModelController modelController = new ModelController();
     private SoferiTiruriController soferiTiruriController = new SoferiTiruriController();
     
-    public FrmMeniuPrincipal() throws IOException {
+    private services.TiruriService tiruriService = new TiruriServiceImpl();
+    private services.StareService stareService = new StareServiceImpl();
+    
+    private DefaultListModel<Tir> modelListe;
+    
+    public FrmMeniuPrincipal() {
         ImageIcon i = new ImageIcon("src/resources/soferIcon.png");
         Image imagine = i.getImage();
         Image imagine1 = imagine.getScaledInstance(14, 14, java.awt.Image.SCALE_SMOOTH);
@@ -40,8 +54,21 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         initComponents();
         btnAdministrareSoferi.setIcon(i);
         btnAdministrareTiruri.setIcon(i1);
+        setModel(tiruriService.getTirByStare(stareService.getStareByNume("Parcat")), lstParcate);
+        setModel(tiruriService.getTirByStare(stareService.getStareByNume("Liber")), lstLibere);
+        setModel(tiruriService.getTirByStare(stareService.getStareByNume("In cursa")), lstInCursa);
+        setModel(tiruriService.getTirByStare(stareService.getStareByNume("In service")), lstInService);
     }
 
+    private void setModel(ArrayList<Tir> listaTiruri, JList listaInterfata) {
+        modelListe = new DefaultListModel<>();
+        for(Tir t : listaTiruri) {
+            modelListe.addElement(t);
+        }
+        listaInterfata.setModel(modelListe);
+        listaInterfata.setCellRenderer(new renderers.ItemTirRenderer());
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -51,13 +78,36 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelPrincipal = new javax.swing.JPanel();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        lblInfoSoferi = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        lblTiruriInCursa = new javax.swing.JLabel();
+        lblTiruriParcate = new javax.swing.JLabel();
+        lblTiruriLibere = new javax.swing.JLabel();
+        lblTiruriInService = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        lstInCursa = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        lstParcate = new javax.swing.JList<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lstLibere = new javax.swing.JList<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        lstInService = new javax.swing.JList<>();
+        jPanel7 = new javax.swing.JPanel();
+        lblSoferiLiberi = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        jRadioButton3 = new javax.swing.JRadioButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         meniu = new javax.swing.JMenuBar();
         meniuAdministrare = new javax.swing.JMenu();
         btnAdministrareSoferi = new javax.swing.JMenuItem();
@@ -67,87 +117,218 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         btnAdministrareSoferiTiruri = new javax.swing.JMenuItem();
         meniuCreare = new javax.swing.JMenu();
         btnInregistrareNoua = new javax.swing.JMenuItem();
+        meniuProfil = new javax.swing.JMenu();
+        meniuLogOut = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lblInfoSoferi.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        lblInfoSoferi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblInfoSoferi.setText("Informatii soferi:");
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Informatii tiruri:");
+
+        java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 30, 5);
+        flowLayout1.setAlignOnBaseline(true);
+        jPanel6.setLayout(flowLayout1);
+
+        lblTiruriInCursa.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblTiruriInCursa.setText("In Cursa:");
+        jPanel6.add(lblTiruriInCursa);
+
+        lblTiruriParcate.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblTiruriParcate.setText("Parcate:");
+        jPanel6.add(lblTiruriParcate);
+
+        lblTiruriLibere.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblTiruriLibere.setText("Libere:");
+        jPanel6.add(lblTiruriLibere);
+
+        lblTiruriInService.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblTiruriInService.setText("In Service:");
+        jPanel6.add(lblTiruriInService);
+
+        jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 5));
+
+        jScrollPane4.setPreferredSize(new java.awt.Dimension(75, 300));
+
+        lstInCursa.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        lstInCursa.setInheritsPopupMenu(true);
+        lstInCursa.setMaximumSize(new java.awt.Dimension(500, 500));
+        lstInCursa.setMinimumSize(new java.awt.Dimension(100, 300));
+        lstInCursa.setPreferredSize(new java.awt.Dimension(100, 300));
+        lstInCursa.setValueIsAdjusting(true);
+        jScrollPane4.setViewportView(lstInCursa);
+
+        jPanel2.add(jScrollPane4);
+
+        jScrollPane2.setPreferredSize(new java.awt.Dimension(75, 300));
+
+        lstParcate.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        lstParcate.setMaximumSize(new java.awt.Dimension(500, 500));
+        lstParcate.setPreferredSize(new java.awt.Dimension(100, 300));
+        lstParcate.setValueIsAdjusting(true);
+        jScrollPane2.setViewportView(lstParcate);
+
+        jPanel2.add(jScrollPane2);
+
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(75, 300));
+
+        lstLibere.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        lstLibere.setMaximumSize(new java.awt.Dimension(500, 500));
+        lstLibere.setPreferredSize(new java.awt.Dimension(100, 300));
+        lstLibere.setValueIsAdjusting(true);
+        jScrollPane1.setViewportView(lstLibere);
+
+        jPanel2.add(jScrollPane1);
+
+        jScrollPane3.setPreferredSize(new java.awt.Dimension(75, 300));
+
+        lstInService.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        lstInService.setMaximumSize(new java.awt.Dimension(500, 500));
+        lstInService.setPreferredSize(new java.awt.Dimension(100, 300));
+        lstInService.setValueIsAdjusting(true);
+        jScrollPane3.setViewportView(lstInService);
+
+        jPanel2.add(jScrollPane3);
+
+        lblSoferiLiberi.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(lblSoferiLiberi, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(lblSoferiLiberi, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(16, 16, 16)))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel2.setText("Ultimele inregistrari:");
+
+        jButton1.setText("Adauga");
+        jPanel3.add(jButton1);
+
+        jButton2.setText("Editeaza");
+        jPanel3.add(jButton2);
+
+        buttonGroup1.add(jRadioButton1);
+        jRadioButton1.setText("In desfasurare");
+        jPanel3.add(jRadioButton1);
+
+        buttonGroup1.add(jRadioButton2);
+        jRadioButton2.setText("Finalizate");
+        jPanel3.add(jRadioButton2);
+
+        buttonGroup1.add(jRadioButton3);
+        jRadioButton3.setText("Toate");
+        jPanel3.add(jRadioButton3);
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane5.setViewportView(jTable1);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(199, 199, 199)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+                .addGap(193, 193, 193))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(85, 85, 85)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(99, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblInfoSoferi, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblInfoSoferi, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Informatii tiruri:");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(178, Short.MAX_VALUE))
-        );
-
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Ultimele inregistrari (dublu click pentru mai multe informatii)");
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 637, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 161, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
-        panelPrincipal.setLayout(panelPrincipalLayout);
-        panelPrincipalLayout.setHorizontalGroup(
-            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelPrincipalLayout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        panelPrincipalLayout.setVerticalGroup(
-            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelPrincipalLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         meniuAdministrare.setText("Administrare");
@@ -208,17 +389,26 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
 
         meniu.add(meniuCreare);
 
+        meniuProfil.setText("Profil");
+        meniuProfil.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        meniuProfil.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        meniuProfil.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        meniu.add(meniuProfil);
+
+        meniuLogOut.setText("jMenu1");
+        meniu.add(meniuLogOut);
+
         setJMenuBar(meniu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -250,8 +440,23 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         soferiTiruriController.actionIndex(this);
     }//GEN-LAST:event_btnAdministrareSoferiTiruriActionPerformed
 
+    public JList<String> getLstInCursa() {
+        return lstInCursa;
+    }
+
+    public JList<String> getLstInService() {
+        return lstInService;
+    }
+
+    public JList<String> getLstLibere() {
+        return lstLibere;
+    }
+
+    public JList<String> getLstParcate() {
+        return lstParcate;
+    }
     
-    /**
+        /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -281,11 +486,8 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                try {
-                    new FrmMeniuPrincipal().setVisible(true);
-                } catch (IOException ex) {
-                    Logger.getLogger(FrmMeniuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                FrmMeniuPrincipal f = new FrmMeniuPrincipal();
+                f.setVisible(true);
             }
         });
     }
@@ -297,15 +499,40 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem btnAdministrareSoferiTiruri;
     private javax.swing.JMenuItem btnAdministrareTiruri;
     private javax.swing.JMenuItem btnInregistrareNoua;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JLabel lblInfoSoferi;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblSoferiLiberi;
+    private javax.swing.JLabel lblTiruriInCursa;
+    private javax.swing.JLabel lblTiruriInService;
+    private javax.swing.JLabel lblTiruriLibere;
+    private javax.swing.JLabel lblTiruriParcate;
+    private javax.swing.JList<String> lstInCursa;
+    private javax.swing.JList<String> lstInService;
+    private javax.swing.JList<String> lstLibere;
+    private javax.swing.JList<String> lstParcate;
     private javax.swing.JMenuBar meniu;
     private javax.swing.JMenu meniuAdministrare;
     private javax.swing.JMenu meniuCreare;
-    private javax.swing.JPanel panelPrincipal;
+    private javax.swing.JMenu meniuLogOut;
+    private javax.swing.JMenu meniuProfil;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,6 +5,7 @@
  */
 package renderers;
 
+import java.awt.Color;
 import java.awt.Component;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;

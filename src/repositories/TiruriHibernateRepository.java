@@ -110,11 +110,9 @@ public class TiruriHibernateRepository implements TiruriRepository {
 
     public static void main(String[] args) {
         TiruriRepository tiruriRepository = new TiruriHibernateRepository();
-        Tir t = new Tir();
-        t.setIdModel(1);
-        t.setIdStare(4);
-        t.setNrInmatriculare("CL65POP");
-        tiruriRepository.adaugaTir(t);
+        Stare s = new Stare();
+        s.setId(3);
+        System.out.println(tiruriRepository.getTirByStare(s));
     }
 
     @Override
