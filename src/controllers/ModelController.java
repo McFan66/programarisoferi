@@ -17,11 +17,13 @@ import javax.swing.JTextField;
 import models.Marca;
 import models.Model;
 import renderers.ItemMarcaRenderer;
+import renderers.ListRenderer;
 import renderers.MarciModeleColorCellRenderer;
 import services.MarcaService;
 import services.MarcaServiceImpl;
 import services.ModelService;
 import services.ModelServiceImpl;
+import tablemodel.ColumnResizer1;
 import tablemodels.TableModelModele;
 
 /**
@@ -32,17 +34,18 @@ public class ModelController {
     private FrmAddModel frmAddModel;
     private FrmAdministrareModele frmAdministrareModele;
     private Model modelSelectat;
-    private Marca selectatiMarca = new Marca(-1, "--SelectatiMarca--");
+    private Marca selectatiMarca = new Marca(-1, "--Selectati Marca--");
     private ModelService modelService = new ModelServiceImpl();
     private MarcaService marcaService = new MarcaServiceImpl();
     private ArrayList<Model> listaModele;
     private tablemodels.TableModelModele tableModelModele = new TableModelModele();
     private DefaultComboBoxModel<Marca> modelCmbMarci = new DefaultComboBoxModel<>();
+    private ListRenderer listRenderer = new ListRenderer();
 
     
     public void initComboBoxMarci() {
         JComboBox dropDownMarca = frmAddModel.getDropDownMarca();
-        dropDownMarca.setRenderer(new ItemMarcaRenderer());
+        dropDownMarca.setRenderer(listRenderer);
         ArrayList<Marca> listaMarci = marcaService.getAll();
         modelCmbMarci.removeAllElements();
         modelCmbMarci.addElement(selectatiMarca);
@@ -71,6 +74,7 @@ public class ModelController {
         tblModele.setModel(tableModelModele);
         tblModele.setAutoCreateRowSorter(true);
         tblModele.getColumnModel().getColumn(3).setCellRenderer(new MarciModeleColorCellRenderer());
+        ColumnResizer1.resizeRowHeightAndColumnsWidth(tblModele);
     }   
     
     public void actionIndex(JFrame parent) {

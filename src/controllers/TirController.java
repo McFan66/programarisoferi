@@ -57,6 +57,7 @@ import services.SoferiTiruriService;
 import services.SoferiTiruriServiceImpl;
 import services.TiruriService;
 import services.TiruriServiceImpl;
+import tablemodel.ColumnResizer1;
 import utils.HibernateUtil;
 import utils.ProjectUtils;
 
@@ -302,6 +303,7 @@ public class TirController {
         };
         tblTiruri.setModel(defaultTableModel);
         tblTiruri.getColumnModel().getColumn(4).setCellRenderer(new TiruriColorCellRenderer());
+        ColumnResizer1.resizeRowHeightAndColumnsWidth(tblTiruri);
         ProjectUtils.tableColumnAdjusterByHeader(tblTiruri);
     }
 

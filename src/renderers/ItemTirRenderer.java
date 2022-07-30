@@ -23,6 +23,10 @@ public class ItemTirRenderer extends DefaultListCellRenderer{
             Tir t = (Tir) value;
             
                 setText(String.format("%s %s %s", t.getModel().getMarca().getNume() , t.getModel().getNume() , t.getNrInmatriculare()));
+                
+                if(isSelected) {
+                    setBackground(Color.cyan);
+                }
         }
         return this;
     }

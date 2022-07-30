@@ -36,6 +36,7 @@ import services.PozaService;
 import services.PozaServiceImpl;
 import services.SoferService;
 import services.SoferServiceImpl;
+import tablemodel.ColumnResizer1;
 import tablemodels.TableModelSoferi;
 import utils.ProjectUtils;
 
@@ -106,6 +107,7 @@ public class SoferController {
         defaultTableModel = new DefaultTableModel(data, columnNames);
         tblSoferi.setModel(defaultTableModel);
         tblSoferi.getColumnModel().getColumn(1).setCellRenderer(new CellRendererImage());
+        ColumnResizer1.resizeRowHeightAndColumnsWidth(tblSoferi);
         ProjectUtils.tableColumnAdjusterByHeader(tblSoferi);
     }
 

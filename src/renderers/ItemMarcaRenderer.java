@@ -5,6 +5,7 @@
  */
 package renderers;
 
+import java.awt.Color;
 import java.awt.Component;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
@@ -21,6 +22,10 @@ public class ItemMarcaRenderer extends DefaultListCellRenderer{
         if(value instanceof Marca){
            Marca m=(Marca)value;
            setText(m.getNume());
+           
+           if(isSelected) {
+               setBackground(Color.cyan);
+           }
         }
         return this;
     }
