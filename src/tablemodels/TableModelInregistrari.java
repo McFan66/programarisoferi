@@ -5,6 +5,7 @@
  */
 package tablemodels;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 import models.Inregistrare;
@@ -57,12 +58,13 @@ public class TableModelInregistrari extends AbstractTableModel{
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Inregistrare i = listaInregistrari.get(rowIndex);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         
         switch(columnIndex) {
             case 0:
-                return i.getDataPlecare();
+                return sdf.format(i.getDataPlecare());
             case 1:
-                return i.getDataSosire();
+                return sdf.format(i.getDataSosire());
             case 2:
                 return i.getSoferTir().getSofer().getNume();
             case 3:

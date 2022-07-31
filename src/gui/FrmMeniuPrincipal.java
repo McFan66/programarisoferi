@@ -6,6 +6,7 @@
 package gui;
 
 import controllers.MarcaController;
+import controllers.MeniuPrincipalController;
 import controllers.ModelController;
 import controllers.SoferController;
 import controllers.SoferiTiruriController;
@@ -18,13 +19,17 @@ import java.util.logging.Logger;
 import javax.swing.Box;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JRadioButton;
+import javax.swing.JTable;
 import models.Stare;
 import models.Tir;
 import services.StareServiceImpl;
 import services.TiruriService;
 import services.TiruriServiceImpl;
 import tablemodel.ColumnResizer1;
+import tablemodels.TableModelInregistrari;
 /**
  *
  * @author Stefan
@@ -36,11 +41,8 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     private MarcaController marcaController = new MarcaController();
     private ModelController modelController = new ModelController();
     private SoferiTiruriController soferiTiruriController = new SoferiTiruriController();
+    private MeniuPrincipalController meniuPrincipalController;
     
-    private services.TiruriService tiruriService = new TiruriServiceImpl();
-    private services.StareService stareService = new StareServiceImpl();
-    
-    private DefaultListModel<Tir> modelListe;
     
     public FrmMeniuPrincipal() {
         ImageIcon i = new ImageIcon("src/resources/soferIcon.png");
@@ -54,21 +56,8 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         initComponents();
         btnAdministrareSoferi.setIcon(i);
         btnAdministrareTiruri.setIcon(i1);
-        setModel(tiruriService.getTirByStare(stareService.getStareByNume("Parcat")), lstParcate);
-        setModel(tiruriService.getTirByStare(stareService.getStareByNume("Liber")), lstLibere);
-        setModel(tiruriService.getTirByStare(stareService.getStareByNume("In cursa")), lstInCursa);
-        setModel(tiruriService.getTirByStare(stareService.getStareByNume("In service")), lstInService);
         
-        ColumnResizer1.adjustColumnPreferredWidths(jTable1);
-    }
-
-    private void setModel(ArrayList<Tir> listaTiruri, JList listaInterfata) {
-        modelListe = new DefaultListModel<>();
-        for(Tir t : listaTiruri) {
-            modelListe.addElement(t);
-        }
-        listaInterfata.setModel(modelListe);
-        listaInterfata.setCellRenderer(new renderers.ItemTirRenderer());
+        ColumnResizer1.adjustColumnPreferredWidths(tblInregistrari);
     }
     
     /**
@@ -104,13 +93,13 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
+        btnAdaugaInregistrare = new javax.swing.JButton();
+        btnEditeazaInregistrare = new javax.swing.JButton();
+        rdbInDesfasurare = new javax.swing.JRadioButton();
+        rdbFinalizate = new javax.swing.JRadioButton();
+        rdbToate = new javax.swing.JRadioButton();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblInregistrari = new javax.swing.JTable();
         meniu = new javax.swing.JMenuBar();
         meniuAdministrare = new javax.swing.JMenu();
         btnAdministrareSoferi = new javax.swing.JMenuItem();
@@ -260,31 +249,57 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Ultimele inregistrari:");
 
-        jButton1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jButton1.setText("Adauga");
-        jPanel3.add(jButton1);
+        btnAdaugaInregistrare.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnAdaugaInregistrare.setText("Adauga");
+        btnAdaugaInregistrare.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdaugaInregistrareActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnAdaugaInregistrare);
 
-        jButton2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jButton2.setText("Editeaza");
-        jPanel3.add(jButton2);
+        btnEditeazaInregistrare.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnEditeazaInregistrare.setText("Editeaza");
+        btnEditeazaInregistrare.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditeazaInregistrareActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnEditeazaInregistrare);
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jRadioButton1.setText("In desfasurare");
-        jPanel3.add(jRadioButton1);
+        buttonGroup1.add(rdbInDesfasurare);
+        rdbInDesfasurare.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        rdbInDesfasurare.setText("In desfasurare");
+        rdbInDesfasurare.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbInDesfasurareActionPerformed(evt);
+            }
+        });
+        jPanel3.add(rdbInDesfasurare);
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jRadioButton2.setText("Finalizate");
-        jPanel3.add(jRadioButton2);
+        buttonGroup1.add(rdbFinalizate);
+        rdbFinalizate.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        rdbFinalizate.setText("Finalizate");
+        rdbFinalizate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbFinalizateActionPerformed(evt);
+            }
+        });
+        jPanel3.add(rdbFinalizate);
 
-        buttonGroup1.add(jRadioButton3);
-        jRadioButton3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jRadioButton3.setText("Toate");
-        jPanel3.add(jRadioButton3);
+        buttonGroup1.add(rdbToate);
+        rdbToate.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        rdbToate.setSelected(true);
+        rdbToate.setText("Toate");
+        rdbToate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbToateActionPerformed(evt);
+            }
+        });
+        jPanel3.add(rdbToate);
 
-        jTable1.setModel(tableModelInregistrari1);
-        jScrollPane5.setViewportView(jTable1);
+        tblInregistrari.setModel(tableModelInregistrari1);
+        jScrollPane5.setViewportView(tblInregistrari);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -436,6 +451,31 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         soferiTiruriController.actionIndex(this);
     }//GEN-LAST:event_btnAdministrareSoferiTiruriActionPerformed
 
+    private void btnAdaugaInregistrareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdaugaInregistrareActionPerformed
+        // TODO add your handling code here:
+        meniuPrincipalController.actionCreate(this);
+    }//GEN-LAST:event_btnAdaugaInregistrareActionPerformed
+
+    private void btnEditeazaInregistrareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditeazaInregistrareActionPerformed
+        // TODO add your handling code here:
+        meniuPrincipalController.actionEdit(this);
+    }//GEN-LAST:event_btnEditeazaInregistrareActionPerformed
+
+    private void rdbToateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbToateActionPerformed
+        // TODO add your handling code here:
+        meniuPrincipalController.updateAndSetModelToTable();
+    }//GEN-LAST:event_rdbToateActionPerformed
+
+    private void rdbFinalizateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbFinalizateActionPerformed
+        // TODO add your handling code here:
+        meniuPrincipalController.updateAndSetModelToTable();
+    }//GEN-LAST:event_rdbFinalizateActionPerformed
+
+    private void rdbInDesfasurareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbInDesfasurareActionPerformed
+        // TODO add your handling code here:
+        meniuPrincipalController.updateAndSetModelToTable();
+    }//GEN-LAST:event_rdbInDesfasurareActionPerformed
+
     public JList<String> getLstInCursa() {
         return lstInCursa;
     }
@@ -451,6 +491,39 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     public JList<String> getLstParcate() {
         return lstParcate;
     }
+
+    public JTable getTblInregistrari() {
+        return tblInregistrari;
+    }
+
+    public TableModelInregistrari getTableModelInregistrari1() {
+        return tableModelInregistrari1;
+    }
+
+    public JButton getBtnEditeazaInregistrare() {
+        return btnEditeazaInregistrare;
+    }
+
+    public JButton getBtnAdaugaInregistrare() {
+        return btnAdaugaInregistrare;
+    }
+
+    public JRadioButton getRdbToate() {
+        return rdbToate;
+    }
+
+    public JRadioButton getRdbFinalizate() {
+        return rdbFinalizate;
+    }
+
+    public JRadioButton getRdbInDesfasurare() {
+        return rdbInDesfasurare;
+    }
+
+    public void setMeniuPrincipalController(MeniuPrincipalController meniuPrincipalController) {
+        this.meniuPrincipalController = meniuPrincipalController;
+    }
+    
     
         /**
      * @param args the command line arguments
@@ -489,15 +562,15 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdaugaInregistrare;
     private javax.swing.JMenuItem btnAdministrareMarci;
     private javax.swing.JMenuItem btnAdministrareModele;
     private javax.swing.JMenuItem btnAdministrareSoferi;
     private javax.swing.JMenuItem btnAdministrareSoferiTiruri;
     private javax.swing.JMenuItem btnAdministrareTiruri;
+    private javax.swing.JButton btnEditeazaInregistrare;
     private javax.swing.JMenuItem btnInregistrareNoua;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -507,15 +580,11 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblSoferiLiberi;
     private javax.swing.JLabel lblTiruriInCursa;
     private javax.swing.JLabel lblTiruriInService;
@@ -530,6 +599,10 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu meniuCreare;
     private javax.swing.JMenu meniuLogOut;
     private javax.swing.JMenu meniuProfil;
+    private javax.swing.JRadioButton rdbFinalizate;
+    private javax.swing.JRadioButton rdbInDesfasurare;
+    private javax.swing.JRadioButton rdbToate;
     private tablemodels.TableModelInregistrari tableModelInregistrari1;
+    private javax.swing.JTable tblInregistrari;
     // End of variables declaration//GEN-END:variables
 }

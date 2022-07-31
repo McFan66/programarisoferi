@@ -22,4 +22,6 @@ public interface InregistrariService {
     public ArrayList<Inregistrare> getInregistrariByDataSosire(Date dataSosire);
     public ArrayList<Inregistrare> getInregistrareByDataPlecare(Date dataPlecare);
     public ArrayList<Inregistrare> getInregistrareByNoPlecare();
+    public ArrayList<Inregistrare> getInregistrariFinalizate();
+    public ArrayList<Inregistrare> getInregistrariInDesfasurare();
 }

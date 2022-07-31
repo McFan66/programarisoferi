@@ -54,5 +54,15 @@ public class InregistrareServiceImpl implements InregistrariService  {
     public ArrayList<Inregistrare> getInregistrareByNoPlecare() {
         return inregistrariRepository.getInregistrareByNoPlecare();
     }
+
+    @Override
+    public ArrayList<Inregistrare> getInregistrariFinalizate() {
+        return inregistrariRepository.getInregistrariFinalizate();
+    }
+
+    @Override
+    public ArrayList<Inregistrare> getInregistrariInDesfasurare() {
+        return inregistrariRepository.getInregistrariInDesfasurare();
+    }
     
 }
