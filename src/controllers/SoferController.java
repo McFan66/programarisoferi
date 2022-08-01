@@ -248,10 +248,10 @@ public class SoferController {
             JOptionPane.showMessageDialog(frmAddSofer, "Va rugam sa adaugati o poza.");
             return false;
         }
-        if (!c.validate(txtCNP.getText())) {
-            JOptionPane.showMessageDialog(frmAddSofer, "CNP incorect.");
-            return false;
-        }
+//        if (!c.validate(txtCNP.getText())) {
+//            JOptionPane.showMessageDialog(frmAddSofer, "CNP incorect.");
+//            return false;
+//        }
         if (txtNume.getText().trim().length() < 2 || txtPrenume.getText().trim().length() < 2) {
             JOptionPane.showMessageDialog(frmAddSofer, "Numele si prenumele trebuie sa aiba minim 2 caractere.");
             return false;

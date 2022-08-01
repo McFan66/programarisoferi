@@ -17,4 +17,5 @@ public interface SoferiRepository {
     public void stergeSofer(Sofer sofer);
     public ArrayList<Sofer> getAll();
     public ArrayList<Sofer> getSoferByValid(boolean valid);
+//    public ArrayList<Sofer> getSoferiLiberi();
 }

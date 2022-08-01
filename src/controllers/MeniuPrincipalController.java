@@ -22,8 +22,10 @@ import models.Inregistrare;
 import models.Sofer;
 import models.SoferiTiruri;
 import models.Tir;
+import renderers.ItemSoferRenderer;
 import renderers.ItemSoferiTiruriRenderer;
 import services.InregistrareServiceImpl;
+import services.SoferServiceImpl;
 import services.SoferiTiruriService;
 import services.SoferiTiruriServiceImpl;
 import services.StareServiceImpl;
@@ -43,6 +45,7 @@ public class MeniuPrincipalController {
     private services.TiruriService tiruriService = new TiruriServiceImpl();
     private services.StareService stareService = new StareServiceImpl();
     private services.SoferiTiruriService soferiTiruriService = new SoferiTiruriServiceImpl();
+    private services.SoferService soferService = new SoferServiceImpl();
     
     private DefaultListModel<Tir> modelListe;
     
@@ -60,6 +63,7 @@ public class MeniuPrincipalController {
         setModel(tiruriService.getTirByStare(stareService.getStareByNume("Liber")), frmMeniuPrincipal.getLstLibere());
         setModel(tiruriService.getTirByStare(stareService.getStareByNume("In cursa")), frmMeniuPrincipal.getLstInCursa());
         setModel(tiruriService.getTirByStare(stareService.getStareByNume("In service")), frmMeniuPrincipal.getLstInService());
+        setModelToListaSoferiLiberi();
         updateAndSetModelToTable();
         frmMeniuPrincipal.setVisible(true);
     }
@@ -170,6 +174,19 @@ public class MeniuPrincipalController {
         tableModelInregistrari.fireTableDataChanged();
         tblInregistrari.setModel(tableModelInregistrari);
         ColumnResizer1.resizeRowHeightAndColumnsWidth(tblInregistrari);
+    }
+    
+    private void setModelToListaSoferiLiberi() {
+        DefaultListModel<Sofer> modelListaSoferiLiberi = new DefaultListModel<>();
+        
+        for (Sofer s : soferService.getAll()) {
+            if(s.getSoferiTiruri().isEmpty()) {
+                modelListaSoferiLiberi.addElement(s);
+            }
+        }
+        
+        frmMeniuPrincipal.getLstSoferiLiberi().setModel(modelListaSoferiLiberi);
+        frmMeniuPrincipal.getLstSoferiLiberi().setCellRenderer(new ItemSoferRenderer());
     }
     
     private void setModel(ArrayList<Tir> listaTiruri, JList listaInterfata) {
