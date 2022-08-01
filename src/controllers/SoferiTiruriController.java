@@ -166,6 +166,7 @@ public class SoferiTiruriController {
         soferTir.setIdTir(tir.getId());
         soferTir.setSofer(sofer);
         soferTir.setTir(tir);
+        soferTir.setValid(true);
         
         listaSoferiTiruri = soferiTiruriService.getAll();
         

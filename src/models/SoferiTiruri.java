@@ -17,6 +17,7 @@ public class SoferiTiruri  implements java.io.Serializable {
      private int idTir;
      private Sofer sofer;
      private Tir tir;
+     private boolean valid;
      private Set inregistrari = new HashSet(0);
 
     public SoferiTiruri() {
@@ -78,6 +79,14 @@ public class SoferiTiruri  implements java.io.Serializable {
     
     public void setInregistrari(Set inregistrari) {
         this.inregistrari = inregistrari;
+    }
+
+    public boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
     }
 
     @Override

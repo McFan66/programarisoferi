@@ -14,6 +14,9 @@
         <property name="idTir" type="int">
             <column name="TIR" not-null="true" />
         </property>
+        <property name="valid" type="boolean">
+            <column name="VALID" not-null="true" default="true"/>
+        </property>
         <many-to-one name="sofer" class="models.Sofer" update="false" insert="false" fetch="select">
             <column name="SOFER" not-null="true" />
         </many-to-one>
