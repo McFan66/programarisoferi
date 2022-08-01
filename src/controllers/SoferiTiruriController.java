@@ -13,7 +13,6 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.table.TableCellRenderer;
 import models.Marca;
 import models.Model;
 import models.Sofer;
