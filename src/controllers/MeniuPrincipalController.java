@@ -104,7 +104,7 @@ public class MeniuPrincipalController {
     public void setModelToCmb() {
         DefaultComboBoxModel<SoferiTiruri> modelCmbSoferiTiruri = new DefaultComboBoxModel<>();
         
-        ArrayList<SoferiTiruri> listaSoferiTiruri = soferiTiruriService.getAll();
+        ArrayList<SoferiTiruri> listaSoferiTiruri = soferiTiruriService.getSoferiTiruriByValid(true);
         
         for(SoferiTiruri sf : listaSoferiTiruri) {
             modelCmbSoferiTiruri.addElement(sf);

@@ -15,7 +15,7 @@ import models.SoferiTiruri;
  */
 public class TableModelSoferiTiruri extends AbstractTableModel{
 
-    private String[] columnNames = new String[] {"ID" , "SOFER" , "TIR", "VALID"};
+    private String[] columnNames = new String[] {"ID" , "SOFER" , "TIR", "ACTIV"};
     private ArrayList<SoferiTiruri> listaSoferiTiruri;
     
     public TableModelSoferiTiruri() {

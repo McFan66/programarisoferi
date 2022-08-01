@@ -91,12 +91,20 @@ public class SoferiTiruriController {
         updateAndSetModelToTable();
     }
     
-    public void actionDelete() {
+    public void actionToggleActiv() {
         JTable tblSoferTiruri = frmAdministrareSoferiTiruri.getTblSoferiTiruri();
         
         int index = tblSoferTiruri.convertRowIndexToModel(tblSoferTiruri.getSelectedRow());
+        SoferiTiruri sf = listaSoferiTiruri.get(index);
         
-        soferiTiruriService.stergeSoferTir(tableModelSoferiTiruri.getSoferTirByIndex(index));
+        if(frmAdministrareSoferiTiruri.getBtnActiveazaInactiveaza().getText() == "Activare") {
+            sf.setValid(true);
+        } 
+        if(frmAdministrareSoferiTiruri.getBtnActiveazaInactiveaza().getText() == "Inactivare") {
+            sf.setValid(false);
+        }
+        
+        soferiTiruriService.adaugaSoferTir(sf);
         
         updateAndSetModelToTable();
     }
@@ -115,7 +123,16 @@ public class SoferiTiruriController {
     public void updateAndSetModelToTable() {
         JTable tblSoferiTiruri = frmAdministrareSoferiTiruri.getTblSoferiTiruri();
         tblSoferiTiruri.setAutoCreateRowSorter(true);
-        listaSoferiTiruri = soferiTiruriService.getAll();
+        
+        if(frmAdministrareSoferiTiruri.getRdbActive().isSelected()) {
+            listaSoferiTiruri = soferiTiruriService.getSoferiTiruriByValid(true);
+            frmAdministrareSoferiTiruri.getBtnActiveazaInactiveaza().setText("Inactivare");
+        }
+        if(frmAdministrareSoferiTiruri.getRdbInactive().isSelected()) {
+            listaSoferiTiruri = soferiTiruriService.getSoferiTiruriByValid(false);
+            frmAdministrareSoferiTiruri.getBtnActiveazaInactiveaza().setText("Activare");
+        }
+        
         tableModelSoferiTiruri.setListaSoferiTiruri(listaSoferiTiruri);
         tableModelSoferiTiruri.fireTableDataChanged();
         tblSoferiTiruri.setModel(tableModelSoferiTiruri);
@@ -141,11 +158,14 @@ public class SoferiTiruriController {
         
         
         for(Tir tir : listaTiruri) {
+//            if(tir.getStare().getNume() != "In cursa" )
             cmbModelTiruri.addElement(tir);
         }
         
         for(Sofer sofer : listaSoferi) {
-            cmbModelSoferi.addElement(sofer);
+//            if(sofer.getSoferiTiruri().iterator().next().getInregistrari().isEmpty()) {
+                cmbModelSoferi.addElement(sofer);
+//            }
         }
         
         dropDownSoferi.setModel(cmbModelSoferi);
