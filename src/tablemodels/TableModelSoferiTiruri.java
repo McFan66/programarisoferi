@@ -15,7 +15,7 @@ import models.SoferiTiruri;
  */
 public class TableModelSoferiTiruri extends AbstractTableModel{
 
-    private String[] columnNames = new String[] {"ID" , "SOFER" , "TIR", "ACTIV"};
+    private String[] columnNames = new String[] {"ID" , "SOFER" , "TIR", "ACTIV", "IN CURSA"};
     private ArrayList<SoferiTiruri> listaSoferiTiruri;
     
     public TableModelSoferiTiruri() {
@@ -58,6 +58,8 @@ public class TableModelSoferiTiruri extends AbstractTableModel{
                 return soferiTiruri.getTir().getNrInmatriculare();
             case 3:
                 return soferiTiruri.isValid() ? "DA" : "NU";
+            case 4:
+                return soferiTiruri.isInCursa() ? "DA" : "NU";
             default:
                 return "Nespecificat";
         }

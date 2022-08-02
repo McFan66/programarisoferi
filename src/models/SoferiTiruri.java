@@ -19,6 +19,7 @@ public class SoferiTiruri  implements java.io.Serializable {
      private Tir tir;
      private boolean valid;
      private Set inregistrari = new HashSet(0);
+     private boolean inCursa;
 
     public SoferiTiruri() {
     }
@@ -89,6 +90,14 @@ public class SoferiTiruri  implements java.io.Serializable {
         this.valid = valid;
     }
 
+    public void setInCursa(boolean inCursa) {
+        this.inCursa = inCursa;
+    }
+
+    public boolean isInCursa() {
+        return inCursa;
+    }
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

@@ -9,6 +9,7 @@ import com.toedter.calendar.JDateChooser;
 import gui.FrmAddInregistrare;
 import gui.FrmMeniuPrincipal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -64,6 +65,26 @@ public class MeniuPrincipalController {
         frmMeniuPrincipal.setVisible(true);
     }
     
+    public void endInregistrare() {
+       JTable tblInregistrari = frmMeniuPrincipal.getTblInregistrari();
+       
+       int index = tblInregistrari.convertRowIndexToModel(tblInregistrari.getSelectedRow());
+       
+       if(index == -1) {
+           JOptionPane.showMessageDialog(frmMeniuPrincipal, "Nu ati selectat o inregistrare");
+           return;
+       }
+       
+       inregistrareSelectata = listaInregistrari.get(index);
+       Calendar c1 = Calendar.getInstance();
+       inregistrareSelectata.setDataSosire(c1.getTime());
+       
+       inregistrariService.adaugaInregistrare(inregistrareSelectata);
+       
+       updateAndSetModelToTable();
+       
+    }
+    
     public void actionEdit(JFrame parent) {
         frmAddInregistrare = new FrmAddInregistrare(parent, true, inregistrareSelectata);
 
@@ -90,6 +111,7 @@ public class MeniuPrincipalController {
     }
     
     public void actionCreate(JFrame parent) {
+        inregistrareSelectata = null;
         frmAddInregistrare = new FrmAddInregistrare(parent, true);
         frmAddInregistrare.setInregistrariController(this);
         frmAddInregistrare.setLocationRelativeTo(parent);
@@ -134,6 +156,10 @@ public class MeniuPrincipalController {
             this.dtcSosire = frmAddInregistrare.getDtcSosire();
             
             SoferiTiruri sf = (SoferiTiruri) frmAddInregistrare.getCmbSoferTir().getSelectedItem();
+            sf.setInCursa(true);
+//            sf.getTir().setStare(stareService.getStareByNume("In cursa"));
+//            tiruriService.adaugaTir(sf.getTir());
+            soferiTiruriService.adaugaSoferTir(sf);
             
             if(inregistrareSelectata != null) {
                 i.setId(inregistrareSelectata.getId());
@@ -141,7 +167,7 @@ public class MeniuPrincipalController {
             
             i.setDataPlecare(this.dtcPlecare.getDate());
             i.setDataSosire(this.dtcSosire.getDate());
-            i.setSoferTir((SoferiTiruri) frmAddInregistrare.getCmbSoferTir().getSelectedItem());
+            i.setSoferTir(sf);
             i.setIdSoferiTiruri(sf.getId());
             
             inregistrariService.adaugaInregistrare(i);

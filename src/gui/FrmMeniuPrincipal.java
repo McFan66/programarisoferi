@@ -94,6 +94,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         btnAdaugaInregistrare = new javax.swing.JButton();
         btnEditeazaInregistrare = new javax.swing.JButton();
+        btnFinalizare = new javax.swing.JButton();
         rdbInDesfasurare = new javax.swing.JRadioButton();
         rdbFinalizate = new javax.swing.JRadioButton();
         rdbToate = new javax.swing.JRadioButton();
@@ -252,6 +253,15 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         });
         jPanel3.add(btnEditeazaInregistrare);
 
+        btnFinalizare.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnFinalizare.setText("Finalizeaza");
+        btnFinalizare.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinalizareActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnFinalizare);
+
         buttonGroup1.add(rdbInDesfasurare);
         rdbInDesfasurare.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         rdbInDesfasurare.setText("In desfasurare");
@@ -292,7 +302,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(199, 199, 199)
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(193, 193, 193))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
@@ -499,6 +509,11 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         meniuPrincipalController.updateAndSetModelToTable();
     }//GEN-LAST:event_rdbInDesfasurareActionPerformed
 
+    private void btnFinalizareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizareActionPerformed
+        // TODO add your handling code here:
+        meniuPrincipalController.endInregistrare();
+    }//GEN-LAST:event_btnFinalizareActionPerformed
+
     public JList<String> getLstInCursa() {
         return lstInCursa;
     }
@@ -550,6 +565,11 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     public JList<Sofer> getLstSoferiLiberi() {
         return lstSoferiLiberi;
     }
+
+    public JButton getBtnFinalizare() {
+        return btnFinalizare;
+    }
+   
     
         /**
      * @param args the command line arguments
@@ -595,6 +615,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem btnAdministrareSoferiTiruri;
     private javax.swing.JMenuItem btnAdministrareTiruri;
     private javax.swing.JButton btnEditeazaInregistrare;
+    private javax.swing.JButton btnFinalizare;
     private javax.swing.JMenuItem btnInregistrareNoua;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
