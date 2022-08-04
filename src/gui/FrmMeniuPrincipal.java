@@ -6,6 +6,7 @@
 package gui;
 
 import controllers.MarcaController;
+import controllers.MeniuPrincipalController;
 import controllers.ModelController;
 import controllers.SoferController;
 import controllers.SoferiTiruriController;
@@ -18,13 +19,18 @@ import java.util.logging.Logger;
 import javax.swing.Box;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JRadioButton;
+import javax.swing.JTable;
+import models.Sofer;
 import models.Stare;
 import models.Tir;
 import services.StareServiceImpl;
 import services.TiruriService;
 import services.TiruriServiceImpl;
 import tablemodel.ColumnResizer1;
+import tablemodels.TableModelInregistrari;
 /**
  *
  * @author Stefan
@@ -36,11 +42,8 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     private MarcaController marcaController = new MarcaController();
     private ModelController modelController = new ModelController();
     private SoferiTiruriController soferiTiruriController = new SoferiTiruriController();
+    private MeniuPrincipalController meniuPrincipalController;
     
-    private services.TiruriService tiruriService = new TiruriServiceImpl();
-    private services.StareService stareService = new StareServiceImpl();
-    
-    private DefaultListModel<Tir> modelListe;
     
     public FrmMeniuPrincipal() {
         ImageIcon i = new ImageIcon("src/resources/soferIcon.png");
@@ -54,21 +57,8 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         initComponents();
         btnAdministrareSoferi.setIcon(i);
         btnAdministrareTiruri.setIcon(i1);
-        setModel(tiruriService.getTirByStare(stareService.getStareByNume("Parcat")), lstParcate);
-        setModel(tiruriService.getTirByStare(stareService.getStareByNume("Liber")), lstLibere);
-        setModel(tiruriService.getTirByStare(stareService.getStareByNume("In cursa")), lstInCursa);
-        setModel(tiruriService.getTirByStare(stareService.getStareByNume("In service")), lstInService);
         
-        ColumnResizer1.adjustColumnPreferredWidths(jTable1);
-    }
-
-    private void setModel(ArrayList<Tir> listaTiruri, JList listaInterfata) {
-        modelListe = new DefaultListModel<>();
-        for(Tir t : listaTiruri) {
-            modelListe.addElement(t);
-        }
-        listaInterfata.setModel(modelListe);
-        listaInterfata.setCellRenderer(new renderers.ItemTirRenderer());
+        ColumnResizer1.adjustColumnPreferredWidths(tblInregistrari);
     }
     
     /**
@@ -99,18 +89,21 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         lstLibere = new javax.swing.JList<>();
         jScrollPane3 = new javax.swing.JScrollPane();
         lstInService = new javax.swing.JList<>();
-        jPanel7 = new javax.swing.JPanel();
-        lblSoferiLiberi = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
+        btnAdaugaInregistrare = new javax.swing.JButton();
+        btnEditeazaInregistrare = new javax.swing.JButton();
+        btnFinalizare = new javax.swing.JButton();
+        rdbInDesfasurare = new javax.swing.JRadioButton();
+        rdbFinalizate = new javax.swing.JRadioButton();
+        rdbToate = new javax.swing.JRadioButton();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblInregistrari = new javax.swing.JTable();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        lstSoferiLiberi = new javax.swing.JList();
         meniu = new javax.swing.JMenuBar();
         meniuAdministrare = new javax.swing.JMenu();
         btnAdministrareSoferi = new javax.swing.JMenuItem();
@@ -209,82 +202,99 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
 
         jPanel2.add(jScrollPane3);
 
-        lblSoferiLiberi.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(lblSoferiLiberi, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(lblSoferiLiberi, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(22, 22, 22))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 486, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(16, 16, 16))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addContainerGap(22, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Ultimele inregistrari:");
 
-        jButton1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jButton1.setText("Adauga");
-        jPanel3.add(jButton1);
+        btnAdaugaInregistrare.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnAdaugaInregistrare.setText("Adauga");
+        btnAdaugaInregistrare.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdaugaInregistrareActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnAdaugaInregistrare);
 
-        jButton2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jButton2.setText("Editeaza");
-        jPanel3.add(jButton2);
+        btnEditeazaInregistrare.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnEditeazaInregistrare.setText("Editeaza");
+        btnEditeazaInregistrare.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditeazaInregistrareActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnEditeazaInregistrare);
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jRadioButton1.setText("In desfasurare");
-        jPanel3.add(jRadioButton1);
+        btnFinalizare.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnFinalizare.setText("Finalizeaza");
+        btnFinalizare.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinalizareActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnFinalizare);
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jRadioButton2.setText("Finalizate");
-        jPanel3.add(jRadioButton2);
+        buttonGroup1.add(rdbInDesfasurare);
+        rdbInDesfasurare.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        rdbInDesfasurare.setText("In desfasurare");
+        rdbInDesfasurare.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbInDesfasurareActionPerformed(evt);
+            }
+        });
+        jPanel3.add(rdbInDesfasurare);
 
-        buttonGroup1.add(jRadioButton3);
-        jRadioButton3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jRadioButton3.setText("Toate");
-        jPanel3.add(jRadioButton3);
+        buttonGroup1.add(rdbFinalizate);
+        rdbFinalizate.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        rdbFinalizate.setText("Finalizate");
+        rdbFinalizate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbFinalizateActionPerformed(evt);
+            }
+        });
+        jPanel3.add(rdbFinalizate);
 
-        jTable1.setModel(tableModelInregistrari1);
-        jScrollPane5.setViewportView(jTable1);
+        buttonGroup1.add(rdbToate);
+        rdbToate.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        rdbToate.setSelected(true);
+        rdbToate.setText("Toate");
+        rdbToate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbToateActionPerformed(evt);
+            }
+        });
+        jPanel3.add(rdbToate);
+
+        tblInregistrari.setModel(tableModelInregistrari1);
+        jScrollPane5.setViewportView(tblInregistrari);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -292,11 +302,11 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(199, 199, 199)
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(193, 193, 193))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 761, Short.MAX_VALUE)
                 .addContainerGap())
             .addComponent(jScrollPane5)
         );
@@ -309,7 +319,36 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane5)
-                .addGap(76, 76, 76))
+                .addGap(48, 48, 48))
+        );
+
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel3.setText("Soferi liberi:");
+
+        jScrollPane6.setViewportView(lstSoferiLiberi);
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -317,14 +356,23 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(14, 14, 14))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         meniuAdministrare.setText("Administrare");
@@ -436,6 +484,36 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         soferiTiruriController.actionIndex(this);
     }//GEN-LAST:event_btnAdministrareSoferiTiruriActionPerformed
 
+    private void btnAdaugaInregistrareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdaugaInregistrareActionPerformed
+        // TODO add your handling code here:
+        meniuPrincipalController.actionCreate(this);
+    }//GEN-LAST:event_btnAdaugaInregistrareActionPerformed
+
+    private void btnEditeazaInregistrareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditeazaInregistrareActionPerformed
+        // TODO add your handling code here:
+        meniuPrincipalController.actionEdit(this);
+    }//GEN-LAST:event_btnEditeazaInregistrareActionPerformed
+
+    private void rdbToateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbToateActionPerformed
+        // TODO add your handling code here:
+        meniuPrincipalController.updateAndSetModelToTable();
+    }//GEN-LAST:event_rdbToateActionPerformed
+
+    private void rdbFinalizateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbFinalizateActionPerformed
+        // TODO add your handling code here:
+        meniuPrincipalController.updateAndSetModelToTable();
+    }//GEN-LAST:event_rdbFinalizateActionPerformed
+
+    private void rdbInDesfasurareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbInDesfasurareActionPerformed
+        // TODO add your handling code here:
+        meniuPrincipalController.updateAndSetModelToTable();
+    }//GEN-LAST:event_rdbInDesfasurareActionPerformed
+
+    private void btnFinalizareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizareActionPerformed
+        // TODO add your handling code here:
+        meniuPrincipalController.endInregistrare();
+    }//GEN-LAST:event_btnFinalizareActionPerformed
+
     public JList<String> getLstInCursa() {
         return lstInCursa;
     }
@@ -451,6 +529,47 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     public JList<String> getLstParcate() {
         return lstParcate;
     }
+
+    public JTable getTblInregistrari() {
+        return tblInregistrari;
+    }
+
+    public TableModelInregistrari getTableModelInregistrari1() {
+        return tableModelInregistrari1;
+    }
+
+    public JButton getBtnEditeazaInregistrare() {
+        return btnEditeazaInregistrare;
+    }
+
+    public JButton getBtnAdaugaInregistrare() {
+        return btnAdaugaInregistrare;
+    }
+
+    public JRadioButton getRdbToate() {
+        return rdbToate;
+    }
+
+    public JRadioButton getRdbFinalizate() {
+        return rdbFinalizate;
+    }
+
+    public JRadioButton getRdbInDesfasurare() {
+        return rdbInDesfasurare;
+    }
+
+    public void setMeniuPrincipalController(MeniuPrincipalController meniuPrincipalController) {
+        this.meniuPrincipalController = meniuPrincipalController;
+    }
+
+    public JList<Sofer> getLstSoferiLiberi() {
+        return lstSoferiLiberi;
+    }
+
+    public JButton getBtnFinalizare() {
+        return btnFinalizare;
+    }
+   
     
         /**
      * @param args the command line arguments
@@ -489,34 +608,32 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdaugaInregistrare;
     private javax.swing.JMenuItem btnAdministrareMarci;
     private javax.swing.JMenuItem btnAdministrareModele;
     private javax.swing.JMenuItem btnAdministrareSoferi;
     private javax.swing.JMenuItem btnAdministrareSoferiTiruri;
     private javax.swing.JMenuItem btnAdministrareTiruri;
+    private javax.swing.JButton btnEditeazaInregistrare;
+    private javax.swing.JButton btnFinalizare;
     private javax.swing.JMenuItem btnInregistrareNoua;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JLabel lblSoferiLiberi;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JLabel lblTiruriInCursa;
     private javax.swing.JLabel lblTiruriInService;
     private javax.swing.JLabel lblTiruriLibere;
@@ -525,11 +642,16 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     private javax.swing.JList<String> lstInService;
     private javax.swing.JList<String> lstLibere;
     private javax.swing.JList<String> lstParcate;
+    private javax.swing.JList lstSoferiLiberi;
     private javax.swing.JMenuBar meniu;
     private javax.swing.JMenu meniuAdministrare;
     private javax.swing.JMenu meniuCreare;
     private javax.swing.JMenu meniuLogOut;
     private javax.swing.JMenu meniuProfil;
+    private javax.swing.JRadioButton rdbFinalizate;
+    private javax.swing.JRadioButton rdbInDesfasurare;
+    private javax.swing.JRadioButton rdbToate;
     private tablemodels.TableModelInregistrari tableModelInregistrari1;
+    private javax.swing.JTable tblInregistrari;
     // End of variables declaration//GEN-END:variables
 }

@@ -7,6 +7,7 @@ package gui;
 
 import controllers.SoferiTiruriController;
 import javax.swing.JButton;
+import javax.swing.JRadioButton;
 import javax.swing.JTable;
 
 /**
@@ -33,13 +34,17 @@ public class FrmAdministrareSoferiTiruri extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSoferiTiruri = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         btnAdauga = new javax.swing.JButton();
         btnEditeaza = new javax.swing.JButton();
-        btnSterge = new javax.swing.JButton();
+        btnActiveazaInactiveaza = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        rdbActive = new javax.swing.JRadioButton();
+        rdbInactive = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -73,24 +78,46 @@ public class FrmAdministrareSoferiTiruri extends javax.swing.JFrame {
         });
         jPanel2.add(btnEditeaza);
 
-        btnSterge.setText("Sterge");
-        btnSterge.addActionListener(new java.awt.event.ActionListener() {
+        btnActiveazaInactiveaza.setText("Activeaza");
+        btnActiveazaInactiveaza.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnStergeActionPerformed(evt);
+                btnActiveazaInactiveazaActionPerformed(evt);
             }
         });
-        jPanel2.add(btnSterge);
+        jPanel2.add(btnActiveazaInactiveaza);
+
+        buttonGroup1.add(rdbActive);
+        rdbActive.setSelected(true);
+        rdbActive.setText("Active");
+        rdbActive.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbActiveActionPerformed(evt);
+            }
+        });
+        jPanel3.add(rdbActive);
+
+        buttonGroup1.add(rdbInactive);
+        rdbInactive.setText("Inactive");
+        rdbInactive.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbInactiveActionPerformed(evt);
+            }
+        });
+        jPanel3.add(rdbInactive);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(111, 111, 111)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                        .addGap(110, 110, 110)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -99,7 +126,9 @@ public class FrmAdministrareSoferiTiruri extends javax.swing.JFrame {
                 .addGap(13, 13, 13)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -133,8 +162,8 @@ public class FrmAdministrareSoferiTiruri extends javax.swing.JFrame {
         return btnEditeaza;
     }
 
-    public JButton getBtnSterge() {
-        return btnSterge;
+    public JButton getBtnActiveazaInactiveaza() {
+        return btnActiveazaInactiveaza;
     }
     
     private void btnAdaugaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdaugaActionPerformed
@@ -147,11 +176,29 @@ public class FrmAdministrareSoferiTiruri extends javax.swing.JFrame {
         soferiTiruriController.actionUpdate(this);
     }//GEN-LAST:event_btnEditeazaActionPerformed
 
-    private void btnStergeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStergeActionPerformed
+    private void btnActiveazaInactiveazaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActiveazaInactiveazaActionPerformed
         // TODO add your handling code here:
-        soferiTiruriController.actionDelete();
-    }//GEN-LAST:event_btnStergeActionPerformed
+        soferiTiruriController.actionToggleActiv();
+    }//GEN-LAST:event_btnActiveazaInactiveazaActionPerformed
 
+    private void rdbActiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbActiveActionPerformed
+        // TODO add your handling code here:
+        soferiTiruriController.updateAndSetModelToTable();
+    }//GEN-LAST:event_rdbActiveActionPerformed
+
+    private void rdbInactiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbInactiveActionPerformed
+        // TODO add your handling code here:
+        soferiTiruriController.updateAndSetModelToTable();
+    }//GEN-LAST:event_rdbInactiveActionPerformed
+
+    public JRadioButton getRdbActive() {
+        return rdbActive;
+    }
+
+    public JRadioButton getRdbInactive() {
+        return rdbInactive;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -188,12 +235,16 @@ public class FrmAdministrareSoferiTiruri extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActiveazaInactiveaza;
     private javax.swing.JButton btnAdauga;
     private javax.swing.JButton btnEditeaza;
-    private javax.swing.JButton btnSterge;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JRadioButton rdbActive;
+    private javax.swing.JRadioButton rdbInactive;
     private javax.swing.JTable tblSoferiTiruri;
     // End of variables declaration//GEN-END:variables
 }

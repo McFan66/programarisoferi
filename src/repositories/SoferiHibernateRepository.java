@@ -61,7 +61,7 @@ public class SoferiHibernateRepository implements SoferiRepository {
     }
     public static void main(String[] args) {
         SoferiRepository soferiRepository = new SoferiHibernateRepository();
-        System.out.println(soferiRepository.getAll());
+//        System.out.println(soferiRepository.getSoferiLiberi());
     }
 
     @Override
@@ -73,5 +73,16 @@ public class SoferiHibernateRepository implements SoferiRepository {
         tx.commit();
         return listaSoferi;
     }
+
+//    @Override
+//    public ArrayList<Sofer> getSoferiLiberi() {
+//        ArrayList<Sofer> listaSoferi = new ArrayList<>();
+//        org.hibernate.Transaction tx = session.beginTransaction();
+//        String hql = "from Sofer where soferiTiruri = :soferiTiruri";
+//        Query q = session.createQuery(hql).setParameter("soferiTiruri", null);
+//        listaSoferi = (ArrayList<Sofer>) q.list();
+//        tx.commit();
+//        return listaSoferi;
+//    }
     
 }

@@ -20,7 +20,6 @@ public class Sofer implements java.io.Serializable {
     private Set<SoferiTiruri> soferiTiruri = new HashSet<SoferiTiruri>(0);
 
     public Sofer() {
-        
     }
 
     public Sofer(int id, String nume, String prenume, String cnp) {

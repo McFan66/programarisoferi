@@ -44,5 +44,10 @@ public class SoferiTiruriServiceImpl implements SoferiTiruriService{
     public ArrayList<SoferiTiruri> getSoferiTiruriByTir(Tir tir) {
         return soferiTiruriRepository.getSoferiTiruriByTir(tir);
     }
+
+    @Override
+    public ArrayList<SoferiTiruri> getSoferiTiruriByValid(boolean valid) {
+        return soferiTiruriRepository.getSoferiTiruriByValid(valid);
+    }
     
 }

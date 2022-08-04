@@ -6,6 +6,7 @@
 package repositories;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import models.Inregistrare;
 import models.SoferiTiruri;
@@ -29,6 +30,7 @@ public class InregistrariHibernateRepository implements InregistrariRepository{
     
     @Override
     public boolean adaugaInregistrare(Inregistrare inregistrare) {
+        session.clear();
         org.hibernate.Transaction tx = session.beginTransaction();
 
         if (inregistrare != null && inregistrare.getId() > 0) {
@@ -43,6 +45,7 @@ public class InregistrariHibernateRepository implements InregistrariRepository{
         } else {
             tx.rollback();
         }
+        session.clear();
         return id > 0;
     }
 
@@ -112,6 +115,41 @@ public class InregistrariHibernateRepository implements InregistrariRepository{
     public static void main(String[] args) {
         InregistrariRepository inregistrariRepository = new InregistrariHibernateRepository();
         System.out.println(inregistrariRepository.getInregistrareByNoPlecare());
+    }
+
+    @Override
+    public ArrayList<Inregistrare> getInregistrariFinalizate() {
+        ArrayList<Inregistrare> listaInregistrari = new ArrayList<>();
+        Calendar c1 = Calendar.getInstance();
+        org.hibernate.Transaction tx = session.beginTransaction();
+        String hql = "from Inregistrare where dataSosire <= :dataCurenta";
+        Query q = session.createQuery(hql).setTimestamp("dataCurenta", c1.getTime());
+        listaInregistrari = (ArrayList<Inregistrare>) q.list();
+        tx.commit();
+        return listaInregistrari;
+    }
+
+    @Override
+    public ArrayList<Inregistrare> getInregistrariInDesfasurare() {
+        ArrayList<Inregistrare> listaInregistrari = new ArrayList<>();
+        Calendar c1 = Calendar.getInstance();
+        org.hibernate.Transaction tx = session.beginTransaction();
+        String hql = "from Inregistrare where dataSosire > :dataCurenta";
+        Query q = session.createQuery(hql).setTimestamp("dataCurenta", c1.getTime());
+        listaInregistrari = (ArrayList<Inregistrare>) q.list();
+        tx.commit();
+        return listaInregistrari;
+    }
+
+    @Override
+    public ArrayList<Inregistrare> getInregistrariByDates(Date dataPlecare, Date dataSosire) {
+        ArrayList<Inregistrare> listaInregistrari;
+        org.hibernate.Transaction tx = session.beginTransaction();
+        String hql = "from Inregistrare where dataPlecare = :dataPlecare and dataSosire = :dataSosire";
+        Query q = session.createQuery(hql).setTimestamp("dataPlecare", dataPlecare).setTimestamp("dataSosire", dataSosire);
+        listaInregistrari = (ArrayList<Inregistrare>) q.list();
+        tx.commit();
+        return listaInregistrari;
     }
     
 }

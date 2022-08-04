@@ -90,11 +90,24 @@ public class SoferiTiruriHibernateRepository implements SoferiTiruriRepository {
         return listaSoferiTiruri;
     }
     
+    
+    
     public static void main(String[] args) {
         SoferiTiruriRepository soferiTiruriRepository = new SoferiTiruriHibernateRepository();
         Tir t = new Tir();
         t.setId(1);
         System.out.println(soferiTiruriRepository.getSoferiTiruriByTir(t));
+    }
+
+    @Override
+    public ArrayList<SoferiTiruri> getSoferiTiruriByValid(boolean valid) {
+        ArrayList<SoferiTiruri> listaSoferiTiruri = new ArrayList<>();
+        org.hibernate.Transaction tx = session.beginTransaction();
+        String hql = "from SoferiTiruri where valid = :valid";
+        Query q = session.createQuery(hql).setParameter("valid", valid);
+        listaSoferiTiruri = (ArrayList<SoferiTiruri>) q.list();
+        tx.commit();
+        return listaSoferiTiruri;
     }
     
 }
