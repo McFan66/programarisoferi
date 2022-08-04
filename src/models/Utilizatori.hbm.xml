@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 2, 2022 6:30:51 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="models.Utilizator" table="UTILIZATORI" schema="FANA" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="nume" type="string">
+            <column name="NUME" length="100" not-null="true" />
+        </property>
+        <property name="prenume" type="string">
+            <column name="PRENUME" length="100" not-null="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="EMAIL" length="100" not-null="true" />
+        </property>
+        <property name="parola" type="string">
+            <column name="PAROLA" length="100" not-null="true" />
+        </property>
+        <property name="valid" type="boolean">
+            <column name="VALID" not-null="true" />
+        </property>
+        <set fetch="select" inverse="true" lazy="false" name="utilizatoriRoluri" table="UTILIZATORI_ROLURI">
+            <key>
+                <column name="UTILIZATOR" not-null="true" />
+            </key>
+            <one-to-many class="models.UtilizatoriRoluri"/>
+        </set>
+    </class>
+</hibernate-mapping>

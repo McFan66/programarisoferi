@@ -49,4 +49,7 @@ Contributor(s):
   <table-filter match-name="INREGISTRARI"/>
   <table-filter match-name="SOFERI_TIRURI"/>
   <table-filter match-name="POZE" />
+  <table-filter match-name="UTILIZATORI"/>
+  <table-filter match-name="ROLURI"/>
+  <table-filter match-name="UTILIZATORI_ROLURI"/>
 </hibernate-reverse-engineering>
