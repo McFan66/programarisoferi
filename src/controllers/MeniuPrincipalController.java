@@ -56,10 +56,10 @@ public class MeniuPrincipalController {
         frmMeniuPrincipal = new FrmMeniuPrincipal();
         frmMeniuPrincipal.setMeniuPrincipalController(this);
         frmMeniuPrincipal.setLocationRelativeTo(null);
-        setModel(tiruriService.getTirByStare(stareService.getStareByNume("Parcat")), frmMeniuPrincipal.getLstParcate());
-        setModel(tiruriService.getTirByStare(stareService.getStareByNume("Liber")), frmMeniuPrincipal.getLstLibere());
-        setModel(tiruriService.getTirByStare(stareService.getStareByNume("In cursa")), frmMeniuPrincipal.getLstInCursa());
-        setModel(tiruriService.getTirByStare(stareService.getStareByNume("In service")), frmMeniuPrincipal.getLstInService());
+        setModel(tiruriService.getTirByStare(stareService.getStareByNume("Stare test")), frmMeniuPrincipal.getLstParcate());
+        setModel(tiruriService.getTirByStare(stareService.getStareByNume("Disponibil")), frmMeniuPrincipal.getLstLibere());
+        setModel(tiruriService.getTirByStare(stareService.getStareByNume("Cursa")), frmMeniuPrincipal.getLstInCursa());
+        setModel(tiruriService.getTirByStare(stareService.getStareByNume("Service")), frmMeniuPrincipal.getLstInService());
         setModelToListaSoferiLiberi();
         updateAndSetModelToTable();
         frmMeniuPrincipal.setVisible(true);
