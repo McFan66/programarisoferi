@@ -140,5 +140,16 @@ public class InregistrariHibernateRepository implements InregistrariRepository{
         tx.commit();
         return listaInregistrari;
     }
+
+    @Override
+    public ArrayList<Inregistrare> getInregistrariByDates(Date dataPlecare, Date dataSosire) {
+        ArrayList<Inregistrare> listaInregistrari;
+        org.hibernate.Transaction tx = session.beginTransaction();
+        String hql = "from Inregistrare where dataPlecare = :dataPlecare and dataSosire = :dataSosire";
+        Query q = session.createQuery(hql).setTimestamp("dataPlecare", dataPlecare).setTimestamp("dataSosire", dataSosire);
+        listaInregistrari = (ArrayList<Inregistrare>) q.list();
+        tx.commit();
+        return listaInregistrari;
+    }
     
 }

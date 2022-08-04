@@ -147,6 +147,7 @@ public class FrmAddInregistrare extends javax.swing.JDialog {
 
     private void dtcPlecarePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dtcPlecarePropertyChange
         // TODO add your handling code here:
+//        meniuPrincipalController.dateChooserStateChanged();
     }//GEN-LAST:event_dtcPlecarePropertyChange
 
     public JDateChooser getDtcPlecare() {

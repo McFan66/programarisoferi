@@ -24,4 +24,5 @@ public interface InregistrariRepository {
     public ArrayList<Inregistrare> getInregistrareByNoPlecare();
     public ArrayList<Inregistrare> getInregistrariFinalizate();
     public ArrayList<Inregistrare> getInregistrariInDesfasurare();
+    public ArrayList<Inregistrare> getInregistrariByDates(Date dataPlecare , Date dataSosire);
 }

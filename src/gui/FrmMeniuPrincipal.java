@@ -306,7 +306,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
                 .addGap(193, 193, 193))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 761, Short.MAX_VALUE)
                 .addContainerGap())
             .addComponent(jScrollPane5)
         );

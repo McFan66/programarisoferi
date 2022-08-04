@@ -115,6 +115,9 @@ public class MeniuPrincipalController {
         frmAddInregistrare = new FrmAddInregistrare(parent, true);
         frmAddInregistrare.setInregistrariController(this);
         frmAddInregistrare.setLocationRelativeTo(parent);
+        Calendar c1 = Calendar.getInstance();
+        frmAddInregistrare.getDtcPlecare().getDateEditor().setDate(c1.getTime());
+//        dateChooserStateChanged();
         setModelToCmb();
         frmAddInregistrare.setVisible(true);
     }
@@ -146,6 +149,10 @@ public class MeniuPrincipalController {
             return false;
         }
         return true;
+    }
+    
+    public void dateChooserStateChanged() {
+        frmAddInregistrare.getDtcSosire().getDateEditor().setDate(frmAddInregistrare.getDtcPlecare().getDate());
     }
     
     public void saveInregistrare() {

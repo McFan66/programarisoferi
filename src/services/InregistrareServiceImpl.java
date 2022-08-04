@@ -64,5 +64,10 @@ public class InregistrareServiceImpl implements InregistrariService  {
     public ArrayList<Inregistrare> getInregistrariInDesfasurare() {
         return inregistrariRepository.getInregistrariInDesfasurare();
     }
+
+    @Override
+    public ArrayList<Inregistrare> getInregistrariByDates(Date dataPlecare, Date dataSosire) {
+        return inregistrariRepository.getInregistrariByDates(dataPlecare, dataSosire);
+    }
     
 }
