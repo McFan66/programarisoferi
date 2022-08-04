@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 2, 2022 6:30:51 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="models.UtilizatoriRoluri" table="UTILIZATORI_ROLURI" schema="FANA" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="idUtilizator" type="int">
+            <column name="UTILIZATOR" not-null="true" />
+        </property>
+        <property name="idRol" type="int">
+            <column name="ROL" not-null="true" />
+        </property>
+        <property name="dataInceput" type="date">
+            <column name="DATA_INCEPUT" length="10" not-null="true" />
+        </property>
+        <property name="dataSfarsit" type="date">
+            <column name="DATA_SFARSIT" length="10" />
+        </property>
+        <many-to-one name="utilizator" class="models.Utilizator" update="false" insert="false" fetch="select">
+            <column name="UTILIZATOR" not-null="true" />
+        </many-to-one>
+        <many-to-one name="rol" class="models.Rol" update="false" insert="false" fetch="select">
+            <column name="ROL" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

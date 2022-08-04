@@ -54,5 +54,8 @@ Contributor(s):
     <mapping resource="models/Soferi.hbm.xml"/>
     <mapping resource="models/Modele.hbm.xml"/>
     <mapping resource="models/Poze.hbm.xml"/>
+    <mapping resource="models/Utilizatori.hbm.xml"/>
+    <mapping resource="models/Roluri.hbm.xml"/>
+    <mapping resource="models/UtilizatoriRoluri.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>
