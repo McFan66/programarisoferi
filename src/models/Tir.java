@@ -117,6 +117,11 @@ public class Tir  implements java.io.Serializable {
         this.valid = valid;
     }
 
+    @Override
+    public String toString() {
+        return "Tir{" + "id=" + id + ", nrInmatriculare=" + nrInmatriculare + ", idModel=" + idModel + ", idStare=" + idStare + ", stare=" + stare + ", model=" + model + ", valid=" + valid + ", soferiTiruri=" + soferiTiruri + '}';
+    }
+
 
 
 

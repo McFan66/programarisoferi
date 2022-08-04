@@ -57,6 +57,7 @@ import services.SoferiTiruriService;
 import services.SoferiTiruriServiceImpl;
 import services.TiruriService;
 import services.TiruriServiceImpl;
+import tablemodel.ColumnResizer1;
 import utils.HibernateUtil;
 import utils.ProjectUtils;
 
@@ -193,7 +194,7 @@ public class TirController {
                 Model m = (Model) cmbModel.getSelectedItem();
                 tirSelectat.setIdModel(m.getId());
                 tirSelectat.setNrInmatriculare(frmAddTir.getTxtNrInmatriculare().getText());
-                tirSelectat.setIdStare(2);
+                tirSelectat.setIdStare(4);
                 tirSelectat.setValid(true);
                 tiruriService.adaugaTir(tirSelectat);
             } else {
@@ -302,6 +303,7 @@ public class TirController {
         };
         tblTiruri.setModel(defaultTableModel);
         tblTiruri.getColumnModel().getColumn(4).setCellRenderer(new TiruriColorCellRenderer());
+        ColumnResizer1.resizeRowHeightAndColumnsWidth(tblTiruri);
         ProjectUtils.tableColumnAdjusterByHeader(tblTiruri);
     }
 

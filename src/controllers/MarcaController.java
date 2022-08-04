@@ -17,6 +17,7 @@ import models.Marca;
 import renderers.MarciModeleColorCellRenderer;
 import services.MarcaService;
 import services.MarcaServiceImpl;
+import tablemodel.ColumnResizer1;
 import tablemodels.TableModelMarci;
 
 /**
@@ -55,7 +56,7 @@ public class MarcaController {
         tableModelMarci.fireTableDataChanged();
         tblMarci.setModel(tableModelMarci);
         tblMarci.getColumnModel().getColumn(2).setCellRenderer(new MarciModeleColorCellRenderer());
-
+        ColumnResizer1.resizeRowHeightAndColumnsWidth(tblMarci);
     }
     
     public void actionEdit(JFrame parent) {

@@ -5,6 +5,7 @@
  */
 package renderers;
 
+import java.awt.Color;
 import java.awt.Component;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
@@ -22,6 +23,10 @@ public class ItemTirRenderer extends DefaultListCellRenderer{
             Tir t = (Tir) value;
             
                 setText(String.format("%s %s %s", t.getModel().getMarca().getNume() , t.getModel().getNume() , t.getNrInmatriculare()));
+                
+                if(isSelected) {
+                    setBackground(Color.cyan);
+                }
         }
         return this;
     }

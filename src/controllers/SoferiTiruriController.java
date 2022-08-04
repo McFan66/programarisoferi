@@ -27,6 +27,7 @@ import services.SoferiTiruriService;
 import services.SoferiTiruriServiceImpl;
 import services.TiruriService;
 import services.TiruriServiceImpl;
+import tablemodel.ColumnResizer1;
 import tablemodels.TableModelSoferiTiruri;
 
 /**
@@ -118,6 +119,7 @@ public class SoferiTiruriController {
         tableModelSoferiTiruri.setListaSoferiTiruri(listaSoferiTiruri);
         tableModelSoferiTiruri.fireTableDataChanged();
         tblSoferiTiruri.setModel(tableModelSoferiTiruri);
+        ColumnResizer1.resizeRowHeightAndColumnsWidth(tblSoferiTiruri);
     }
     
     public void updateAndSetModelToDropDowns() {

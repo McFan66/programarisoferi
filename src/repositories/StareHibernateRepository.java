@@ -45,6 +45,20 @@ public class StareHibernateRepository implements StareRepository {
     }
 
     @Override
+    public Stare getStareByNume(String nume) {
+        session.clear();
+        org.hibernate.Transaction tx = session.beginTransaction();
+        
+        Query q = session.createQuery("from Stare where nume = :nume").setParameter("nume", nume);
+        
+        Stare stare = (Stare) q.uniqueResult();
+        
+        tx.commit();
+        return stare;
+        
+    }
+    
+    @Override
     public void stergeStare(Stare stare) {
        org.hibernate.Transaction tx = session.beginTransaction();
         session.delete(stare);
@@ -63,10 +77,7 @@ public class StareHibernateRepository implements StareRepository {
     
     public static void main(String[] args) {
         StareRepository stareRepository = new StareHibernateRepository();
-        Stare s = new Stare();
-        s.setValid(1);
-        s.setNume("Service");
-        stareRepository.adaugaStare(s);
+        System.out.println(stareRepository.getStareByNume("Liber"));
     }
     
 }
