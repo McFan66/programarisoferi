@@ -9,12 +9,13 @@ import java.util.ArrayList;
 import models.Marca;
 import models.Stare;
 import models.Tir;
+import observers.Subject;
 
 /**
  *
  * @author Stefan
  */
-public interface TiruriService {
+public interface TiruriService extends Subject{
     public boolean adaugaTir(Tir tir);
     public void stergeTir(Tir tir);
     public ArrayList<Tir> getAll();

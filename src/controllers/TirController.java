@@ -280,16 +280,16 @@ public class TirController {
             }
             data[x][2] = String.format("%s %s %s", allMatches.get(0), allMatches.get(1), allMatches.get(2));
             switch (t.getIdStare()) {
-                case 1:
+                case 6:
                     data[x][4] = "Tir test";
                     break;
-                case 2:
+                case 7:
                     data[x][4] = "Disponibil";
                     break;
-                case 3:
+                case 8:
                     data[x][4] = "In cursa";
                     break;
-                case 4:
+                case 9:
                     data[x][4] = "In service";
                     break;
             }
@@ -433,24 +433,24 @@ public class TirController {
     }
 
     public void modService() {
-        if (tirSelectat.getIdStare() == 2) {
+        if (tirSelectat.getIdStare() == 7) {
             int raspuns = JOptionPane.showConfirmDialog(frmAfisareDetaliiTir, "Sunteti sigur ca doriti sa plasati acest tir in service?", "Plasare tir in service", JOptionPane.YES_NO_OPTION);
             if (raspuns == JOptionPane.YES_OPTION) {
                 Session session = HibernateUtil.getSessionFactory().openSession();
                 org.hibernate.Transaction tx = session.beginTransaction();
-                tirSelectat.setIdStare(4);
+                tirSelectat.setIdStare(9);
                 tiruriService.adaugaTir(tirSelectat);
                 tx.commit();
                 frmAfisareDetaliiTir.getLblStatus().setText("In service");
                 Color darkOrange = new Color(255, 143, 0);
                 frmAfisareDetaliiTir.getLblStatus().setForeground(darkOrange);
             }
-        } else if (tirSelectat.getIdStare() == 4) {
+        } else if (tirSelectat.getIdStare() == 9) {
             int raspuns = JOptionPane.showConfirmDialog(frmAfisareDetaliiTir, "Sunteti sigur ca doriti sa eliminati acest tir din service?", "Eliminare tir din service", JOptionPane.YES_NO_OPTION);
             if (raspuns == JOptionPane.YES_OPTION) {
                 Session session = HibernateUtil.getSessionFactory().openSession();
                 org.hibernate.Transaction tx = session.beginTransaction();
-                tirSelectat.setIdStare(2);
+                tirSelectat.setIdStare(7);
                 tiruriService.adaugaTir(tirSelectat);
                 tx.commit();
                 frmAfisareDetaliiTir.getLblStatus().setText("Disponibil");

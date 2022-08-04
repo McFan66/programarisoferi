@@ -5,6 +5,7 @@ package models;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -23,6 +24,8 @@ public class Tir  implements java.io.Serializable {
   //   private ArrayList<File> poze;
   //   private File folderPoze;
      private Set soferiTiruri = new HashSet(0);
+     
+     
 
     public Tir() {
     }
