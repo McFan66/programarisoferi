@@ -12,23 +12,12 @@ import controllers.SoferController;
 import controllers.SoferiTiruriController;
 import controllers.TirController;
 import java.awt.Image;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.Box;
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import models.Sofer;
-import models.Stare;
-import models.Tir;
-import services.StareServiceImpl;
-import services.TiruriService;
-import services.TiruriServiceImpl;
 import tablemodel.ColumnResizer1;
 import tablemodels.TableModelInregistrari;
 /**
@@ -77,14 +66,11 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         lblTiruriInCursa = new javax.swing.JLabel();
-        lblTiruriParcate = new javax.swing.JLabel();
         lblTiruriLibere = new javax.swing.JLabel();
         lblTiruriInService = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         lstInCursa = new javax.swing.JList<>();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        lstParcate = new javax.swing.JList<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstLibere = new javax.swing.JList<>();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -122,17 +108,13 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Informatii tiruri:");
 
-        java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 40, 5);
+        java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 80, 5);
         flowLayout1.setAlignOnBaseline(true);
         jPanel6.setLayout(flowLayout1);
 
         lblTiruriInCursa.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblTiruriInCursa.setText("In Cursa:");
         jPanel6.add(lblTiruriInCursa);
-
-        lblTiruriParcate.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        lblTiruriParcate.setText("Parcate:");
-        jPanel6.add(lblTiruriParcate);
 
         lblTiruriLibere.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblTiruriLibere.setText("Libere:");
@@ -144,6 +126,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
 
         jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.LINE_AXIS));
 
+        jScrollPane4.setBorder(null);
         jScrollPane4.setPreferredSize(new java.awt.Dimension(75, 300));
 
         lstInCursa.setModel(new javax.swing.AbstractListModel<String>() {
@@ -151,6 +134,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        lstInCursa.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lstInCursa.setInheritsPopupMenu(true);
         lstInCursa.setMaximumSize(new java.awt.Dimension(500, 500));
         lstInCursa.setMinimumSize(new java.awt.Dimension(100, 300));
@@ -160,20 +144,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
 
         jPanel2.add(jScrollPane4);
 
-        jScrollPane2.setPreferredSize(new java.awt.Dimension(75, 300));
-
-        lstParcate.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        lstParcate.setMaximumSize(new java.awt.Dimension(500, 500));
-        lstParcate.setPreferredSize(new java.awt.Dimension(100, 300));
-        lstParcate.setValueIsAdjusting(true);
-        jScrollPane2.setViewportView(lstParcate);
-
-        jPanel2.add(jScrollPane2);
-
+        jScrollPane1.setBorder(null);
         jScrollPane1.setPreferredSize(new java.awt.Dimension(75, 300));
 
         lstLibere.setModel(new javax.swing.AbstractListModel<String>() {
@@ -181,6 +152,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        lstLibere.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lstLibere.setMaximumSize(new java.awt.Dimension(500, 500));
         lstLibere.setPreferredSize(new java.awt.Dimension(100, 300));
         lstLibere.setValueIsAdjusting(true);
@@ -188,6 +160,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
 
         jPanel2.add(jScrollPane1);
 
+        jScrollPane3.setBorder(null);
         jScrollPane3.setPreferredSize(new java.awt.Dimension(75, 300));
 
         lstInService.setModel(new javax.swing.AbstractListModel<String>() {
@@ -195,6 +168,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        lstInService.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lstInService.setMaximumSize(new java.awt.Dimension(500, 500));
         lstInService.setPreferredSize(new java.awt.Dimension(100, 300));
         lstInService.setValueIsAdjusting(true);
@@ -223,8 +197,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -325,6 +298,9 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel3.setText("Soferi liberi:");
 
+        jScrollPane6.setBorder(null);
+
+        lstSoferiLiberi.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane6.setViewportView(lstSoferiLiberi);
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -526,10 +502,6 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         return lstLibere;
     }
 
-    public JList<String> getLstParcate() {
-        return lstParcate;
-    }
-
     public JTable getTblInregistrari() {
         return tblInregistrari;
     }
@@ -570,6 +542,16 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         return btnFinalizare;
     }
    
+    public void initControllers() {
+        this.tirController.setPozaService(meniuPrincipalController.getPozaService());
+        this.tirController.setSoferiTiruriService(meniuPrincipalController.getSoferiTiruriService());
+        this.tirController.setTiruriService(meniuPrincipalController.getTiruriService());
+        this.soferController.setPozaService(meniuPrincipalController.getPozaService());
+        this.soferController.setSoferService(meniuPrincipalController.getSoferService());
+        this.soferiTiruriController.setSoferService(meniuPrincipalController.getSoferService());
+        this.soferiTiruriController.setSoferiTiruriService(meniuPrincipalController.getSoferiTiruriService());
+        this.soferiTiruriController.setTiruriService(meniuPrincipalController.getTiruriService());
+    }
     
         /**
      * @param args the command line arguments
@@ -629,7 +611,6 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
@@ -637,11 +618,9 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel lblTiruriInCursa;
     private javax.swing.JLabel lblTiruriInService;
     private javax.swing.JLabel lblTiruriLibere;
-    private javax.swing.JLabel lblTiruriParcate;
     private javax.swing.JList<String> lstInCursa;
     private javax.swing.JList<String> lstInService;
     private javax.swing.JList<String> lstLibere;
-    private javax.swing.JList<String> lstParcate;
     private javax.swing.JList lstSoferiLiberi;
     private javax.swing.JMenuBar meniu;
     private javax.swing.JMenu meniuAdministrare;

@@ -37,9 +37,9 @@ public class SoferiTiruriController {
     
     private FrmAddSoferiTiruri frmAddSoferiTiruri;
     private FrmAdministrareSoferiTiruri frmAdministrareSoferiTiruri;
-    private SoferiTiruriService soferiTiruriService = new SoferiTiruriServiceImpl();
-    private TiruriService tiruriService = new TiruriServiceImpl();
-    private SoferService soferService = new SoferServiceImpl();
+    private SoferiTiruriService soferiTiruriService;
+    private TiruriService tiruriService;
+    private SoferService soferService;
     private SoferiTiruri soferiTiruriSelectat = null;
     private ArrayList<SoferiTiruri> listaSoferiTiruri;
     private tablemodels.TableModelSoferiTiruri tableModelSoferiTiruri = new TableModelSoferiTiruri();
@@ -200,4 +200,18 @@ public class SoferiTiruriController {
         updateAndSetModelToTable();
         frmAddSoferiTiruri.dispose();
     }
+
+    public void setSoferiTiruriService(SoferiTiruriService soferiTiruriService) {
+        this.soferiTiruriService = soferiTiruriService;
+    }
+
+    public void setTiruriService(TiruriService tiruriService) {
+        this.tiruriService = tiruriService;
+    }
+
+    public void setSoferService(SoferService soferService) {
+        this.soferService = soferService;
+    }
+    
+    
   }

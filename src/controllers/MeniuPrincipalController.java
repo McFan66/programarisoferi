@@ -25,9 +25,16 @@ import observers.VObserver;
 import renderers.ItemSoferRenderer;
 import renderers.ItemSoferiTiruriRenderer;
 import services.InregistrareServiceImpl;
+import services.InregistrariService;
+import services.PozaService;
+import services.PozaServiceImpl;
+import services.SoferService;
 import services.SoferServiceImpl;
+import services.SoferiTiruriService;
 import services.SoferiTiruriServiceImpl;
+import services.StareService;
 import services.StareServiceImpl;
+import services.TiruriService;
 import services.TiruriServiceImpl;
 import tablemodel.ColumnResizer1;
 import tablemodels.TableModelInregistrari;
@@ -45,6 +52,7 @@ public class MeniuPrincipalController implements VObserver {
     private services.StareService stareService = new StareServiceImpl();
     private services.SoferiTiruriService soferiTiruriService = new SoferiTiruriServiceImpl();
     private services.SoferService soferService = new SoferServiceImpl();
+    private services.PozaService pozaService = new PozaServiceImpl();
 
     private DefaultListModel<Tir> modelListe;
 
@@ -56,10 +64,11 @@ public class MeniuPrincipalController implements VObserver {
 
     public void actionIndex() {
         tiruriService.addObserver(this);
+        inregistrariService.addObserver(this);
         frmMeniuPrincipal = new FrmMeniuPrincipal();
         frmMeniuPrincipal.setMeniuPrincipalController(this);
         frmMeniuPrincipal.setLocationRelativeTo(null);
-        setModel(tiruriService.getTirByStare(stareService.getStareByNume("Stare test")), frmMeniuPrincipal.getLstParcate());
+        frmMeniuPrincipal.initControllers();
         setModel(tiruriService.getTirByStare(stareService.getStareByNume("Disponibil")), frmMeniuPrincipal.getLstLibere());
         setModel(tiruriService.getTirByStare(stareService.getStareByNume("Cursa")), frmMeniuPrincipal.getLstInCursa());
         setModel(tiruriService.getTirByStare(stareService.getStareByNume("Service")), frmMeniuPrincipal.getLstInService());
@@ -81,7 +90,8 @@ public class MeniuPrincipalController implements VObserver {
         inregistrareSelectata = listaInregistrari.get(index);
         Calendar c1 = Calendar.getInstance();
         inregistrareSelectata.setDataSosire(c1.getTime());
-
+        inregistrareSelectata.getSoferTir().setInCursa(false);
+        soferiTiruriService.adaugaSoferTir(inregistrareSelectata.getSoferTir());
         inregistrariService.adaugaInregistrare(inregistrareSelectata);
 
         updateAndSetModelToTable();
@@ -211,9 +221,9 @@ public class MeniuPrincipalController implements VObserver {
     private void setModelToListaSoferiLiberi() {
         DefaultListModel<Sofer> modelListaSoferiLiberi = new DefaultListModel<>();
 
-        for (Sofer s : soferService.getAll()) {
-            if (s.getSoferiTiruri().isEmpty()) {
-                modelListaSoferiLiberi.addElement(s);
+        for (SoferiTiruri sf : soferiTiruriService.getAll()) {
+            if (!sf.isInCursa()) {
+                modelListaSoferiLiberi.addElement(sf.getSofer());
             }
         }
 
@@ -232,14 +242,43 @@ public class MeniuPrincipalController implements VObserver {
 
     @Override
     public void update(Object subject) {
-        if (subject != null) {
-            Tir tir=(Tir)subject;
-            System.out.println(tir.toString());
+//        if (subject != null) {
+//            Tir tir=(Tir)subject;
+//            System.out.println(tir.toString());
+//        }
+
+        if(subject instanceof Tir) {
+            setModel(tiruriService.getTirByStare(stareService.getStareByNume("Disponibil")), frmMeniuPrincipal.getLstLibere());
+            setModel(tiruriService.getTirByStare(stareService.getStareByNume("Cursa")), frmMeniuPrincipal.getLstInCursa());
+            setModel(tiruriService.getTirByStare(stareService.getStareByNume("Service")), frmMeniuPrincipal.getLstInService());
         }
-        setModel(tiruriService.getTirByStare(stareService.getStareByNume("Stare test")), frmMeniuPrincipal.getLstParcate());
-        setModel(tiruriService.getTirByStare(stareService.getStareByNume("Disponibil")), frmMeniuPrincipal.getLstLibere());
-        setModel(tiruriService.getTirByStare(stareService.getStareByNume("Cursa")), frmMeniuPrincipal.getLstInCursa());
-        setModel(tiruriService.getTirByStare(stareService.getStareByNume("Service")), frmMeniuPrincipal.getLstInService());
+        if(subject instanceof Inregistrare) {
+            setModelToListaSoferiLiberi();
+        }
     }
 
+    public InregistrariService getInregistrariService() {
+        return inregistrariService;
+    }
+
+    public TiruriService getTiruriService() {
+        return tiruriService;
+    }
+
+    public StareService getStareService() {
+        return stareService;
+    }
+
+    public SoferiTiruriService getSoferiTiruriService() {
+        return soferiTiruriService;
+    }
+
+    public SoferService getSoferService() {
+        return soferService;
+    }
+
+    public PozaService getPozaService() {
+        return pozaService;
+    }
+    
 }

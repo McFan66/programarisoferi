@@ -9,12 +9,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import models.Inregistrare;
 import models.SoferiTiruri;
+import observers.Subject;
 
 /**
  *
  * @author Stefan
  */
-public interface InregistrariService {
+public interface InregistrariService extends Subject{
     public boolean adaugaInregistrare(Inregistrare inregistrare);
     public void stergeInregistrare(Inregistrare inregistrare);
     public ArrayList<Inregistrare> getAll();

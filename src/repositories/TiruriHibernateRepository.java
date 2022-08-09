@@ -29,7 +29,7 @@ public class TiruriHibernateRepository implements TiruriRepository {
     @Override
     public boolean adaugaTir(Tir tir) {
         org.hibernate.Transaction tx = session.beginTransaction();
-
+        session.clear();
         if (tir != null && tir.getId() > 0) {
             session.saveOrUpdate(tir);
             tx.commit();

@@ -29,9 +29,6 @@ public class TiruriServiceImpl implements TiruriService {
         System.out.println("[DEBUG]"+getClass().getName()+" s-a creat o instanta");
     }
     
-    
-    
-    
     @Override
     public boolean adaugaTir(Tir tir) {
         System.out.println("[DEBUG] "+getClass().getName()+" adaugaTir() "+tir);

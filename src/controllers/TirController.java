@@ -75,11 +75,11 @@ public class TirController {
     private int curImageIndex;
     private int indexPozaCurenta;
     private ArrayList<File> listaPozeDeAfisat = new ArrayList<>();
-    private TiruriService tiruriService = new TiruriServiceImpl();
+    private TiruriService tiruriService;
     private MarcaService marcaService = new MarcaServiceImpl();
     private ModelService modelService = new ModelServiceImpl();
-    private PozaService pozaService = new PozaServiceImpl();
-    private SoferiTiruriService soferiTiruriService = new SoferiTiruriServiceImpl();
+    private PozaService pozaService;
+    private SoferiTiruriService soferiTiruriService;
     private DefaultComboBoxModel<Marca> modelCmbMarci = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<Model> modelCmbModele = new DefaultComboBoxModel<>();
     private Tir tirSelectat;
@@ -338,24 +338,25 @@ public class TirController {
             allMatches.add(m.group());
         }
         switch (tirSelectat.getIdStare()) {
-            case 1:
+            case 6:
                 frmAfisareDetaliiTir.getLblStatus().setText("Tir test");
                 frmAfisareDetaliiTir.getLblStatus().setForeground(Color.BLUE);
                 break;
-            case 2:
+            case 7:
                 frmAfisareDetaliiTir.getLblStatus().setText("Disponibil");
                 Color darkGreen = new Color(0, 153, 0);
                 frmAfisareDetaliiTir.getLblStatus().setForeground(darkGreen);
                 break;
-            case 3:
+            case 8:
                 frmAfisareDetaliiTir.getLblStatus().setText("In cursa");
                 frmAfisareDetaliiTir.getLblStatus().setForeground(Color.RED);
                 frmAfisareDetaliiTir.getBtnModService().setEnabled(false);
                 break;
-            case 4:
+            case 9:
                 frmAfisareDetaliiTir.getLblStatus().setText("In service");
                 Color darkOrange = new Color(255, 143, 0);
                 frmAfisareDetaliiTir.getLblStatus().setForeground(darkOrange);
+                frmAfisareDetaliiTir.getBtnModService().setText("Dezactiveaza mod service");
                 break;
         }
         frmAfisareDetaliiTir.getLblNrInmatriculare().setText(String.format("%s %s %s", allMatches.get(0), allMatches.get(1), allMatches.get(2)));
@@ -458,6 +459,7 @@ public class TirController {
                 frmAfisareDetaliiTir.getLblStatus().setForeground(darkGreen);
             }
         }
+        updateAndSetModelToTable();
     }
 
     public void stergeImagine() {
@@ -560,4 +562,18 @@ public class TirController {
             Logger.getLogger(FrmAddTir.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public void setTiruriService(TiruriService tiruriService) {
+        this.tiruriService = tiruriService;
+    }
+
+    public void setPozaService(PozaService pozaService) {
+        this.pozaService = pozaService;
+    }
+
+    public void setSoferiTiruriService(SoferiTiruriService soferiTiruriService) {
+        this.soferiTiruriService = soferiTiruriService;
+    }
+    
+    
 }

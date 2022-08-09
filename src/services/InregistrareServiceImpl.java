@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import models.Inregistrare;
 import models.SoferiTiruri;
+import observers.VObserver;
 import repositories.InregistrariHibernateRepository;
 import repositories.InregistrariRepository;
 
@@ -19,9 +20,12 @@ import repositories.InregistrariRepository;
 public class InregistrareServiceImpl implements InregistrariService  {
     
     private final InregistrariRepository inregistrariRepository = new InregistrariHibernateRepository();
+    
+    private ArrayList<VObserver> observere = new ArrayList<>();
 
     @Override
     public boolean adaugaInregistrare(Inregistrare inregistrare) {
+        notifyObservers(inregistrare);
         return inregistrariRepository.adaugaInregistrare(inregistrare);
     }
 
@@ -68,6 +72,23 @@ public class InregistrareServiceImpl implements InregistrariService  {
     @Override
     public ArrayList<Inregistrare> getInregistrariByDates(Date dataPlecare, Date dataSosire) {
         return inregistrariRepository.getInregistrariByDates(dataPlecare, dataSosire);
+    }
+
+    @Override
+    public void addObserver(VObserver observer) {
+        this.observere.add(observer);
+    }
+
+    @Override
+    public void removeObserver(VObserver observer) {
+        this.observere.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(Object subject) {
+            for (VObserver observer : observere) {
+            observer.update(subject);
+        }
     }
     
 }

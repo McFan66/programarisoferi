@@ -49,8 +49,8 @@ public class SoferController {
     private FrmAddSofer frmAddSofer;
     private FrmAdministrareSoferi frmAdministrareSoferi;
     private File pozaSelectata;
-    private SoferService soferService = new SoferServiceImpl();
-    private PozaService pozaService = new PozaServiceImpl();
+    private SoferService soferService;
+    private PozaService pozaService;
     private ArrayList<Sofer> listaSoferi;
     private Sofer soferSelectat;
 
@@ -280,5 +280,15 @@ public class SoferController {
             }
         }
     }
+
+    public void setSoferService(SoferService soferService) {
+        this.soferService = soferService;
+    }
+
+    public void setPozaService(PozaService pozaService) {
+        this.pozaService = pozaService;
+    }
+    
+    
 
 }
