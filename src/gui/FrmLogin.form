@@ -40,7 +40,7 @@
                               <Component id="txtEmail" min="-2" pref="242" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="txtParola" max="32767" attributes="0"/>
+                          <Component id="customPasswordField1" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
@@ -63,7 +63,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblParola" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtParola" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="customPasswordField1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
               <Component id="btnLoin" min="-2" max="-2" attributes="0"/>
@@ -93,7 +93,10 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLoinActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JPasswordField" name="txtParola">
+    <Component class="gui.CustomPasswordField" name="customPasswordField1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="customPasswordField1"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
