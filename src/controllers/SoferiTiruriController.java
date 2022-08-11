@@ -13,6 +13,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import models.AppSingleTone;
 import models.Marca;
 import models.Model;
 import models.Sofer;
@@ -37,9 +38,9 @@ public class SoferiTiruriController {
     
     private FrmAddSoferiTiruri frmAddSoferiTiruri;
     private FrmAdministrareSoferiTiruri frmAdministrareSoferiTiruri;
-    private SoferiTiruriService soferiTiruriService;
-    private TiruriService tiruriService;
-    private SoferService soferService;
+    private SoferiTiruriService soferiTiruriService=AppSingleTone.getAppSingleToneInstance().getSoferiTiruriService();
+    private TiruriService tiruriService=AppSingleTone.getAppSingleToneInstance().getTiruriService();
+    private SoferService soferService=AppSingleTone.getAppSingleToneInstance().getSoferService();
     private SoferiTiruri soferiTiruriSelectat = null;
     private ArrayList<SoferiTiruri> listaSoferiTiruri;
     private tablemodels.TableModelSoferiTiruri tableModelSoferiTiruri = new TableModelSoferiTiruri();

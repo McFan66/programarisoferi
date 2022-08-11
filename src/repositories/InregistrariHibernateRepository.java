@@ -23,14 +23,18 @@ public class InregistrariHibernateRepository implements InregistrariRepository{
     Session session = null;
 
     public InregistrariHibernateRepository() {
-        this.session = HibernateUtil.getSessionFactory().openSession();
+        if (session == null || !session.isOpen()) {
+            this.session = HibernateUtil.getSessionFactory().openSession();
+        }
     }
     
     
     
     @Override
     public boolean adaugaInregistrare(Inregistrare inregistrare) {
-        session.clear();
+        if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         org.hibernate.Transaction tx = session.beginTransaction();
 
         if (inregistrare != null && inregistrare.getId() > 0) {
@@ -45,7 +49,7 @@ public class InregistrariHibernateRepository implements InregistrariRepository{
         } else {
             tx.rollback();
         }
-        session.clear();
+        session.close();
         return id > 0;
     }
 
@@ -58,16 +62,23 @@ public class InregistrariHibernateRepository implements InregistrariRepository{
 
     @Override
     public ArrayList<Inregistrare> getAll() {
+        if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         ArrayList<Inregistrare> listaInregistrari = new ArrayList<>();
         org.hibernate.Transaction tx = session.beginTransaction();
         Query q = session.createQuery("from Inregistrare");
         listaInregistrari = (ArrayList<Inregistrare>) q.list();
         tx.commit();
+        session.close();
         return listaInregistrari;
     }
 
     @Override
     public ArrayList<Inregistrare> getInregistrariBySoferiTiruri(SoferiTiruri soferTir) {
+        if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         ArrayList<Inregistrare> listaInregistrari = new ArrayList<>();
         org.hibernate.Transaction tx = session.beginTransaction();
         Inregistrare inregistrare = new Inregistrare();
@@ -75,11 +86,15 @@ public class InregistrariHibernateRepository implements InregistrariRepository{
         Query q = session.createQuery("from Inregistrare where idSoferTir = :idSoferTir").setProperties(inregistrare);
         listaInregistrari = (ArrayList<Inregistrare>) q.list();
         tx.commit();
+        session.close();
         return listaInregistrari;
     }
 
     @Override
     public ArrayList<Inregistrare> getInregistrariByDataSosire(Date dataSosire) {
+        if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         ArrayList<Inregistrare> listaInregistrari = new ArrayList<>();
         org.hibernate.Transaction tx = session.beginTransaction();
         Inregistrare inregistrare = new Inregistrare();
@@ -87,11 +102,15 @@ public class InregistrariHibernateRepository implements InregistrariRepository{
         Query q = session.createQuery("from Inregistrare where dataSosire = :dataSosire").setProperties(inregistrare);
         listaInregistrari = (ArrayList<Inregistrare>) q.list();
         tx.commit();
+        session.close();
         return listaInregistrari;
     }
 
     @Override
     public ArrayList<Inregistrare> getInregistrareByDataPlecare(Date dataPlecare) {
+        if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         ArrayList<Inregistrare> listaInregistrari = new ArrayList<>();
         org.hibernate.Transaction tx = session.beginTransaction();
         Inregistrare inregistrare = new Inregistrare();
@@ -99,16 +118,21 @@ public class InregistrariHibernateRepository implements InregistrariRepository{
         Query q = session.createQuery("from Inregistrare where dataPlecare = :dataPlecare").setProperties(inregistrare);
         listaInregistrari = (ArrayList<Inregistrare>) q.list();
         tx.commit();
+        session.close();
         return listaInregistrari;
     }
 
     @Override
     public ArrayList<Inregistrare> getInregistrareByNoPlecare() {
+        if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         ArrayList<Inregistrare> listaInregistrari = new ArrayList<>();
         org.hibernate.Transaction tx = session.beginTransaction();
         Query q = session.createQuery("from Inregistrare where dataPlecare = null");
         listaInregistrari = (ArrayList<Inregistrare>) q.list();
         tx.commit();
+        session.close();
         return listaInregistrari;
     }
     
@@ -119,6 +143,9 @@ public class InregistrariHibernateRepository implements InregistrariRepository{
 
     @Override
     public ArrayList<Inregistrare> getInregistrariFinalizate() {
+        if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         ArrayList<Inregistrare> listaInregistrari = new ArrayList<>();
         Calendar c1 = Calendar.getInstance();
         org.hibernate.Transaction tx = session.beginTransaction();
@@ -126,11 +153,15 @@ public class InregistrariHibernateRepository implements InregistrariRepository{
         Query q = session.createQuery(hql).setTimestamp("dataCurenta", c1.getTime());
         listaInregistrari = (ArrayList<Inregistrare>) q.list();
         tx.commit();
+        session.close();
         return listaInregistrari;
     }
 
     @Override
     public ArrayList<Inregistrare> getInregistrariInDesfasurare() {
+        if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         ArrayList<Inregistrare> listaInregistrari = new ArrayList<>();
         Calendar c1 = Calendar.getInstance();
         org.hibernate.Transaction tx = session.beginTransaction();
@@ -138,17 +169,22 @@ public class InregistrariHibernateRepository implements InregistrariRepository{
         Query q = session.createQuery(hql).setTimestamp("dataCurenta", c1.getTime());
         listaInregistrari = (ArrayList<Inregistrare>) q.list();
         tx.commit();
+        session.close();
         return listaInregistrari;
     }
 
     @Override
     public ArrayList<Inregistrare> getInregistrariByDates(Date dataPlecare, Date dataSosire) {
+                if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         ArrayList<Inregistrare> listaInregistrari;
         org.hibernate.Transaction tx = session.beginTransaction();
         String hql = "from Inregistrare where dataPlecare = :dataPlecare and dataSosire = :dataSosire";
         Query q = session.createQuery(hql).setTimestamp("dataPlecare", dataPlecare).setTimestamp("dataSosire", dataSosire);
         listaInregistrari = (ArrayList<Inregistrare>) q.list();
         tx.commit();
+        session.close();
         return listaInregistrari;
     }
     

@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import models.AppSingleTone;
 import models.Inregistrare;
 import models.Sofer;
 import models.SoferiTiruri;
@@ -47,12 +48,12 @@ public class MeniuPrincipalController implements VObserver {
 
     private FrmAddInregistrare frmAddInregistrare;
     private FrmMeniuPrincipal frmMeniuPrincipal;
-    private services.InregistrariService inregistrariService = new InregistrareServiceImpl();
-    private services.TiruriService tiruriService = new TiruriServiceImpl();
-    private services.StareService stareService = new StareServiceImpl();
-    private services.SoferiTiruriService soferiTiruriService = new SoferiTiruriServiceImpl();
-    private services.SoferService soferService = new SoferServiceImpl();
-    private services.PozaService pozaService = new PozaServiceImpl();
+    private services.InregistrariService inregistrariService = AppSingleTone.getAppSingleToneInstance().getInregistrariService();
+    private services.TiruriService tiruriService = AppSingleTone.getAppSingleToneInstance().getTiruriService();
+    private services.StareService stareService = AppSingleTone.getAppSingleToneInstance().getStareService();
+    private services.SoferiTiruriService soferiTiruriService = AppSingleTone.getAppSingleToneInstance().getSoferiTiruriService();
+    private services.SoferService soferService = AppSingleTone.getAppSingleToneInstance().getSoferService();
+    private services.PozaService pozaService = AppSingleTone.getAppSingleToneInstance().getPozaService();
 
     private DefaultListModel<Tir> modelListe;
 
@@ -68,7 +69,6 @@ public class MeniuPrincipalController implements VObserver {
         frmMeniuPrincipal = new FrmMeniuPrincipal();
         frmMeniuPrincipal.setMeniuPrincipalController(this);
         frmMeniuPrincipal.setLocationRelativeTo(null);
-        frmMeniuPrincipal.initControllers();
         setModel(tiruriService.getTirByStare(stareService.getStareByNume("Disponibil")), frmMeniuPrincipal.getLstLibere());
         setModel(tiruriService.getTirByStare(stareService.getStareByNume("Cursa")), frmMeniuPrincipal.getLstInCursa());
         setModel(tiruriService.getTirByStare(stareService.getStareByNume("Service")), frmMeniuPrincipal.getLstInService());
@@ -255,30 +255,6 @@ public class MeniuPrincipalController implements VObserver {
         if(subject instanceof Inregistrare) {
             setModelToListaSoferiLiberi();
         }
-    }
-
-    public InregistrariService getInregistrariService() {
-        return inregistrariService;
-    }
-
-    public TiruriService getTiruriService() {
-        return tiruriService;
-    }
-
-    public StareService getStareService() {
-        return stareService;
-    }
-
-    public SoferiTiruriService getSoferiTiruriService() {
-        return soferiTiruriService;
-    }
-
-    public SoferService getSoferService() {
-        return soferService;
-    }
-
-    public PozaService getPozaService() {
-        return pozaService;
     }
     
 }

@@ -23,7 +23,9 @@ public class TiruriHibernateRepository implements TiruriRepository {
     Session session = null;
 
     public TiruriHibernateRepository() {
-        this.session = HibernateUtil.getSessionFactory().openSession();
+        if (session == null || !session.isOpen()) {
+            this.session = HibernateUtil.getSessionFactory().openSession();
+        }
     }
 
     @Override
@@ -57,11 +59,15 @@ public class TiruriHibernateRepository implements TiruriRepository {
 
     @Override
     public ArrayList<Tir> getAll() {
+        if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         ArrayList<Tir> listaTiruri = new ArrayList<>();
         org.hibernate.Transaction tx = session.beginTransaction();
         Query q = session.createQuery("from Tir");
         listaTiruri = (ArrayList<Tir>) q.list();
         tx.commit();
+        session.close();
         return listaTiruri;
     }
 
@@ -87,12 +93,16 @@ public class TiruriHibernateRepository implements TiruriRepository {
     @Override
     public ArrayList<Tir> getTirByStare(Stare stare) {
         ArrayList<Tir> listaTiruri = new ArrayList<>();
+        if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         org.hibernate.Transaction tx = session.beginTransaction();
         Tir t = new Tir();
         t.setStare(stare);
         Query q = session.createQuery("from Tir where stare= :stare").setProperties(t);
         listaTiruri = (ArrayList<Tir>) q.list();
         tx.commit();
+        session.close();
         return listaTiruri;
     }
 

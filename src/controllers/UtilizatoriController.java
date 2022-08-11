@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import models.AppSingleTone;
 import models.Utilizator;
 import services.UtilizatoriService;
 import services.UtilizatoriServiceImpl;
@@ -21,7 +22,7 @@ import services.UtilizatoriServiceImpl;
 public class UtilizatoriController {
     
     private FrmAdministrareUtilizatori frmAdministrareUtilizatori;
-    private UtilizatoriService utilizatoriService = new UtilizatoriServiceImpl();
+    private UtilizatoriService utilizatoriService = AppSingleTone.getAppSingleToneInstance().getUtilizatoriService();
     private ArrayList<Utilizator> listaUtilizatori;
     private Utilizator utilizatorSelectat;
     

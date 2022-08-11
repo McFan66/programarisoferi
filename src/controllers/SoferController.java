@@ -29,6 +29,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import models.AppSingleTone;
 import models.Poza;
 import models.Sofer;
 import renderers.CellRendererImage;
@@ -49,8 +50,8 @@ public class SoferController {
     private FrmAddSofer frmAddSofer;
     private FrmAdministrareSoferi frmAdministrareSoferi;
     private File pozaSelectata;
-    private SoferService soferService;
-    private PozaService pozaService;
+    private SoferService soferService=AppSingleTone.getAppSingleToneInstance().getSoferService();
+    private PozaService pozaService=AppSingleTone.getAppSingleToneInstance().getPozaService();
     private ArrayList<Sofer> listaSoferi;
     private Sofer soferSelectat;
 

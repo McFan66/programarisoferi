@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import models.AppSingleTone;
 import models.Marca;
 import renderers.MarciModeleColorCellRenderer;
 import services.MarcaService;
@@ -27,7 +28,7 @@ import tablemodels.TableModelMarci;
 public class MarcaController {
     private FrmAddMarca frmAddMarca;
     private FrmAdministrareMarci frmAdministrareMarci;
-    private MarcaService marcaService = new MarcaServiceImpl();
+    private MarcaService marcaService = AppSingleTone.getAppSingleToneInstance().getMarcaService();
     private ArrayList<Marca> listaMarci;
     private tablemodels.TableModelMarci tableModelMarci = new TableModelMarci();
     private Marca marcaSelectata;

@@ -44,6 +44,8 @@ Contributor(s):
     <property name="hibernate.dialect">org.hibernate.dialect.DerbyDialect</property>
     <property name="hibernate.connection.driver_class">org.apache.derby.jdbc.ClientDriver</property>
     <property name="hibernate.connection.url">jdbc:derby://localhost:1527/tiruri_soferi</property>
+    <property name="hibernate.enable_lazy_load_no_trans">true</property>
+
     <property name="hibernate.connection.username">fana</property>
     <property name="hibernate.connection.password">fana</property>
     <mapping resource="models/Marca.hbm.xml"/>

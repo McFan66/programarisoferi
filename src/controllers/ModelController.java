@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import models.AppSingleTone;
 import models.Marca;
 import models.Model;
 import renderers.ItemMarcaRenderer;
@@ -35,8 +36,8 @@ public class ModelController {
     private FrmAdministrareModele frmAdministrareModele;
     private Model modelSelectat;
     private Marca selectatiMarca = new Marca(-1, "--Selectati Marca--");
-    private ModelService modelService = new ModelServiceImpl();
-    private MarcaService marcaService = new MarcaServiceImpl();
+    private ModelService modelService = AppSingleTone.getAppSingleToneInstance().getModelService();
+    private MarcaService marcaService = AppSingleTone.getAppSingleToneInstance().getMarcaService();
     private ArrayList<Model> listaModele;
     private tablemodels.TableModelModele tableModelModele = new TableModelModele();
     private DefaultComboBoxModel<Marca> modelCmbMarci = new DefaultComboBoxModel<>();
