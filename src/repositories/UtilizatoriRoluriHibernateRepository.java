@@ -6,6 +6,8 @@
 package repositories;
 
 import java.util.ArrayList;
+import models.Rol;
+import models.Utilizator;
 import models.UtilizatoriRoluri;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -60,5 +62,45 @@ public class UtilizatoriRoluriHibernateRepository implements UtilizatoriRoluriRe
         tx.commit();
         return listaUtilizatoriRoluri;
     }
-    
+
+    @Override
+    public ArrayList<UtilizatoriRoluri> getUtilizatoriRoluriByValid(boolean valid) {
+        ArrayList<UtilizatoriRoluri> listaUtilizatoriRoluri = new ArrayList<>();
+        org.hibernate.Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from UtilizatoriRoluri where valid= :valid").setParameter("valid", valid);
+        listaUtilizatoriRoluri = (ArrayList<UtilizatoriRoluri>) q.list();
+        tx.commit();
+        return listaUtilizatoriRoluri;
+    }
+
+    @Override
+    public ArrayList<UtilizatoriRoluri> getUtilizatoriRoluriByRoluri(Rol rol) {
+        ArrayList<UtilizatoriRoluri> listaUtilizatoriRoluri = new ArrayList<>();
+        org.hibernate.Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from UtilizatoriRoluri where idRol= :idRol").setParameter("idRol", rol.getId());
+        listaUtilizatoriRoluri = (ArrayList<UtilizatoriRoluri>) q.list();
+        tx.commit();
+        return listaUtilizatoriRoluri;
+    }
+
+    @Override
+    public int getUtilizatoriCuRol(Rol rol) {
+        ArrayList<UtilizatoriRoluri> listaUtilizatoriRoluri = new ArrayList<>();
+        org.hibernate.Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from UtilizatoriRoluri where idRol= :idRol and dataSfarsit is null").setParameter("idRol", rol.getId());
+        listaUtilizatoriRoluri = (ArrayList<UtilizatoriRoluri>) q.list();
+        tx.commit();
+        return listaUtilizatoriRoluri.size();
+    }
+
+    @Override
+    public ArrayList<UtilizatoriRoluri> getUtilizatoriRoluriByUtilizator(Utilizator utilizator) {
+        ArrayList<UtilizatoriRoluri> listaUtilizatoriRoluri = new ArrayList<>();
+        org.hibernate.Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from UtilizatoriRoluri where idUtilizator= :idUtilizator").setParameter("idUtilizator", utilizator.getId());
+        listaUtilizatoriRoluri = (ArrayList<UtilizatoriRoluri>) q.list();
+        tx.commit();
+        return listaUtilizatoriRoluri;
+    }
+
 }

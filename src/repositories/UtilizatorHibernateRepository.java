@@ -83,12 +83,13 @@ public class UtilizatorHibernateRepository implements UtilizatorRepository{
     
     public static void main(String[] args) {
         UtilizatorRepository utilizatorRepository = new UtilizatorHibernateRepository();
-        Utilizator u = new Utilizator();
+        ArrayList<Utilizator> lista = utilizatorRepository.getAll();
+        Utilizator u = lista.get(0);
         u.setNume("Test");
         u.setPrenume("Tester");
         u.setValid(true);
-        u.setEmail("test@test.com");
-        u.setParola("test");
+        u.setEmail("dev");
+        u.setParola("123");
         utilizatorRepository.adaugaUtilizator(u);
     }
     

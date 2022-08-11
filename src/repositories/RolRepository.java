@@ -16,4 +16,5 @@ public interface RolRepository {
     public boolean adaugaRol(Rol rol);
     public void stergeRol(Rol rol);
     public ArrayList<Rol> getAll();
+    public ArrayList<Rol> getRolByValid(boolean valid);
 }

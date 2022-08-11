@@ -32,5 +32,10 @@ public class RoluriServiceImpl implements RoluriService{
     public ArrayList<Rol> getAll() {
         return rolRepository.getAll();
     }
+
+    @Override
+    public ArrayList<Rol> getRoluriByValid(boolean valid) {
+        return rolRepository.getRolByValid(valid);
+    }
     
 }

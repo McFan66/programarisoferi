@@ -6,6 +6,8 @@
 package services;
 
 import java.util.ArrayList;
+import models.Rol;
+import models.Utilizator;
 import models.UtilizatoriRoluri;
 
 /**
@@ -16,4 +18,6 @@ public interface UtilizatoriRoluriService {
     public boolean adaugaUtilizatoriRoluri(UtilizatoriRoluri utilizatoriRoluri);
     public void stergeUtilizatoriRoluri(UtilizatoriRoluri utilizatoriRoluri);
     public ArrayList<UtilizatoriRoluri> getAll();
+    public ArrayList<UtilizatoriRoluri> getUtilizatoriRoluriByValid(boolean valid);
+    public int getNrUtilizatoriCuRol(Rol rol);
 }

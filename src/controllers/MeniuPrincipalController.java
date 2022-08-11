@@ -50,7 +50,6 @@ public class MeniuPrincipalController {
     private ArrayList<Inregistrare> listaInregistrari;
     private tablemodels.TableModelInregistrari tableModelInregistrari = new TableModelInregistrari();
     private JDateChooser dtcPlecare;
-    private JDateChooser dtcSosire;
     
     public void actionIndex() {
         frmMeniuPrincipal = new FrmMeniuPrincipal();
@@ -102,7 +101,7 @@ public class MeniuPrincipalController {
         
         frmAddInregistrare.getCmbSoferTir().setSelectedItem(inregistrareSelectata.getSoferTir());
         frmAddInregistrare.getDtcPlecare().setDate(inregistrareSelectata.getDataPlecare());
-        frmAddInregistrare.getDtcSosire().setDate(inregistrareSelectata.getDataSosire());
+        //frmAddInregistrare.getDtcSosire().setDate(inregistrareSelectata.getDataSosire());
         frmAddInregistrare.setLocationRelativeTo(parent);
         frmAddInregistrare.setInregistrariController(this);
         setModelToCmb();
@@ -140,10 +139,6 @@ public class MeniuPrincipalController {
             JOptionPane.showMessageDialog(frmAddInregistrare, "Va rugam sa selectati o data de plecare");
             return false;
         }
-        if(frmAddInregistrare.getDtcSosire().getDate() == null) {
-            JOptionPane.showMessageDialog(frmAddInregistrare, "Va rugam sa selectati o data de sosire");
-            return false;
-        }
         if(frmAddInregistrare.getCmbSoferTir().getSelectedItem() == null) {
             JOptionPane.showMessageDialog(frmAddInregistrare, "Va rugam sa selectati soferul + tirul care vor pleca in cursa");
             return false;
@@ -151,16 +146,16 @@ public class MeniuPrincipalController {
         return true;
     }
     
-    public void dateChooserStateChanged() {
-        frmAddInregistrare.getDtcSosire().getDateEditor().setDate(frmAddInregistrare.getDtcPlecare().getDate());
-    }
+//    public void dateChooserStateChanged() {
+//        frmAddInregistrare.getDtcSosire().getDateEditor().setDate(frmAddInregistrare.getDtcPlecare().getDate());
+//    }
     
     public void saveInregistrare() {
         if(isFormValid()) {
             Inregistrare i = new Inregistrare();
             
             this.dtcPlecare = frmAddInregistrare.getDtcPlecare();
-            this.dtcSosire = frmAddInregistrare.getDtcSosire();
+            //this.dtcSosire = frmAddInregistrare.getDtcSosire();
             
             SoferiTiruri sf = (SoferiTiruri) frmAddInregistrare.getCmbSoferTir().getSelectedItem();
             sf.setInCursa(true);
@@ -173,7 +168,7 @@ public class MeniuPrincipalController {
             }
             
             i.setDataPlecare(this.dtcPlecare.getDate());
-            i.setDataSosire(this.dtcSosire.getDate());
+           // i.setDataSosire(this.dtcSosire.getDate());
             i.setSoferTir(sf);
             i.setIdSoferiTiruri(sf.getId());
             

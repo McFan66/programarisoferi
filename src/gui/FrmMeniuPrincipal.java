@@ -8,9 +8,11 @@ package gui;
 import controllers.MarcaController;
 import controllers.MeniuPrincipalController;
 import controllers.ModelController;
+import controllers.RolController;
 import controllers.SoferController;
 import controllers.SoferiTiruriController;
 import controllers.TirController;
+import controllers.UtilizatorController;
 import java.awt.Image;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,6 +43,8 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     private TirController tirController = new TirController();
     private MarcaController marcaController = new MarcaController();
     private ModelController modelController = new ModelController();
+    private UtilizatorController utilizatorController = new UtilizatorController();
+    private RolController rolController = new RolController();
     private SoferiTiruriController soferiTiruriController = new SoferiTiruriController();
     private MeniuPrincipalController meniuPrincipalController;
     
@@ -114,6 +118,9 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         meniuCreare = new javax.swing.JMenu();
         btnInregistrareNoua = new javax.swing.JMenuItem();
         meniuProfil = new javax.swing.JMenu();
+        meniuManagement = new javax.swing.JMenu();
+        btnAdministrareUtilizatori = new javax.swing.JMenuItem();
+        btnAdministrareRoluri = new javax.swing.JMenuItem();
         meniuLogOut = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -336,7 +343,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -439,6 +446,27 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         meniuProfil.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         meniu.add(meniuProfil);
 
+        meniuManagement.setText("Management");
+        meniuManagement.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+
+        btnAdministrareUtilizatori.setText("Administrare Utilizatori");
+        btnAdministrareUtilizatori.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdministrareUtilizatoriActionPerformed(evt);
+            }
+        });
+        meniuManagement.add(btnAdministrareUtilizatori);
+
+        btnAdministrareRoluri.setText("Administrare Roluri");
+        btnAdministrareRoluri.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdministrareRoluriActionPerformed(evt);
+            }
+        });
+        meniuManagement.add(btnAdministrareRoluri);
+
+        meniu.add(meniuManagement);
+
         meniuLogOut.setText("jMenu1");
         meniu.add(meniuLogOut);
 
@@ -513,6 +541,14 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         meniuPrincipalController.endInregistrare();
     }//GEN-LAST:event_btnFinalizareActionPerformed
+
+    private void btnAdministrareUtilizatoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministrareUtilizatoriActionPerformed
+        utilizatorController.actionIndex(this);
+    }//GEN-LAST:event_btnAdministrareUtilizatoriActionPerformed
+
+    private void btnAdministrareRoluriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministrareRoluriActionPerformed
+        rolController.actionIndex(this);
+    }//GEN-LAST:event_btnAdministrareRoluriActionPerformed
 
     public JList<String> getLstInCursa() {
         return lstInCursa;
@@ -611,9 +647,11 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnAdaugaInregistrare;
     private javax.swing.JMenuItem btnAdministrareMarci;
     private javax.swing.JMenuItem btnAdministrareModele;
+    private javax.swing.JMenuItem btnAdministrareRoluri;
     private javax.swing.JMenuItem btnAdministrareSoferi;
     private javax.swing.JMenuItem btnAdministrareSoferiTiruri;
     private javax.swing.JMenuItem btnAdministrareTiruri;
+    private javax.swing.JMenuItem btnAdministrareUtilizatori;
     private javax.swing.JButton btnEditeazaInregistrare;
     private javax.swing.JButton btnFinalizare;
     private javax.swing.JMenuItem btnInregistrareNoua;
@@ -647,6 +685,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu meniuAdministrare;
     private javax.swing.JMenu meniuCreare;
     private javax.swing.JMenu meniuLogOut;
+    private javax.swing.JMenu meniuManagement;
     private javax.swing.JMenu meniuProfil;
     private javax.swing.JRadioButton rdbFinalizate;
     private javax.swing.JRadioButton rdbInDesfasurare;

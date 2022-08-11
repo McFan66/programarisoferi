@@ -86,6 +86,32 @@
             <Property name="horizontalTextPosition" type="int" value="4"/>
           </Properties>
         </Menu>
+        <Menu class="javax.swing.JMenu" name="meniuManagement">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Management"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="14" style="1"/>
+            </Property>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="btnAdministrareUtilizatori">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Administrare Utilizatori"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAdministrareUtilizatoriActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="btnAdministrareRoluri">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Administrare Roluri"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAdministrareRoluriActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
         <Menu class="javax.swing.JMenu" name="meniuLogOut">
           <Properties>
             <Property name="text" type="java.lang.String" value="jMenu1"/>
@@ -685,7 +711,7 @@
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane6" min="-2" pref="356" max="-2" attributes="0"/>
-                      <EmptySpace pref="12" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

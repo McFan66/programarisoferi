@@ -19,6 +19,14 @@ public class Rol {
     private boolean valid;
     private Set<UtilizatoriRoluri> utilizatoriRoluri = new HashSet<UtilizatoriRoluri>(0);
 
+    public Rol() {
+    }
+
+    public Rol(String nume) {
+        this.nume = nume;
+    }
+
+    
     public int getId() {
         return id;
     }

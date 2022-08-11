@@ -6,6 +6,7 @@
 package services;
 
 import java.util.ArrayList;
+import models.Rol;
 import models.Utilizator;
 
 /**
@@ -18,4 +19,5 @@ public interface UtilizatoriService {
     public ArrayList<Utilizator> getAll();
     public Utilizator login(String email, String parola);
     public ArrayList<Utilizator> getUtilizatoriByValid(boolean valid);
+    public Rol getRolulUtilizatorului(Utilizator utilizator);
 }

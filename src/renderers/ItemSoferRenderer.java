@@ -16,7 +16,7 @@ import models.Sofer;
  * @author Vlad
  */
 public class ItemSoferRenderer extends DefaultListCellRenderer{
-
+private Color defaultForegroundColor=getForeground();
     @Override
     public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         if(value instanceof Sofer) {
@@ -25,7 +25,12 @@ public class ItemSoferRenderer extends DefaultListCellRenderer{
                 setText(String.format("%s %s", s.getNume() , s.getPrenume()));
                 
                 if(isSelected) {
-                    setBackground(Color.cyan);
+                    setBackground(new Color(25,116,211));
+                    setForeground(Color.white);
+                }
+                else{
+                    setBackground(Color.white);
+                    setForeground(defaultForegroundColor);
                 }
         }
         return this;

@@ -5,7 +5,7 @@
  */
 package gui;
 
-import controllers.UtilizatorController;
+import controllers.RolController;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
@@ -14,14 +14,14 @@ import javax.swing.JTable;
  *
  * @author Stefan
  */
-public class FrmAdministrareUtilizatori extends javax.swing.JDialog {
+public class FrmAdministrareRoluri extends javax.swing.JDialog {
 
-    private UtilizatorController utilizatoriController;
+    private RolController rolController;
     
     /**
      * Creates new form FrmAdministrareUtilizatori
      */
-    public FrmAdministrareUtilizatori(java.awt.Frame parent, boolean modal) {
+    public FrmAdministrareRoluri(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -152,27 +152,27 @@ public class FrmAdministrareUtilizatori extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAdaugaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdaugaActionPerformed
-        utilizatoriController.actionCreate(this);
+        rolController.actionCreate(this);
     }//GEN-LAST:event_btnAdaugaActionPerformed
 
     private void btnEditeazaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditeazaActionPerformed
-        utilizatoriController.actionEdit(this);
+        rolController.actionEdit(this);
     }//GEN-LAST:event_btnEditeazaActionPerformed
 
     private void btnStergeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStergeActionPerformed
-        utilizatoriController.actionDelete();
+        rolController.actionDelete();
     }//GEN-LAST:event_btnStergeActionPerformed
 
     private void rdbToateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbToateActionPerformed
-        utilizatoriController.updateAndSetModelToTable();
+        rolController.updateAndSetModelToTable();
     }//GEN-LAST:event_rdbToateActionPerformed
 
     private void rdbActivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbActivActionPerformed
-        utilizatoriController.updateAndSetModelToTable();
+        rolController.updateAndSetModelToTable();
     }//GEN-LAST:event_rdbActivActionPerformed
 
     private void rdbInactivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbInactivActionPerformed
-        utilizatoriController.updateAndSetModelToTable();
+        rolController.updateAndSetModelToTable();
     }//GEN-LAST:event_rdbInactivActionPerformed
 
     public JTable getTblUtilizatori() {
@@ -195,8 +195,8 @@ public class FrmAdministrareUtilizatori extends javax.swing.JDialog {
         return btnSterge;
     }
 
-    public void setUtilizatoriController(UtilizatorController utilizatoriController) {
-        this.utilizatoriController = utilizatoriController;
+    public void setRolController(RolController rolController) {
+        this.rolController = rolController;
     }
 
     
@@ -218,20 +218,21 @@ public class FrmAdministrareUtilizatori extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmAdministrareUtilizatori.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAdministrareRoluri.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmAdministrareUtilizatori.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAdministrareRoluri.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmAdministrareUtilizatori.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAdministrareRoluri.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmAdministrareUtilizatori.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAdministrareRoluri.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FrmAdministrareUtilizatori dialog = new FrmAdministrareUtilizatori(new javax.swing.JFrame(), true);
+                FrmAdministrareRoluri dialog = new FrmAdministrareRoluri(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

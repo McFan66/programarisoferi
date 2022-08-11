@@ -6,9 +6,13 @@
 package services;
 
 import java.util.ArrayList;
+import models.Rol;
 import models.Utilizator;
+import models.UtilizatoriRoluri;
 import repositories.UtilizatorHibernateRepository;
 import repositories.UtilizatorRepository;
+import repositories.UtilizatoriRoluriHibernateRepository;
+import repositories.UtilizatoriRoluriRepository;
 
 /**
  *
@@ -17,6 +21,7 @@ import repositories.UtilizatorRepository;
 public class UtilizatoriServiceImpl implements UtilizatoriService{
     
     UtilizatorRepository utilizatorRepository = new UtilizatorHibernateRepository();
+    UtilizatoriRoluriRepository utilizatoriRoluriRepository = new UtilizatoriRoluriHibernateRepository();
 
     @Override
     public boolean adaugaUtilizator(Utilizator utilizator) {
@@ -41,6 +46,16 @@ public class UtilizatoriServiceImpl implements UtilizatoriService{
     @Override
     public ArrayList<Utilizator> getUtilizatoriByValid(boolean valid) {
         return utilizatorRepository.getUtilizatorByValid(valid);
+    }
+
+    @Override
+    public Rol getRolulUtilizatorului(Utilizator utilizator) {
+        for (UtilizatoriRoluri ur : utilizatoriRoluriRepository.getUtilizatoriRoluriByUtilizator(utilizator)){
+            if (ur.getDataSfarsit()==null){
+                return ur.getRol();
+            }
+        }
+        return new Rol("Nedefinit");
     }
     
 }
