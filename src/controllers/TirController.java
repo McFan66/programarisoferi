@@ -55,6 +55,7 @@ import services.PozaService;
 import services.PozaServiceImpl;
 import services.SoferiTiruriService;
 import services.SoferiTiruriServiceImpl;
+import services.StareService;
 import services.TiruriService;
 import services.TiruriServiceImpl;
 import tablemodel.ColumnResizer1;
@@ -80,6 +81,7 @@ public class TirController {
     private ModelService modelService = AppSingleTone.getAppSingleToneInstance().getModelService();
     private PozaService pozaService=AppSingleTone.getAppSingleToneInstance().getPozaService();
     private SoferiTiruriService soferiTiruriService=AppSingleTone.getAppSingleToneInstance().getSoferiTiruriService();
+    private StareService stareService = AppSingleTone.getAppSingleToneInstance().getStareService();
     private DefaultComboBoxModel<Marca> modelCmbMarci = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<Model> modelCmbModele = new DefaultComboBoxModel<>();
     private Tir tirSelectat;
@@ -192,16 +194,20 @@ public class TirController {
             if (tirSelectat == null) {
                 tirSelectat = new Tir();
                 Model m = (Model) cmbModel.getSelectedItem();
+                tirSelectat.setModel(m);
                 tirSelectat.setIdModel(m.getId());
                 tirSelectat.setNrInmatriculare(frmAddTir.getTxtNrInmatriculare().getText());
                 tirSelectat.setIdStare(7);
+                tirSelectat.setStare(stareService.getStareByNume("Disponibil"));
                 tirSelectat.setValid(true);
                 tiruriService.adaugaTir(tirSelectat);
             } else {
                 Model m = (Model) cmbModel.getSelectedItem();
                 tirSelectat.setIdModel(m.getId());
+                tirSelectat.setModel(m);
                 tirSelectat.setNrInmatriculare(frmAddTir.getTxtNrInmatriculare().getText());
                 tirSelectat.setIdStare(tirSelectat.getIdStare());
+                tirSelectat.setStare(stareService.getStareByNume("Disponibil"));
                 tiruriService.adaugaTir(tirSelectat);
                 ArrayList<Poza> pozeDeSters = pozaService.getPozaByTipAndObiect(1, tirSelectat.getId());
                 for (Poza pozaDeSters : pozeDeSters) {
@@ -390,7 +396,7 @@ public class TirController {
         frmAfisareDetaliiTir.setLocationRelativeTo(frmAdministrareTiruri);
         frmAfisareDetaliiTir.setVisible(true);
     }
-
+    
     public void nextImageDetalii() {
         JLabel lblPoze = frmAfisareDetaliiTir.getLblPoze();
         if (indexPozaCurenta >= 0 && indexPozaCurenta < pozeTir.size() - 1) {

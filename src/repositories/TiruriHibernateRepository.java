@@ -30,6 +30,9 @@ public class TiruriHibernateRepository implements TiruriRepository {
 
     @Override
     public boolean adaugaTir(Tir tir) {
+        if(!session.isOpen()) {
+            this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         org.hibernate.Transaction tx = session.beginTransaction();
         session.clear();
         if (tir != null && tir.getId() > 0) {
@@ -45,7 +48,7 @@ public class TiruriHibernateRepository implements TiruriRepository {
         } else {
             tx.rollback();
         }
-        session.clear();
+        session.close();
         return id > 0;
     }
 
@@ -75,6 +78,9 @@ public class TiruriHibernateRepository implements TiruriRepository {
     public ArrayList<Tir> getTirByMarca(Marca marca) {
         ArrayList<Model> listaModele = new ArrayList<>();
         ArrayList<Tir> listaTiruri = new ArrayList<>();
+                if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         org.hibernate.Transaction tx = session.beginTransaction();
         Model model = new Model();
         model.setMarca(marca);
@@ -87,6 +93,7 @@ public class TiruriHibernateRepository implements TiruriRepository {
             listaTiruri = (ArrayList<Tir>) qq.list();
         }
         tx.commit();
+        session.close();
         return listaTiruri;
     }
 
@@ -109,12 +116,16 @@ public class TiruriHibernateRepository implements TiruriRepository {
     @Override
     public ArrayList<Tir> getTirByNumarInmatriculare(String nrInmatriculare) {
         ArrayList<Tir> listaTiruri = new ArrayList<>();
+                if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         org.hibernate.Transaction tx = session.beginTransaction();
         Tir tir = new Tir();
         tir.setNrInmatriculare(nrInmatriculare);
         Query q = session.createQuery("from Tir where nrInmatriculare= :nrInmatriculare").setProperties(tir);
         listaTiruri = (ArrayList<Tir>) q.list();
         tx.commit();
+        session.close();
         return listaTiruri;
     }
 
@@ -128,10 +139,14 @@ public class TiruriHibernateRepository implements TiruriRepository {
     @Override
     public ArrayList<Tir> getTirByValid(boolean valid) {
         ArrayList<Tir> listaTiruri = new ArrayList<>();
+                if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         org.hibernate.Transaction tx = session.beginTransaction();
         Query q = session.createQuery("from Tir where valid= :valid").setParameter("valid", valid);
         listaTiruri = (ArrayList<Tir>) q.list();
         tx.commit();
+        session.close();
         return listaTiruri;
     }
 

@@ -115,10 +115,4 @@ public class AppSingleTone {
         return utilizatoriService;
     }
     
-    
-    
-    
-    
-    
-    
 }

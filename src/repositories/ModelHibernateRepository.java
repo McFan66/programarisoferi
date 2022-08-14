@@ -21,13 +21,17 @@ public class ModelHibernateRepository implements ModelRepository{
     Session session = null;
     
     public ModelHibernateRepository(){
-        this.session = HibernateUtil.getSessionFactory().openSession();
+        if(session == null || !session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
     }
     
     @Override
     public boolean adaugaModel(Model model) {
+        if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         org.hibernate.Transaction tx = session.beginTransaction();
-        session.clear();
         if (model != null && model.getId() > 0) {
             session.saveOrUpdate(model);
             tx.commit();
@@ -40,7 +44,7 @@ public class ModelHibernateRepository implements ModelRepository{
         } else {
             tx.rollback();
         }
-        session.clear();
+        session.close();
         return id > 0;
     }
 
@@ -55,21 +59,29 @@ public class ModelHibernateRepository implements ModelRepository{
     @Override
     public ArrayList<Model> getAll() {
         ArrayList<Model> listaModele = new ArrayList<>();
+        if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         org.hibernate.Transaction tx = session.beginTransaction();
         Query q = session.createQuery("from Model");
         listaModele = (ArrayList<Model>) q.list();
         tx.commit();
+        session.close();
         return listaModele;
     }
 
     @Override
     public ArrayList<Model> getModeleByMarca(Marca marca) {
         ArrayList<Model> listaModele = new ArrayList<>();
+                if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         org.hibernate.Transaction tx = session.beginTransaction();
        
         Query q = session.createQuery("from Model where marca= :marca").setParameter("marca", marca);
         listaModele = (ArrayList<Model>) q.list();
         tx.commit();
+        session.close();
         return listaModele;
     }
     

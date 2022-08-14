@@ -21,11 +21,16 @@ public class SoferiHibernateRepository implements SoferiRepository {
     Session session = null;
     
     public SoferiHibernateRepository(){
-        this.session = HibernateUtil.getSessionFactory().openSession();
+        if(session == null || !session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
     }
     
     @Override
     public boolean adaugaSofer(Sofer sofer) {
+                if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         org.hibernate.Transaction tx = session.beginTransaction();
        
         if (sofer!=null && sofer.getId()>0){
@@ -40,6 +45,7 @@ public class SoferiHibernateRepository implements SoferiRepository {
         } else {
             tx.rollback();
         }
+        session.close();
         return id > 0; 
     }
 
@@ -53,10 +59,14 @@ public class SoferiHibernateRepository implements SoferiRepository {
     @Override
     public ArrayList<Sofer> getAll() {
         ArrayList<Sofer> listaSoferi = new ArrayList<>();
+                if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         org.hibernate.Transaction tx = session.beginTransaction();
         Query q = session.createQuery("from Sofer");
         listaSoferi = (ArrayList<Sofer>) q.list();
         tx.commit();
+        session.close();
         return listaSoferi;
     }
     public static void main(String[] args) {
@@ -67,10 +77,14 @@ public class SoferiHibernateRepository implements SoferiRepository {
     @Override
     public ArrayList<Sofer> getSoferByValid(boolean valid) {
         ArrayList<Sofer> listaSoferi = new ArrayList<>();
+                if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         org.hibernate.Transaction tx = session.beginTransaction();
         Query q = session.createQuery("from Sofer where valid = :valid").setParameter("valid", valid);
         listaSoferi = (ArrayList<Sofer>) q.list();
         tx.commit();
+        session.close();
         return listaSoferi;
     }
 

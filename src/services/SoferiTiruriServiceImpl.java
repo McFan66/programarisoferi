@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import models.Sofer;
 import models.SoferiTiruri;
 import models.Tir;
+import observers.VObserver;
 import repositories.SoferiTiruriHibernateRepository;
 import repositories.SoferiTiruriRepository;
 
@@ -20,8 +21,11 @@ public class SoferiTiruriServiceImpl implements SoferiTiruriService{
 
     private final SoferiTiruriRepository soferiTiruriRepository = new SoferiTiruriHibernateRepository();
     
+    private ArrayList<VObserver> observere = new ArrayList<>();
+    
     @Override
     public boolean adaugaSoferTir(SoferiTiruri soferTir) {
+        notifyObservers(soferTir);
         return soferiTiruriRepository.adaugaSoferTir(soferTir);
     }
 
@@ -48,6 +52,23 @@ public class SoferiTiruriServiceImpl implements SoferiTiruriService{
     @Override
     public ArrayList<SoferiTiruri> getSoferiTiruriByValid(boolean valid) {
         return soferiTiruriRepository.getSoferiTiruriByValid(valid);
+    }
+
+    @Override
+    public void addObserver(VObserver observer) {
+        this.observere.add(observer);
+    }
+
+    @Override
+    public void removeObserver(VObserver observer) {
+        this.observere.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(Object subject) {
+        for (VObserver observer : observere) {
+            observer.update(subject);
+        }
     }
     
 }

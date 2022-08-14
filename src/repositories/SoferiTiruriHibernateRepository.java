@@ -77,24 +77,32 @@ public class SoferiTiruriHibernateRepository implements SoferiTiruriRepository {
     @Override
     public ArrayList<SoferiTiruri> getSoferiTiruriBySofer(Sofer sofer) {
         ArrayList<SoferiTiruri> listaSoferiTiruri = new ArrayList<>();
+                if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         org.hibernate.Transaction tx = session.beginTransaction();
         SoferiTiruri st = new SoferiTiruri();
         st.setSofer(sofer);
         Query q = session.createQuery("from SoferiTiruri where idSofer= :idSofer").setProperties(st);
         listaSoferiTiruri = (ArrayList<SoferiTiruri>) q.list();
         tx.commit();
+        session.close();
         return listaSoferiTiruri;
     }
 
     @Override
     public ArrayList<SoferiTiruri> getSoferiTiruriByTir(Tir tir) {
         ArrayList<SoferiTiruri> listaSoferiTiruri = new ArrayList<>();
+        if(!session.isOpen()){
+            this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         org.hibernate.Transaction tx = session.beginTransaction();
         SoferiTiruri st = new SoferiTiruri();
         st.setTir(tir);
         Query q = session.createQuery("from SoferiTiruri where idTir= :idTir").setProperties(st);
         listaSoferiTiruri = (ArrayList<SoferiTiruri>) q.list();
         tx.commit();
+        session.close();
         return listaSoferiTiruri;
     }
 

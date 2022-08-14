@@ -20,11 +20,17 @@ public class PozaHibernateRepository implements PozaRepository {
     Session session = null;
 
     public PozaHibernateRepository() {
-        this.session = HibernateUtil.getSessionFactory().openSession();
+        if(session == null || !session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
     }
 
     @Override
     public boolean adaugaPoza(Poza poza) {
+                if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
+        
         org.hibernate.Transaction tx = session.beginTransaction();
 
         if (poza != null && poza.getId() > 0) {
@@ -39,35 +45,48 @@ public class PozaHibernateRepository implements PozaRepository {
         } else {
             tx.rollback();
         }
+        session.close();
         return id > 0;
     }
 
     @Override
     public void stergePoza(Poza poza) {
+                if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         org.hibernate.Transaction tx = session.beginTransaction();
         session.delete(poza);
+        session.close();
         tx.commit();
     }
 
     @Override
     public ArrayList<Poza> getAll() {
         ArrayList<Poza> listaPoze = new ArrayList<>();
+                if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         org.hibernate.Transaction tx = session.beginTransaction();
         Query q = session.createQuery("from Poza");
         listaPoze = (ArrayList<Poza>) q.list();
         tx.commit();
+        session.close();
         return listaPoze;
     }
 
     @Override
     public ArrayList<Poza> getPozeByTipAndId(int tip, int id) {
         ArrayList<Poza> listaPoze = new ArrayList<>();
+                if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         org.hibernate.Transaction tx = session.beginTransaction();
         Query q = session.createQuery("from Poza where tipObiect= :tip and idObiect= :id");
         q.setParameter("tip", tip);
         q.setParameter("id", id);
         listaPoze = (ArrayList<Poza>) q.list();
         tx.commit();
+        session.close();
         return listaPoze;
     }
 

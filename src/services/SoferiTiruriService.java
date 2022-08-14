@@ -9,12 +9,13 @@ import java.util.ArrayList;
 import models.Sofer;
 import models.SoferiTiruri;
 import models.Tir;
+import observers.Subject;
 
 /**
  *
  * @author Stefan
  */
-public interface SoferiTiruriService {
+public interface SoferiTiruriService extends Subject {
     public boolean adaugaSoferTir(SoferiTiruri soferTir);
     public void stergeSoferTir(SoferiTiruri soferTir);
     public ArrayList<SoferiTiruri> getAll();

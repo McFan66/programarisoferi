@@ -20,13 +20,19 @@ public class StareHibernateRepository implements StareRepository {
     Session session = null;
 
     public StareHibernateRepository() {
-        this.session = HibernateUtil.getSessionFactory().openSession();        
+        if (session == null || !session.isOpen()) {
+            this.session = HibernateUtil.getSessionFactory().openSession();
+        }    
     }
     
     
     
     @Override
     public boolean adaugaStare(Stare stare) {
+        
+                if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         org.hibernate.Transaction tx = session.beginTransaction();
 
         if (stare != null && stare.getId() > 0) {
@@ -41,19 +47,24 @@ public class StareHibernateRepository implements StareRepository {
         } else {
             tx.rollback();
         }
+        session.close();
         return id > 0;
     }
 
     @Override
     public Stare getStareByNume(String nume) {
-        session.clear();
+        if(!session.isOpen()) {
+            this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         org.hibernate.Transaction tx = session.beginTransaction();
         
         Query q = session.createQuery("from Stare where nume = :nume").setParameter("nume", nume);
         
         Stare stare = (Stare) q.uniqueResult();
         
+        
         tx.commit();
+        session.close();
         return stare;
         
     }
@@ -68,10 +79,14 @@ public class StareHibernateRepository implements StareRepository {
     @Override
     public ArrayList<Stare> getAll() {
         ArrayList<Stare> listaStari = new ArrayList<>();
+                if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         org.hibernate.Transaction tx = session.beginTransaction();
         Query q = session.createQuery("from Stare");
         listaStari = (ArrayList<Stare>) q.list();
         tx.commit();
+        session.close();
         return listaStari;
     }
     

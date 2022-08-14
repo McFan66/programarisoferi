@@ -60,8 +60,10 @@ public class Stare  implements java.io.Serializable {
         this.tiruri = tiruri;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Stare{" + "id=" + id + ", nume=" + nume + ", valid=" + valid;
+    }
 
 }
 

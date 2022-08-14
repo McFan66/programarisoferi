@@ -20,13 +20,17 @@ public class MarcaHibernateRepository implements MarcaRepository {
     Session session = null;
 
     public MarcaHibernateRepository() {
-        this.session = HibernateUtil.getSessionFactory().openSession();
+        if(session  == null || !session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
     }
 
     @Override
     public boolean adaugaMarca(Marca marca) {
+        if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         org.hibernate.Transaction tx = session.beginTransaction();  
-        session.clear();
         if (marca != null && marca.getId() > 0) {
             session.saveOrUpdate(marca);
             tx.commit();
@@ -39,7 +43,7 @@ public class MarcaHibernateRepository implements MarcaRepository {
         } else {
             tx.rollback();
         }
-        session.clear();
+        session.close();
         return id > 0;
     }
 
@@ -53,11 +57,14 @@ public class MarcaHibernateRepository implements MarcaRepository {
     @Override
     public ArrayList<Marca> getAll() {
         ArrayList<Marca> listaMarci = new ArrayList<>();
+        if(!session.isOpen()){
+           this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         org.hibernate.Transaction tx = session.beginTransaction();
         Query q = session.createQuery("from Marca");
         listaMarci = (ArrayList<Marca>) q.list();
         tx.commit();
-        session.clear();
+        session.close();
         return listaMarci;
     }
     
