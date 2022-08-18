@@ -22,4 +22,5 @@ public interface SoferiTiruriService extends Subject {
     public ArrayList<SoferiTiruri> getSoferiTiruriBySofer(Sofer sofer);
     public ArrayList<SoferiTiruri> getSoferiTiruriByTir(Tir tir);
     public ArrayList<SoferiTiruri> getSoferiTiruriByValid(boolean valid);
+    public ArrayList<SoferiTiruri> getSoferiTiruriByInCursa(boolean inCursa);
 }

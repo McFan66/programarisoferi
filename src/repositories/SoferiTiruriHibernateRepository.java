@@ -128,4 +128,19 @@ public class SoferiTiruriHibernateRepository implements SoferiTiruriRepository {
         return listaSoferiTiruri;
     }
 
+    @Override
+    public ArrayList<SoferiTiruri> getSoferiTiruriByInCursa(boolean inCursa) {
+        if(!session.isOpen()) {
+            this.session = HibernateUtil.getSessionFactory().openSession();
+        }
+        ArrayList<SoferiTiruri> listaSoferiTiruri = new ArrayList<>();
+        org.hibernate.Transaction tx = session.beginTransaction();
+        String hql = "from SoferiTiruri sf where sf.valid = :valid and sf.inCursa = :inCursa";
+        Query q = session.createQuery(hql).setParameter("inCursa", inCursa).setParameter("valid", true);
+        listaSoferiTiruri = (ArrayList<SoferiTiruri>) q.list();
+        tx.commit();
+        session.close();
+        return listaSoferiTiruri;
+    }
+
 }

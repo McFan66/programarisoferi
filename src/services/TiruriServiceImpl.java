@@ -11,7 +11,6 @@ import javafx.beans.Observable;
 import models.Marca;
 import models.Stare;
 import models.Tir;
-import observers.Fereastra;
 import observers.VObserver;
 import repositories.TiruriHibernateRepository;
 import repositories.TiruriRepository;
@@ -32,8 +31,9 @@ public class TiruriServiceImpl implements TiruriService {
     @Override
     public boolean adaugaTir(Tir tir) {
         System.out.println("[DEBUG] "+getClass().getName()+" adaugaTir() "+tir);
+        tiruriRepository.adaugaTir(tir);
         notifyObservers(tir);
-        return tiruriRepository.adaugaTir(tir);
+        return true;
     }
     
     @Override

@@ -21,22 +21,9 @@ import models.Inregistrare;
 import models.Sofer;
 import models.SoferiTiruri;
 import models.Tir;
-import observers.Fereastra;
 import observers.VObserver;
 import renderers.ItemSoferRenderer;
 import renderers.ItemSoferiTiruriRenderer;
-import services.InregistrareServiceImpl;
-import services.InregistrariService;
-import services.PozaService;
-import services.PozaServiceImpl;
-import services.SoferService;
-import services.SoferServiceImpl;
-import services.SoferiTiruriService;
-import services.SoferiTiruriServiceImpl;
-import services.StareService;
-import services.StareServiceImpl;
-import services.TiruriService;
-import services.TiruriServiceImpl;
 import tablemodel.ColumnResizer1;
 import tablemodels.TableModelInregistrari;
 
@@ -90,6 +77,12 @@ public class MeniuPrincipalController implements VObserver {
 
         inregistrareSelectata = listaInregistrari.get(index);
         Calendar c1 = Calendar.getInstance();
+        
+        if(c1.getTime().compareTo(inregistrareSelectata.getDataSosire()) > 0) {
+            JOptionPane.showMessageDialog(frmMeniuPrincipal, "Inregistrarea selectata este deja finalizata");
+            return;
+        }
+        
         inregistrareSelectata.setDataSosire(c1.getTime());
         inregistrareSelectata.getSoferTir().setInCursa(false);
         inregistrareSelectata.getSoferTir().getTir().setStare(stareService.getStareByNume("Disponibil"));
@@ -142,7 +135,7 @@ public class MeniuPrincipalController implements VObserver {
     public void setModelToCmb() {
         DefaultComboBoxModel<SoferiTiruri> modelCmbSoferiTiruri = new DefaultComboBoxModel<>();
 
-        ArrayList<SoferiTiruri> listaSoferiTiruri = soferiTiruriService.getSoferiTiruriByValid(true);
+        ArrayList<SoferiTiruri> listaSoferiTiruri = soferiTiruriService.getSoferiTiruriByInCursa(false);
 
         for (SoferiTiruri sf : listaSoferiTiruri) {
             modelCmbSoferiTiruri.addElement(sf);
@@ -226,7 +219,7 @@ public class MeniuPrincipalController implements VObserver {
     private void setModelToListaSoferiLiberi() {
         DefaultListModel<Sofer> modelListaSoferiLiberi = new DefaultListModel<>();
 
-        for (SoferiTiruri sf : soferiTiruriService.getAll()) {
+        for (SoferiTiruri sf : soferiTiruriService.getSoferiTiruriByValid(true)) {
             if (!sf.isInCursa()) {
                 modelListaSoferiLiberi.addElement(sf.getSofer());
             }
@@ -251,25 +244,25 @@ public class MeniuPrincipalController implements VObserver {
 //            Tir tir=(Tir)subject;
 //            System.out.println(tir.toString());
 //        }
-
-
-            setModel(tiruriService.getTirByStare(stareService.getStareByNume("Disponibil")), frmMeniuPrincipal.getLstLibere());
-            setModel(tiruriService.getTirByStare(stareService.getStareByNume("Cursa")), frmMeniuPrincipal.getLstInCursa());
-            setModel(tiruriService.getTirByStare(stareService.getStareByNume("Service")), frmMeniuPrincipal.getLstInService());
-            setModelToListaSoferiLiberi();
-
-
-
-//        if(subject instanceof Tir) {
+//
+//
 //            setModel(tiruriService.getTirByStare(stareService.getStareByNume("Disponibil")), frmMeniuPrincipal.getLstLibere());
 //            setModel(tiruriService.getTirByStare(stareService.getStareByNume("Cursa")), frmMeniuPrincipal.getLstInCursa());
 //            setModel(tiruriService.getTirByStare(stareService.getStareByNume("Service")), frmMeniuPrincipal.getLstInService());
-//        }
-//        if(subject instanceof Inregistrare) {
 //            setModelToListaSoferiLiberi();
-//        }
-//        if(subject instanceof SoferiTiruri) {
-//            setModelToListaSoferiLiberi();
-//        }
+
+
+
+        if(subject instanceof Tir) {
+            setModel(tiruriService.getTirByStare(stareService.getStareByNume("Disponibil")), frmMeniuPrincipal.getLstLibere());
+            setModel(tiruriService.getTirByStare(stareService.getStareByNume("Service")), frmMeniuPrincipal.getLstInService());
+        }
+        if(subject instanceof Inregistrare) {
+            setModelToListaSoferiLiberi();
+            setModel(tiruriService.getTirByStare(stareService.getStareByNume("Cursa")), frmMeniuPrincipal.getLstInCursa());
+        }
+        if(subject instanceof SoferiTiruri) {
+            setModelToListaSoferiLiberi();
+        }
     }    
 }

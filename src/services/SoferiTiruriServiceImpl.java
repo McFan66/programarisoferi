@@ -51,6 +51,7 @@ public class SoferiTiruriServiceImpl implements SoferiTiruriService{
 
     @Override
     public ArrayList<SoferiTiruri> getSoferiTiruriByValid(boolean valid) {
+        notifyObservers(valid);
         return soferiTiruriRepository.getSoferiTiruriByValid(valid);
     }
 
@@ -69,6 +70,11 @@ public class SoferiTiruriServiceImpl implements SoferiTiruriService{
         for (VObserver observer : observere) {
             observer.update(subject);
         }
+    }
+
+    @Override
+    public ArrayList<SoferiTiruri> getSoferiTiruriByInCursa(boolean inCursa) {
+        return soferiTiruriRepository.getSoferiTiruriByInCursa(inCursa);
     }
     
 }
