@@ -39,7 +39,7 @@ public class ImageUtils {
     public static ImageIcon getRoundImageIcon(File imgFile) {
         try {
             BufferedImage master = ImageIO.read(imgFile);
-
+            
             int diameter = Math.min(60, 60);
             BufferedImage mask = new BufferedImage(60, 60, BufferedImage.TYPE_INT_ARGB);
 

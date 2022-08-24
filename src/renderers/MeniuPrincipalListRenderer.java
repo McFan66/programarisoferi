@@ -27,14 +27,15 @@ import utils.ImageUtils;
 public class MeniuPrincipalListRenderer extends JLabel implements ListCellRenderer<Tir>{
     
     private final PozaService pozaService = AppSingleTone.getAppSingleToneInstance().getPozaService();
+
     
     @Override
     public Component getListCellRendererComponent(JList<? extends Tir> list, Tir value, int index, boolean isSelected, boolean cellHasFocus) {
         
             Poza p = pozaService.getPozaByTipAndObiect(1, value.getId()).get(0);
             File file = new File("./poze/tiruri/" + value.getNrInmatriculare() + "/" + p.getImagePath());
-            ImageIcon i = new ImageIcon(new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH));
-        //ImageUtils.getRoundImageIcon(file);
+//            ImageIcon i = new ImageIcon(new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH));
+           ImageIcon i =  ImageUtils.getRoundImageIcon(file);
             setIcon(i);
             setText(value.getDescriere());
         

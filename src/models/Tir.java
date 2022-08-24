@@ -96,7 +96,6 @@ public class Tir  implements java.io.Serializable {
     public void setIdModel(int idModel) {
         this.idModel = idModel;
     }
-
 //    public ArrayList<File> getPoze() {
 //        return poze;
 //    }
