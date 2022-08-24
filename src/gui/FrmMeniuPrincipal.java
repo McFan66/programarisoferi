@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import models.Sofer;
 import tablemodel.ColumnResizer1;
 import tablemodels.TableModelInregistrari;
@@ -46,6 +47,8 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         initComponents();
         btnAdministrareSoferi.setIcon(i);
         btnAdministrareTiruri.setIcon(i1);
+        
+        lstLibere.setFixedCellHeight(70);
         
         ColumnResizer1.adjustColumnPreferredWidths(tblInregistrari);
     }
@@ -86,6 +89,9 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         rdbToate = new javax.swing.JRadioButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         tblInregistrari = new javax.swing.JTable();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        txtFiltreaza = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
@@ -129,6 +135,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         jScrollPane4.setBorder(null);
         jScrollPane4.setPreferredSize(new java.awt.Dimension(75, 300));
 
+        lstInCursa.setBackground(new java.awt.Color(214, 217, 223));
         lstInCursa.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -147,6 +154,8 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         jScrollPane1.setBorder(null);
         jScrollPane1.setPreferredSize(new java.awt.Dimension(75, 300));
 
+        lstLibere.setBackground(new java.awt.Color(214, 217, 223));
+        lstLibere.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         lstLibere.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -163,6 +172,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         jScrollPane3.setBorder(null);
         jScrollPane3.setPreferredSize(new java.awt.Dimension(75, 300));
 
+        lstInService.setBackground(new java.awt.Color(214, 217, 223));
         lstInService.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -180,16 +190,18 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(22, 22, 22))))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 707, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -266,6 +278,29 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         tblInregistrari.setModel(tableModelInregistrari1);
         jScrollPane5.setViewportView(tblInregistrari);
 
+        jPanel7.setLayout(new java.awt.GridLayout());
+
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("FIltreaza:");
+        jPanel7.add(jLabel4);
+
+        txtFiltreaza.setMinimumSize(new java.awt.Dimension(100, 24));
+        txtFiltreaza.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFiltreazaActionPerformed(evt);
+            }
+        });
+        txtFiltreaza.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtFiltreazaKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtFiltreazaKeyTyped(evt);
+            }
+        });
+        jPanel7.add(txtFiltreaza);
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -276,9 +311,14 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
                 .addGap(193, 193, 193))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 655, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addComponent(jScrollPane5)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane5))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 636, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -286,10 +326,12 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5)
-                .addGap(48, 48, 48))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
+                .addGap(46, 46, 46))
         );
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -297,6 +339,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
 
         jScrollPane6.setBorder(null);
 
+        lstSoferiLiberi.setBackground(new java.awt.Color(214, 217, 223));
         lstSoferiLiberi.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane6.setViewportView(lstSoferiLiberi);
 
@@ -487,6 +530,20 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         meniuPrincipalController.endInregistrare();
     }//GEN-LAST:event_btnFinalizareActionPerformed
 
+    private void txtFiltreazaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFiltreazaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFiltreazaActionPerformed
+
+    private void txtFiltreazaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltreazaKeyReleased
+        // TODO add your handling code here:
+//        meniuPrincipalController.actionFilter();
+    }//GEN-LAST:event_txtFiltreazaKeyReleased
+
+    private void txtFiltreazaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltreazaKeyTyped
+        // TODO add your handling code here:
+                meniuPrincipalController.actionFilter();
+    }//GEN-LAST:event_txtFiltreazaKeyTyped
+
     public JList<String> getLstInCursa() {
         return lstInCursa;
     }
@@ -538,7 +595,10 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     public JButton getBtnFinalizare() {
         return btnFinalizare;
     }
-   
+
+    public JTextField getTxtFiltreaza() {
+        return txtFiltreaza;
+    }
    
     
         /**
@@ -591,12 +651,14 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
@@ -620,5 +682,6 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     private javax.swing.JRadioButton rdbToate;
     private tablemodels.TableModelInregistrari tableModelInregistrari1;
     private javax.swing.JTable tblInregistrari;
+    private javax.swing.JTextField txtFiltreaza;
     // End of variables declaration//GEN-END:variables
 }

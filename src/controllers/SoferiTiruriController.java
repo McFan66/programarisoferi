@@ -158,12 +158,13 @@ public class SoferiTiruriController {
         
         
         for(Tir tir : listaTiruri) {
-//            if(tir.getStare().getNume() != "In cursa" )
-            cmbModelTiruri.addElement(tir);
+//            if(tir.getStare().getNume() != "Cursa" || tir.getStare().getNume() != "Service" ) {
+                cmbModelTiruri.addElement(tir);
+//            }
         }
         
         for(Sofer sofer : listaSoferi) {
-//            if(sofer.getSoferiTiruri().iterator().next().getInregistrari().isEmpty()) {
+//            if(sofer.getSoferiTiruri().isEmpty()) {
                 cmbModelSoferi.addElement(sofer);
 //            }
         }

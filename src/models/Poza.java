@@ -57,6 +57,12 @@ public class Poza {
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
+
+    @Override
+    public String toString() {
+        return "Poza{" + "id=" + id + ", tipObiect=" + tipObiect + ", idObiect=" + idObiect + ", imagePath=" + imagePath + '}';
+    }
+    
     
     
 }

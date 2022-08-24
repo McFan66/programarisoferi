@@ -18,6 +18,7 @@ public class Sofer implements java.io.Serializable {
     private String cnp;
     private boolean valid;
     private Set<SoferiTiruri> soferiTiruri = new HashSet<SoferiTiruri>(0);
+    private Set<Poza> poze = new HashSet<>(0);
 
     public Sofer() {
     }
@@ -94,9 +95,17 @@ public class Sofer implements java.io.Serializable {
         return String.format("%s %s", this.nume, this.prenume);
     }
 
+    public Set<Poza> getPoze() {
+        return poze;
+    }
+
+    public void setPoze(Set<Poza> poze) {
+        this.poze = poze;
+    }
+
     @Override
     public String toString() {
-        return "Sofer{" + "id=" + id + ", nume=" + nume + ", prenume=" + prenume + ", cnp=" + cnp + '}';
+        return "Sofer{" + "id=" + id + ", nume=" + nume + ", prenume=" + prenume + ", cnp=" + cnp + ", valid=" + valid + ", soferiTiruri=" + soferiTiruri + ", poze=" + poze + '}';
     }
 
     @Override

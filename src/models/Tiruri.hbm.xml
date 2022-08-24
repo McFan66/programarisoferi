@@ -31,5 +31,17 @@
       </key>
       <one-to-many class="models.SoferiTiruri"/>
     </set>
+    <set fetch="select" inverse = "true" lazy = "false" name="poze" table="POZE">
+        <key>
+            <column name="ID_OBIECT" not-null="true" />
+        </key>
+        <one-to-many class="models.Poza"/>
+        <filter name = "filterPoze" condition = "TIP_OBIECT = :tipObiectParam"/>
+    </set>
   </class>
+  
+  
+  <filter-def name = "filterPoze">
+        <filter-param name = "tipObiectParam" type = "integer" />
+  </filter-def>
 </hibernate-mapping>

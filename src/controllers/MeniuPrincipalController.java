@@ -16,6 +16,9 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableRowSorter;
 import models.AppSingleTone;
 import models.Inregistrare;
 import models.Sofer;
@@ -24,6 +27,7 @@ import models.Tir;
 import observers.VObserver;
 import renderers.ItemSoferRenderer;
 import renderers.ItemSoferiTiruriRenderer;
+import renderers.MeniuPrincipalListRenderer;
 import tablemodel.ColumnResizer1;
 import tablemodels.TableModelInregistrari;
 
@@ -235,8 +239,22 @@ public class MeniuPrincipalController implements VObserver {
             modelListe.addElement(t);
         }
         listaInterfata.setModel(modelListe);
-        listaInterfata.setCellRenderer(new renderers.ItemTirRenderer());
+        listaInterfata.setCellRenderer(new MeniuPrincipalListRenderer());
     }
+    
+    
+    private void filterTable(String text) {
+        TableRowSorter<AbstractTableModel> tr = new TableRowSorter<>(tableModelInregistrari);
+        frmMeniuPrincipal.getTblInregistrari().setRowSorter(tr);
+        
+        tr.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+    }
+    
+    public void actionFilter() {
+        String text = frmMeniuPrincipal.getTxtFiltreaza().getText().toLowerCase().trim();
+        filterTable(text);
+    }
+        
 
     @Override
     public void update(Object subject) {

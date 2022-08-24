@@ -8,6 +8,7 @@ package repositories;
 import utils.HibernateUtil;
 import java.util.ArrayList;
 import models.Sofer;
+import org.hibernate.Filter;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -20,9 +21,13 @@ public class SoferiHibernateRepository implements SoferiRepository {
 
     Session session = null;
     
+    Filter filterPoze;
+    
     public SoferiHibernateRepository(){
         if(session == null || !session.isOpen()){
            this.session = HibernateUtil.getSessionFactory().openSession();
+           filterPoze = session.enableFilter("filterPozeSoferi");
+           filterPoze.setParameter("tipObiectParam", 1);
         }
     }
     
@@ -71,7 +76,7 @@ public class SoferiHibernateRepository implements SoferiRepository {
     }
     public static void main(String[] args) {
         SoferiRepository soferiRepository = new SoferiHibernateRepository();
-//        System.out.println(soferiRepository.getSoferiLiberi());
+        System.out.println(soferiRepository.getAll());
     }
 
     @Override

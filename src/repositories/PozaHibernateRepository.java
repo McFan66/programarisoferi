@@ -77,7 +77,7 @@ public class PozaHibernateRepository implements PozaRepository {
     @Override
     public ArrayList<Poza> getPozeByTipAndId(int tip, int id) {
         ArrayList<Poza> listaPoze = new ArrayList<>();
-                if(!session.isOpen()){
+        if(!session.isOpen()){
            this.session = HibernateUtil.getSessionFactory().openSession();
         }
         org.hibernate.Transaction tx = session.beginTransaction();

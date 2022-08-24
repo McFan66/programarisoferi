@@ -25,8 +25,9 @@ public class SoferiTiruriServiceImpl implements SoferiTiruriService{
     
     @Override
     public boolean adaugaSoferTir(SoferiTiruri soferTir) {
+        soferiTiruriRepository.adaugaSoferTir(soferTir);
         notifyObservers(soferTir);
-        return soferiTiruriRepository.adaugaSoferTir(soferTir);
+        return true;
     }
 
     @Override

@@ -24,6 +24,7 @@ public class Tir  implements java.io.Serializable {
   //   private ArrayList<File> poze;
   //   private File folderPoze;
      private Set soferiTiruri = new HashSet(0);
+     private Set poze = new HashSet(0);
      
      
 
@@ -120,10 +121,24 @@ public class Tir  implements java.io.Serializable {
         this.valid = valid;
     }
 
+    public Set getPoze() {
+        return poze;
+    }
+
+    public void setPoze(Set poze) {
+        this.poze = poze;
+    }
+    
+    public String getDescriere() {
+        return String.format("%s-%s %s", this.model.getMarca().getNume() , this.model.getNume() , this.nrInmatriculare);
+    }
+
     @Override
     public String toString() {
-        return "Tir{" + "id=" + id + ", nrInmatriculare=" + nrInmatriculare + ", idModel=" + idModel + ", idStare=" + idStare + ", stare=" + stare + ", model=" + model + ", valid=" + valid + ", soferiTiruri=" + soferiTiruri + '}';
+        return "Tir{" + "id=" + id + ", nrInmatriculare=" + nrInmatriculare + ", idModel=" + idModel + ", idStare=" + idStare + ", stare=" + stare + ", model=" + model + ", valid=" + valid + ", soferiTiruri=" + soferiTiruri + ", poze=" + poze + '}';
     }
+    
+    
 
 
 

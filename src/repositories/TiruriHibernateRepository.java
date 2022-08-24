@@ -10,6 +10,7 @@ import models.Marca;
 import models.Model;
 import models.Stare;
 import models.Tir;
+import org.hibernate.Filter;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import utils.HibernateUtil;
@@ -21,10 +22,14 @@ import utils.HibernateUtil;
 public class TiruriHibernateRepository implements TiruriRepository {
 
     Session session = null;
+    
+    Filter filterPoze;
 
     public TiruriHibernateRepository() {
         if (session == null || !session.isOpen()) {
             this.session = HibernateUtil.getSessionFactory().openSession();
+            filterPoze = session.enableFilter("filterPoze");
+            filterPoze.setParameter("tipObiectParam", 1);
         }
     }
 
@@ -131,9 +136,7 @@ public class TiruriHibernateRepository implements TiruriRepository {
 
     public static void main(String[] args) {
         TiruriRepository tiruriRepository = new TiruriHibernateRepository();
-        Stare s = new Stare();
-        s.setId(3);
-        System.out.println(tiruriRepository.getTirByStare(s));
+        System.out.println(tiruriRepository.getAll());
     }
 
     @Override

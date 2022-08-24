@@ -184,13 +184,29 @@ public class TirController {
         }
     }
 
-    public void saveTir() {
-        if (isFormValid()) {
+    public void savePoza(Tir tir) {
             File tiruri = makeFolderPoze();
             File pozeTir = new File(tiruri, frmAddTir.getTxtNrInmatriculare().getText());
             if (!pozeTir.exists()) {
                 pozeTir.mkdir();
             }
+        
+            ArrayList<File> listaFisiereNoua = new ArrayList<>();
+            for (File pozaDeSalvat : listaFisiere) {
+                makeFile(pozaDeSalvat, pozeTir);
+                listaFisiereNoua.add(pozaCreeata);
+            }
+            for (File pozaDeSalvat : listaFisiereNoua) {
+                Poza p = new Poza();
+                p.setTipObiect(1);
+                p.setIdObiect(tir.getId());
+                p.setImagePath(pozaDeSalvat.getName());
+                pozaService.adaugaPoza(p);
+            }
+    }
+    
+    public void saveTir() {
+        if (isFormValid()) {
             if (tirSelectat == null) {
                 tirSelectat = new Tir();
                 Model m = (Model) cmbModel.getSelectedItem();
@@ -201,6 +217,7 @@ public class TirController {
                 tirSelectat.setStare(stareService.getStareByNume("Disponibil"));
                 tirSelectat.setValid(true);
                 tiruriService.adaugaTir(tirSelectat);
+                                savePoza(tirSelectat);
             } else {
                 Model m = (Model) cmbModel.getSelectedItem();
                 tirSelectat.setIdModel(m.getId());
@@ -208,25 +225,15 @@ public class TirController {
                 tirSelectat.setNrInmatriculare(frmAddTir.getTxtNrInmatriculare().getText());
                 tirSelectat.setIdStare(tirSelectat.getIdStare());
                 tirSelectat.setStare(stareService.getStareByNume("Disponibil"));
-                tiruriService.adaugaTir(tirSelectat);
                 ArrayList<Poza> pozeDeSters = pozaService.getPozaByTipAndObiect(1, tirSelectat.getId());
                 for (Poza pozaDeSters : pozeDeSters) {
                     pozaService.stergePoza(pozaDeSters);
                 }
+                tiruriService.adaugaTir(tirSelectat);
+                                                savePoza(tirSelectat);
+
             }
 
-            ArrayList<File> listaFisiereNoua = new ArrayList<>();
-            for (File pozaDeSalvat : listaFisiere) {
-                makeFile(pozaDeSalvat, pozeTir);
-                listaFisiereNoua.add(pozaCreeata);
-            }
-            for (File pozaDeSalvat : listaFisiereNoua) {
-                Poza p = new Poza();
-                p.setTipObiect(1);
-                p.setIdObiect(tirSelectat.getId());
-                p.setImagePath(pozaDeSalvat.getName());
-                pozaService.adaugaPoza(p);
-            }
             JOptionPane.showMessageDialog(frmAddTir, "Tirul a fost salvat cu succes.");
             frmAddTir.dispose();
             updateAndSetModelToTable();
