@@ -22,4 +22,5 @@ public interface SoferiTiruriRepository {
     public ArrayList<SoferiTiruri> getSoferiTiruriByTir(Tir tir);
     public ArrayList<SoferiTiruri> getSoferiTiruriByValid(boolean valid);
     public ArrayList<SoferiTiruri> getSoferiTiruriByInCursa(boolean inCursa);
+    public SoferiTiruri getSoferiTiruriInCursaByTir(Tir tir);
 }

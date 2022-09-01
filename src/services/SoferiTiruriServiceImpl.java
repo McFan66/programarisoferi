@@ -77,5 +77,10 @@ public class SoferiTiruriServiceImpl implements SoferiTiruriService{
     public ArrayList<SoferiTiruri> getSoferiTiruriByInCursa(boolean inCursa) {
         return soferiTiruriRepository.getSoferiTiruriByInCursa(inCursa);
     }
+
+    @Override
+    public SoferiTiruri getSoferiTiruriInCursaByTir(Tir tir) {
+        return soferiTiruriRepository.getSoferiTiruriInCursaByTir(tir);
+    }
     
 }

@@ -5,6 +5,8 @@
  */
 package renderers;
 
+import gui.CustomLabel;
+import gui.ImageAvatar;
 import java.awt.Component;
 import java.awt.Image;
 import java.io.File;
@@ -18,26 +20,40 @@ import models.AppSingleTone;
 import models.Poza;
 import models.Tir;
 import services.PozaService;
+import services.SoferiTiruriService;
+import services.StareService;
 import utils.ImageUtils;
 
 /**
  *
  * @author Vlad
  */
-public class MeniuPrincipalListRenderer extends JLabel implements ListCellRenderer<Tir>{
+public class MeniuPrincipalListRenderer extends CustomLabel implements ListCellRenderer<Tir>{
     
     private final PozaService pozaService = AppSingleTone.getAppSingleToneInstance().getPozaService();
+    private final SoferiTiruriService soferiTiruriService = AppSingleTone.getAppSingleToneInstance().getSoferiTiruriService();
+    private final StareService stareService = AppSingleTone.getAppSingleToneInstance().getStareService();
 
     
     @Override
     public Component getListCellRendererComponent(JList<? extends Tir> list, Tir value, int index, boolean isSelected, boolean cellHasFocus) {
         
-            Poza p = pozaService.getPozaByTipAndObiect(1, value.getId()).get(0);
-            File file = new File("./poze/tiruri/" + value.getNrInmatriculare() + "/" + p.getImagePath());
-//            ImageIcon i = new ImageIcon(new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH));
-           ImageIcon i =  ImageUtils.getRoundImageIcon(file);
-            setIcon(i);
-            setText(value.getDescriere());
+        Poza p;
+        File file;
+        if(value == null) {
+            return this;
+        }
+        if(value.getIdStare() == 8) {
+            p = pozaService.getPozaByTipAndObiect(2, soferiTiruriService.getSoferiTiruriInCursaByTir(value).getIdSofer()).get(0);
+            file = new File("./poze/soferi" + "/" + p.getImagePath());
+        }
+        else {
+            p = pozaService.getPozaByTipAndObiect(1, value.getId()).get(0);
+            file = new File("./poze/tiruri/" + value.getNrInmatriculare() + "/" + p.getImagePath());
+        }
+    
+        super.getLblTextTir().setText(value.getDescriere());
+        super.getImageAvatar1().setIcon(new ImageIcon(file.getPath()));
         
         return this;
     }
