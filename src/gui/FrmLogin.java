@@ -6,6 +6,8 @@
 package gui;
 
 import controllers.ApplicationController;
+import controllers.MeniuPrincipalController;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import models.AppSingleTone;
 import models.Utilizator;
@@ -20,13 +22,15 @@ public class FrmLogin extends javax.swing.JFrame {
     
     private UtilizatoriService utilizatoriService = new UtilizatoriServiceImpl();
     
-    private ApplicationController applicationController = new ApplicationController();
+    private MeniuPrincipalController meniuPrincipalController = new MeniuPrincipalController();
 
     /**
      * Creates new form FrmLogin
      */
     public FrmLogin() {
         initComponents();
+        //txtParola.setIcon(new ImageIcon("src/resources/show-password.png"));
+        setTitle("Autentificare");
     }
     
     private boolean loginAction() {
@@ -41,7 +45,7 @@ public class FrmLogin extends javax.swing.JFrame {
             }
             AppSingleTone.getAppSingleToneInstance().setUtilizatorAutentificat(utilizatorAutentificat);
             dispose();
-// aici deschidem meniu principal --> applicationController.actionCreate();            
+            meniuPrincipalController.actionIndex();
             return true;
         } else {
             JOptionPane.showMessageDialog(this, "Email sau parola incorecta.");
@@ -63,8 +67,7 @@ public class FrmLogin extends javax.swing.JFrame {
         txtEmail = new javax.swing.JTextField();
         lblParola = new javax.swing.JLabel();
         btnLoin = new javax.swing.JButton();
-        txtParola = new javax.swing.JPasswordField();
-        btnViewParola = new javax.swing.JToggleButton();
+        txtParola = new gui.CustomPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -96,16 +99,14 @@ public class FrmLogin extends javax.swing.JFrame {
                             .addComponent(lblEmail, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lblParola, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(txtParola)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnViewParola, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtParola, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnLoin)))
+                        .addComponent(btnLoin, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -115,13 +116,11 @@ public class FrmLogin extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEmail)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblParola)
-                        .addComponent(txtParola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnViewParola, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblParola)
+                    .addComponent(txtParola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLoin)
                 .addContainerGap())
         );
@@ -136,7 +135,7 @@ public class FrmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLoinActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        System.exit(0);
+
     }//GEN-LAST:event_formWindowClosed
 
     /**
@@ -169,17 +168,18 @@ public class FrmLogin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmLogin().setVisible(true);
+                FrmLogin fereastra = new FrmLogin();
+                fereastra.setLocationRelativeTo(null);
+                fereastra.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLoin;
-    private javax.swing.JToggleButton btnViewParola;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblParola;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JPasswordField txtParola;
+    private gui.CustomPasswordField txtParola;
     // End of variables declaration//GEN-END:variables
 }

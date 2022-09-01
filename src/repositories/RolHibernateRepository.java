@@ -60,5 +60,15 @@ public class RolHibernateRepository implements RolRepository{
         tx.commit();
         return listaRoluri;
     }
+
+    @Override
+    public ArrayList<Rol> getRolByValid(boolean valid) {
+        ArrayList<Rol> listaRoluri = new ArrayList<>();
+        org.hibernate.Transaction tx = session.beginTransaction();
+        Query q = session.createQuery("from Rol where valid= :valid").setParameter("valid", valid);
+        listaRoluri = (ArrayList<Rol>) q.list();
+        tx.commit();
+        return listaRoluri;
+    }
     
 }

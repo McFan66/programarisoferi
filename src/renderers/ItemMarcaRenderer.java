@@ -15,19 +15,25 @@ import models.Marca;
  *
  * @author Stefan
  */
-public class ItemMarcaRenderer extends DefaultListCellRenderer{
+public class ItemMarcaRenderer extends DefaultListCellRenderer {
+
+    private Color defaultForegroundColor = getForeground();
 
     @Override
     public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-        if(value instanceof Marca){
-           Marca m=(Marca)value;
-           setText(m.getNume());
-           
-           if(isSelected) {
-               setBackground(Color.cyan);
-           }
+        if (value instanceof Marca) {
+            Marca m = (Marca) value;
+            setText(m.getNume());
+
+            if (isSelected) {
+                setBackground(new Color(25, 116, 211));
+                setForeground(Color.white);
+            } else {
+                setBackground(Color.white);
+                setForeground(defaultForegroundColor);
+            }
         }
         return this;
     }
-    
+
 }

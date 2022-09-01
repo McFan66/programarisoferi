@@ -6,17 +6,24 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import models.Rol;
 import models.Utilizator;
+import models.UtilizatoriRoluri;
 import repositories.UtilizatorHibernateRepository;
 import repositories.UtilizatorRepository;
+import repositories.UtilizatoriRoluriHibernateRepository;
+import repositories.UtilizatoriRoluriRepository;
 
 /**
  *
  * @author Stefan
  */
-public class UtilizatoriServiceImpl implements UtilizatoriService{
-    
+public class UtilizatoriServiceImpl implements UtilizatoriService {
+
     UtilizatorRepository utilizatorRepository = new UtilizatorHibernateRepository();
+    UtilizatoriRoluriRepository utilizatoriRoluriRepository = new UtilizatoriRoluriHibernateRepository();
 
     @Override
     public boolean adaugaUtilizator(Utilizator utilizator) {
@@ -42,5 +49,32 @@ public class UtilizatoriServiceImpl implements UtilizatoriService{
     public ArrayList<Utilizator> getUtilizatoriByValid(boolean valid) {
         return utilizatorRepository.getUtilizatorByValid(valid);
     }
-    
+
+    @Override
+    public Rol getRolulUtilizatorului(Utilizator utilizator) {
+        for (UtilizatoriRoluri ur : utilizatoriRoluriRepository.getUtilizatoriRoluriByUtilizator(utilizator)) {
+            if (ur.getDataSfarsit() == null) {
+                return ur.getRol();
+            }
+        }
+        return new Rol("Nedefinit");
+    }
+
+    @Override
+    public ArrayList<Rol> getListaRoluriActive(Utilizator utilizator) {
+        ArrayList<Rol> listaRoluri = new ArrayList<>();
+        Calendar c = Calendar.getInstance();
+        Date azi = c.getTime();
+        for (UtilizatoriRoluri ur : utilizatoriRoluriRepository.getUtilizatoriRoluriByUtilizator(utilizator)) {
+            if ((azi.after(ur.getDataInceput()) || azi.equals(ur.getDataInceput())) && azi.before(ur.getDataSfarsit())) {
+                listaRoluri.add(ur.getRol());
+            }else
+                if ((azi.after(ur.getDataInceput()) || azi.equals(ur.getDataInceput())) && ur.getDataSfarsit()==null){
+                    listaRoluri.add(ur.getRol());
+                }
+        }
+        System.out.println("merge" + listaRoluri);
+        return listaRoluri;
+    }
+
 }

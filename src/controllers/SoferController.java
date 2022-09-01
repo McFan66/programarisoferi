@@ -151,7 +151,7 @@ public class SoferController {
         }
         listaSoferi = soferService.getAll();
         Sofer s = listaSoferi.get(index);
-        int raspuns = JOptionPane.showConfirmDialog(frmAdministrareSoferi, String.format("Sunteti sigur ca doriti sa stergeti soferul %s?", s.getNumeComplet()), "Stergere sofer", JOptionPane.YES_NO_OPTION);
+        int raspuns = JOptionPane.showConfirmDialog(frmAdministrareSoferi, String.format("Sunteti sigur ca doriti sa inactivati soferul %s?", s.getNumeComplet()), "Inactivare sofer", JOptionPane.YES_NO_OPTION);
 //        if (raspuns == JOptionPane.YES_OPTION) {
 //            if (!pozaService.getPozaByTipAndObiect(2, s.getId()).isEmpty()) {
 //                Poza pozaDeSters = pozaService.getPozaByTipAndObiect(2, s.getId()).get(0);
@@ -249,10 +249,10 @@ public class SoferController {
             JOptionPane.showMessageDialog(frmAddSofer, "Va rugam sa adaugati o poza.");
             return false;
         }
-//        if (!c.validate(txtCNP.getText())) {
-//            JOptionPane.showMessageDialog(frmAddSofer, "CNP incorect.");
-//            return false;
-//        }
+        if (!c.validate(txtCNP.getText())) {
+            JOptionPane.showMessageDialog(frmAddSofer, "CNP incorect.");
+            return false;
+        }
         if (txtNume.getText().trim().length() < 2 || txtPrenume.getText().trim().length() < 2) {
             JOptionPane.showMessageDialog(frmAddSofer, "Numele si prenumele trebuie sa aiba minim 2 caractere.");
             return false;

@@ -6,6 +6,8 @@
 package services;
 
 import java.util.ArrayList;
+import models.Rol;
+import models.Utilizator;
 import models.UtilizatoriRoluri;
 import repositories.UtilizatoriRoluriHibernateRepository;
 import repositories.UtilizatoriRoluriRepository;
@@ -32,5 +34,26 @@ public class UtilizatoriRoluriServiceImpl implements UtilizatoriRoluriService{
     public ArrayList<UtilizatoriRoluri> getAll() {
         return utilizatoriRoluriRepository.getAll();
     }
+
+    @Override
+    public ArrayList<UtilizatoriRoluri> getUtilizatoriRoluriByValid(boolean valid) {
+        return utilizatoriRoluriRepository.getUtilizatoriRoluriByValid(valid);
+    }
+
+    @Override
+    public int getNrUtilizatoriCuRol(Rol rol) {
+        return utilizatoriRoluriRepository.getUtilizatoriCuRol(rol);
+    }
+
+    @Override
+    public ArrayList<UtilizatoriRoluri> getUtilizatoriRoluriByUtilizator(Utilizator utilizator) {
+        return utilizatoriRoluriRepository.getUtilizatoriRoluriByUtilizator(utilizator);
+    }
+
+    @Override
+    public ArrayList<UtilizatoriRoluri> getUtilizatoriRoluriActiveAndUpcomingByUtilizator(Utilizator utilizator) {
+        return utilizatoriRoluriRepository.getUtilizatoriRoluriActiveAndUpcomingByUtilizator(utilizator);
+    }
+
     
 }

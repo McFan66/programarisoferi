@@ -16,4 +16,5 @@ public interface RoluriService {
     public boolean adaugaRol(Rol rol);
     public void stergeRol(Rol rol);
     public ArrayList<Rol> getAll();
+    public ArrayList<Rol> getRoluriByValid(boolean valid);
 }

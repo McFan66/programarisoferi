@@ -14,19 +14,19 @@ import models.Inregistrare;
  *
  * @author Vlad
  */
-public class TableModelInregistrari extends AbstractTableModel{
-    
-    private String[] columnNames = new String[] {"Data plecare" , "Data sosire" , "Sofer" , "Tir"};
+public class TableModelInregistrari extends AbstractTableModel {
+
+    private String[] columnNames = new String[]{"Data plecare", "Data sosire", "Sofer", "Tir"};
     private ArrayList<Inregistrare> listaInregistrari;
-    
+
     public TableModelInregistrari() {
         this.listaInregistrari = new ArrayList();
     }
-    
+
     public TableModelInregistrari(ArrayList<Inregistrare> listaInregistrari) {
         this.listaInregistrari = listaInregistrari;
     }
-    
+
     @Override
     public int getRowCount() {
         return listaInregistrari.size();
@@ -54,38 +54,41 @@ public class TableModelInregistrari extends AbstractTableModel{
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         return false;
     }
-    
+
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Inregistrare i = listaInregistrari.get(rowIndex);
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        
-        switch(columnIndex) {
+
+        switch (columnIndex) {
             case 0:
                 return sdf.format(i.getDataPlecare());
             case 1:
-                return sdf.format(i.getDataSosire());
+                if (i.getDataSosire() != null) {
+                    return sdf.format(i.getDataSosire());
+                }
+                return "Nespecificat";
             case 2:
-                return i.getSoferTir().getSofer().getNume();
+                return i.getSoferTir().getSofer().getNumeComplet();
             case 3:
                 return i.getSoferTir().getTir().getNrInmatriculare();
             default:
                 return "Nespecificat";
         }
     }
-    
+
     public Inregistrare getInregistrareByIndex(int rowIndex) {
         return listaInregistrari.get(rowIndex);
     }
-    
+
     public void addInregistrare(Inregistrare i) {
         int index = listaInregistrari.indexOf(i);
-        if(index == -1) {
+        if (index == -1) {
             listaInregistrari.add(i);
         } else {
             listaInregistrari.set(index, i);
         }
         fireTableDataChanged();
     }
-    
+
 }

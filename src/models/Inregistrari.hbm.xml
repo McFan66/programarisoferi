@@ -11,7 +11,7 @@
       <column name="SOFERI_TIRURI" not-null="true"/>
     </property>
     <property name="dataSosire" type="date">
-      <column length="10" name="DATA_SOSIRE" not-null="true"/>
+      <column length="10" name="DATA_SOSIRE" not-null="false"/>
     </property>
     <property name="dataPlecare" type="date">
       <column length="10" name="DATA_PLECARE"/>

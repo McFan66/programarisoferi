@@ -9,20 +9,20 @@ import java.awt.Color;
 import java.awt.Component;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
-import models.Sofer;
+import models.Rol;
 
 /**
  *
- * @author Vlad
+ * @author Stefan
  */
-public class ItemSoferRenderer extends DefaultListCellRenderer{
+public class ItemRolRenderer extends DefaultListCellRenderer {
 private Color defaultForegroundColor=getForeground();
     @Override
     public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-        if(value instanceof Sofer) {
-            Sofer s = (Sofer) value;
+        if(value instanceof Rol) {
+            Rol r = (Rol) value;
             
-                setText(String.format("%s %s", s.getNume() , s.getPrenume()));
+                setText(r.getNume());
                 
                 if(isSelected) {
                     setBackground(new Color(25,116,211));

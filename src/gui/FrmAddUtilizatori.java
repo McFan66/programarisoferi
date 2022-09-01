@@ -5,20 +5,64 @@
  */
 package gui;
 
+import controllers.UtilizatorController;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JPasswordField;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+
 /**
  *
  * @author Stefan
  */
 public class FrmAddUtilizatori extends javax.swing.JDialog {
 
+    private UtilizatorController utilizatorController;
+    
     /**
      * Creates new form FrmAddUtilizatori
      */
-    public FrmAddUtilizatori(java.awt.Frame parent, boolean modal) {
+    public FrmAddUtilizatori(JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
 
+    public JTextField getTxtNume() {
+        return txtNume;
+    }
+
+    public JTextField getTxtEmail() {
+        return txtEmail;
+    }
+
+
+    public JTextField getTxtPrenume() {
+        return txtPrenume;
+    }
+
+    public void setUtilizatorController(UtilizatorController utilizatorController) {
+        this.utilizatorController = utilizatorController;
+    }
+
+    public CustomPasswordField getTxtConfirmaParola() {
+        return txtConfirmaParola;
+    }
+
+    public CustomPasswordField getTxtParola() {
+        return txtParola;
+    }
+
+    public JTable getTblRoluri() {
+        return tblRoluri;
+    }
+
+    public JButton getBtnFinalizeaza() {
+        return btnFinalizeaza;
+    }
+
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,33 +72,85 @@ public class FrmAddUtilizatori extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        lblNume = new javax.swing.JLabel();
+        lblPrenume = new javax.swing.JLabel();
+        lblEmail = new javax.swing.JLabel();
+        lblParola = new javax.swing.JLabel();
+        txtNume = new javax.swing.JTextField();
+        txtPrenume = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
+        btnSalveaza = new javax.swing.JButton();
+        lblConfirmaParola = new javax.swing.JLabel();
+        txtParola = new gui.CustomPasswordField();
+        txtConfirmaParola = new gui.CustomPasswordField();
+        btnAdauga = new javax.swing.JButton();
+        btnEditeaza = new javax.swing.JButton();
+        btnFinalizeaza = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblRoluri = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel1.setText("Nume:");
+        lblNume.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        lblNume.setText("Nume:");
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel2.setText("Prenume:");
+        lblPrenume.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        lblPrenume.setText("Prenume:");
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel3.setText("Email:");
+        lblEmail.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        lblEmail.setText("Email:");
 
-        jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel4.setText("Parola:");
+        lblParola.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        lblParola.setText("Parola:");
 
-        jTextField1.setText("jTextField1");
+        btnSalveaza.setText("Salveaza");
+        btnSalveaza.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalveazaActionPerformed(evt);
+            }
+        });
 
-        jTextField2.setText("jTextField2");
+        lblConfirmaParola.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        lblConfirmaParola.setText("Confirma parola:");
 
-        jTextField3.setText("jTextField3");
+        btnAdauga.setText("Adauga");
+        btnAdauga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdaugaActionPerformed(evt);
+            }
+        });
+
+        btnEditeaza.setText("Editeaza");
+        btnEditeaza.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditeazaActionPerformed(evt);
+            }
+        });
+
+        btnFinalizeaza.setText("Finalizeaza");
+        btnFinalizeaza.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinalizeazaActionPerformed(evt);
+            }
+        });
+
+        tblRoluri.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblRoluri.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblRoluriMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblRoluri);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -63,15 +159,32 @@ public class FrmAddUtilizatori extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
-                    .addComponent(jTextField2)
-                    .addComponent(jTextField3))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnAdauga, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 167, Short.MAX_VALUE)
+                                .addComponent(btnSalveaza))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnEditeaza, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnFinalizeaza, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNume, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblPrenume, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblEmail, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblParola, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblConfirmaParola, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNume, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+                            .addComponent(txtPrenume)
+                            .addComponent(txtEmail)
+                            .addComponent(txtParola, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtConfirmaParola, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -79,23 +192,58 @@ public class FrmAddUtilizatori extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblNume)
+                    .addComponent(txtNume, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblPrenume)
+                    .addComponent(txtPrenume, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblEmail)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblParola)
+                    .addComponent(txtParola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblConfirmaParola)
+                    .addComponent(txtConfirmaParola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAdauga)
+                    .addComponent(btnEditeaza)
+                    .addComponent(btnFinalizeaza))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSalveaza)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSalveazaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalveazaActionPerformed
+        utilizatorController.saveUtilizator();
+    }//GEN-LAST:event_btnSalveazaActionPerformed
+
+    private void btnAdaugaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdaugaActionPerformed
+        utilizatorController.actionAdaugaRol(this);
+    }//GEN-LAST:event_btnAdaugaActionPerformed
+
+    private void btnFinalizeazaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizeazaActionPerformed
+        utilizatorController.actionDeleteRol();
+    }//GEN-LAST:event_btnFinalizeazaActionPerformed
+
+    private void btnEditeazaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditeazaActionPerformed
+        utilizatorController.actionEditeazaRol(this);
+    }//GEN-LAST:event_btnEditeazaActionPerformed
+
+    private void tblRoluriMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblRoluriMouseClicked
+       utilizatorController.rolSelected();
+    }//GEN-LAST:event_tblRoluriMouseClicked
 
     /**
      * @param args the command line arguments
@@ -127,7 +275,7 @@ public class FrmAddUtilizatori extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FrmAddUtilizatori dialog = new FrmAddUtilizatori(new javax.swing.JFrame(), true);
+                FrmAddUtilizatori dialog = new FrmAddUtilizatori(new JDialog(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -140,12 +288,21 @@ public class FrmAddUtilizatori extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JButton btnAdauga;
+    private javax.swing.JButton btnEditeaza;
+    private javax.swing.JButton btnFinalizeaza;
+    private javax.swing.JButton btnSalveaza;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblConfirmaParola;
+    private javax.swing.JLabel lblEmail;
+    private javax.swing.JLabel lblNume;
+    private javax.swing.JLabel lblParola;
+    private javax.swing.JLabel lblPrenume;
+    private javax.swing.JTable tblRoluri;
+    private gui.CustomPasswordField txtConfirmaParola;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtNume;
+    private gui.CustomPasswordField txtParola;
+    private javax.swing.JTextField txtPrenume;
     // End of variables declaration//GEN-END:variables
 }

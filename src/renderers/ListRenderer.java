@@ -16,6 +16,8 @@ import models.Marca;
  */
 public class ListRenderer extends DefaultListCellRenderer {
 
+    private Color defaultForegroundColor = getForeground();
+
     /**
      * Metoda returneaza numele categoriei din JComboBox
      *
@@ -26,7 +28,6 @@ public class ListRenderer extends DefaultListCellRenderer {
      * @param cellHasFocus
      * @return numele Categoriei
      */
-    
     @Override
     public Component getListCellRendererComponent(
             JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
@@ -35,6 +36,7 @@ public class ListRenderer extends DefaultListCellRenderer {
         if (value instanceof Marca) {
 
             Marca m = (Marca) value;
+            setText(m.getNume());
 //            //setam valoarea afisata in combobox ca fiind numele categoriei
 //            if (c.getNivel() != 0) {
 //                setText(HelpService.buildLevelString(c.getNivel()) + c.getDenumire());
@@ -42,8 +44,11 @@ public class ListRenderer extends DefaultListCellRenderer {
 //                setText(c.getDenumire());
 //            }
             if (isSelected) {
-                setBackground(Color.cyan);
-//                setForeground(Color.white);
+                setBackground(new Color(25, 116, 211));
+                setForeground(Color.white);
+            } else {
+                setBackground(Color.white);
+                setForeground(defaultForegroundColor);
             }
         }
 
