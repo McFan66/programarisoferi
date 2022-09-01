@@ -96,6 +96,7 @@ public class TirController {
 
     public void actionCreate(JDialog parent) {
         frmAddTir = new FrmAddTir(parent, true);
+        frmAddTir.setTitle("Adauga tir");
         cmbMarca = frmAddTir.getCmbMarca();
         cmbModel = frmAddTir.getCmbModel();
         cmbMarca.setRenderer(new ItemMarcaRenderer());
@@ -121,10 +122,17 @@ public class TirController {
             JOptionPane.showMessageDialog(frmAdministrareTiruri, "Va rugam sa selectati un tir.");
             return;
         }
-        listaTiruri = tiruriService.getAll();
+        if (frmAdministrareTiruri.getRdbToate().isSelected()) {
+            listaTiruri = tiruriService.getAll();
+        } else if (frmAdministrareTiruri.getRdbActive().isSelected()) {
+            listaTiruri = tiruriService.getTirByValid(true);
+        } else if (frmAdministrareTiruri.getRdbInactive().isSelected()) {
+            listaTiruri = tiruriService.getTirByValid(false);
+        }
         Tir t = listaTiruri.get(index);
         this.tirSelectat = t;
         frmAddTir = new FrmAddTir(parent, true, tirSelectat);
+        frmAddTir.setTitle("Editeaza tir");
         frmAddTir.setTirController(this);
         cmbMarca = frmAddTir.getCmbMarca();
         cmbMarca.setRenderer(new ItemMarcaRenderer());
@@ -154,7 +162,13 @@ public class TirController {
             JOptionPane.showMessageDialog(frmAdministrareTiruri, "Va rugam sa selectati un tir.");
             return;
         }
-        listaTiruri = tiruriService.getAll();
+        if (frmAdministrareTiruri.getRdbToate().isSelected()) {
+            listaTiruri = tiruriService.getAll();
+        } else if (frmAdministrareTiruri.getRdbActive().isSelected()) {
+            listaTiruri = tiruriService.getTirByValid(true);
+        } else if (frmAdministrareTiruri.getRdbInactive().isSelected()) {
+            listaTiruri = tiruriService.getTirByValid(false);
+        }
         Tir t = listaTiruri.get(index);
         int raspuns = JOptionPane.showConfirmDialog(frmAdministrareTiruri, "Sunteti sigur ca vreti sa stergeti tirul selectat?", "Stergere tir", JOptionPane.YES_NO_OPTION);
 //        if (raspuns == JOptionPane.YES_OPTION) {
@@ -229,6 +243,7 @@ public class TirController {
 
     public void actionIndex(java.awt.Frame parent) {
         frmAdministrareTiruri = new FrmAdministrareTiruri(parent, true);
+        frmAdministrareTiruri.setTitle("Administrare tiruri");
         frmAdministrareTiruri.getRdbToate().setSelected(true);
         updateAndSetModelToTable();
         tblTiruri.addMouseListener(new MouseAdapter() {
@@ -329,6 +344,7 @@ public class TirController {
     private void afisareDetaliiTir() {
         tirSelectat = listaTiruri.get(tblTiruri.getSelectedRow());
         frmAfisareDetaliiTir = new FrmAfisareDetaliiTir(frmAdministrareTiruri, true);
+        frmAfisareDetaliiTir.setTitle("Detalii tir");
         frmAfisareDetaliiTir.getLblMarca().setText(tirSelectat.getModel().getMarca().getNume());
         frmAfisareDetaliiTir.getLblModel().setText(tirSelectat.getModel().getNume());
         Pattern p = Pattern.compile("[A-Z]+|\\d+");

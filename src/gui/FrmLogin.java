@@ -35,7 +35,7 @@ public class FrmLogin extends javax.swing.JFrame {
     
     private boolean loginAction() {
         String email = txtEmail.getText().trim();
-        String parola = new String("");
+        String parola = new String(txtParola.getPassword());
         Utilizator utilizatorAutentificat;
         if ((utilizatorAutentificat = utilizatoriService.login(email, parola)) != null) {
             if (!utilizatorAutentificat.isValid()){
@@ -67,7 +67,7 @@ public class FrmLogin extends javax.swing.JFrame {
         txtEmail = new javax.swing.JTextField();
         lblParola = new javax.swing.JLabel();
         btnLoin = new javax.swing.JButton();
-        customPasswordField1 = new gui.CustomPasswordField();
+        txtParola = new gui.CustomPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -87,8 +87,6 @@ public class FrmLogin extends javax.swing.JFrame {
             }
         });
 
-        customPasswordField1.setText("customPasswordField1");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -105,7 +103,7 @@ public class FrmLogin extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(customPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(txtParola, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnLoin, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -121,7 +119,7 @@ public class FrmLogin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblParola)
-                    .addComponent(customPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtParola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLoin)
                 .addContainerGap())
@@ -179,9 +177,9 @@ public class FrmLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLoin;
-    private gui.CustomPasswordField customPasswordField1;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblParola;
     private javax.swing.JTextField txtEmail;
+    private gui.CustomPasswordField txtParola;
     // End of variables declaration//GEN-END:variables
 }

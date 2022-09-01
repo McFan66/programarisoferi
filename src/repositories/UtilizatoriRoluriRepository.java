@@ -22,4 +22,5 @@ public interface UtilizatoriRoluriRepository {
     public ArrayList<UtilizatoriRoluri> getUtilizatoriRoluriByRoluri(Rol rol);
     public int getUtilizatoriCuRol(Rol rol);
     public ArrayList<UtilizatoriRoluri> getUtilizatoriRoluriByUtilizator(Utilizator utilizator);
+    public ArrayList<UtilizatoriRoluri> getUtilizatoriRoluriActiveAndUpcomingByUtilizator(Utilizator utilizator);
 }

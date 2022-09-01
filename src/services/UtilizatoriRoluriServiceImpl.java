@@ -45,5 +45,15 @@ public class UtilizatoriRoluriServiceImpl implements UtilizatoriRoluriService{
         return utilizatoriRoluriRepository.getUtilizatoriCuRol(rol);
     }
 
+    @Override
+    public ArrayList<UtilizatoriRoluri> getUtilizatoriRoluriByUtilizator(Utilizator utilizator) {
+        return utilizatoriRoluriRepository.getUtilizatoriRoluriByUtilizator(utilizator);
+    }
+
+    @Override
+    public ArrayList<UtilizatoriRoluri> getUtilizatoriRoluriActiveAndUpcomingByUtilizator(Utilizator utilizator) {
+        return utilizatoriRoluriRepository.getUtilizatoriRoluriActiveAndUpcomingByUtilizator(utilizator);
+    }
+
     
 }

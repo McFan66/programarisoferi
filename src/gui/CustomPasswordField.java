@@ -78,5 +78,5 @@ public class CustomPasswordField extends JPasswordField {
     public void setShowPassword(boolean showPassword) {
         this.showPassword = showPassword;
     }
-
+    
 }

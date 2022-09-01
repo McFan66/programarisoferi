@@ -20,4 +20,6 @@ public interface UtilizatoriRoluriService {
     public ArrayList<UtilizatoriRoluri> getAll();
     public ArrayList<UtilizatoriRoluri> getUtilizatoriRoluriByValid(boolean valid);
     public int getNrUtilizatoriCuRol(Rol rol);
+    public ArrayList<UtilizatoriRoluri> getUtilizatoriRoluriByUtilizator(Utilizator utilizator);
+    public ArrayList<UtilizatoriRoluri> getUtilizatoriRoluriActiveAndUpcomingByUtilizator(Utilizator utilizator);
 }

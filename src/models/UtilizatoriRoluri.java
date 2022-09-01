@@ -20,6 +20,8 @@ public class UtilizatoriRoluri {
     private Date dataSfarsit;
     private Utilizator utilizator;
     private Rol rol;
+    
+    private boolean editat;
 
     public int getId() {
         return id;
@@ -75,6 +77,14 @@ public class UtilizatoriRoluri {
 
     public void setRol(Rol rol) {
         this.rol = rol;
+    }
+
+    public boolean isEditat() {
+        return editat;
+    }
+
+    public void setEditat(boolean editat) {
+        this.editat = editat;
     }
     
     

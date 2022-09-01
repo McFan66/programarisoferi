@@ -20,4 +20,5 @@ public interface UtilizatoriService {
     public Utilizator login(String email, String parola);
     public ArrayList<Utilizator> getUtilizatoriByValid(boolean valid);
     public Rol getRolulUtilizatorului(Utilizator utilizator);
+    public ArrayList<Rol> getListaRoluriActive(Utilizator utilizator);
 }

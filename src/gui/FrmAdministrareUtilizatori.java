@@ -6,9 +6,15 @@
 package gui;
 
 import controllers.UtilizatorController;
+import java.awt.AWTEvent;
+import java.awt.Toolkit;
+import java.awt.event.AWTEventListener;
+import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -24,6 +30,27 @@ public class FrmAdministrareUtilizatori extends javax.swing.JDialog {
     public FrmAdministrareUtilizatori(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener() {
+            @Override
+            public void eventDispatched(AWTEvent event) {
+                MouseEvent eventMouse = (MouseEvent) event;
+            //    System.out.println(event.getID() + " " + eventMouse.getID() + " " + MouseEvent.BUTTON3);
+
+                if (eventMouse.getButton() == MouseEvent.BUTTON3) {
+                    //MouseEvent eventMouse=(MouseEvent) event;
+                    // int row=tblTiruri.rowAtPoint(eventMouse.getLocationOnScreen());
+                    // if(row==-1)
+                    tblUtilizatori.clearSelection();
+                    ListSelectionModel selectionModel = tblUtilizatori.getSelectionModel();
+                    selectionModel.setAnchorSelectionIndex(-1);
+                    selectionModel.setLeadSelectionIndex(-1);
+
+                    TableColumnModel columnModel = tblUtilizatori.getColumnModel();
+                    columnModel.getSelectionModel().setAnchorSelectionIndex(-1);
+                    columnModel.getSelectionModel().setLeadSelectionIndex(-1);
+                }
+            }
+        }, AWTEvent.MOUSE_EVENT_MASK);
     }
 
     /**
@@ -103,6 +130,11 @@ public class FrmAdministrareUtilizatori extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblUtilizatori.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblUtilizatoriMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblUtilizatori);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -175,6 +207,10 @@ public class FrmAdministrareUtilizatori extends javax.swing.JDialog {
         utilizatoriController.updateAndSetModelToTable();
     }//GEN-LAST:event_rdbInactivActionPerformed
 
+    private void tblUtilizatoriMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUtilizatoriMouseClicked
+        utilizatoriController.itemSelected();
+    }//GEN-LAST:event_tblUtilizatoriMouseClicked
+
     public JTable getTblUtilizatori() {
         return tblUtilizatori;
     }
@@ -197,6 +233,10 @@ public class FrmAdministrareUtilizatori extends javax.swing.JDialog {
 
     public void setUtilizatoriController(UtilizatorController utilizatoriController) {
         this.utilizatoriController = utilizatoriController;
+    }
+
+    public JButton getBtnEditeaza() {
+        return btnEditeaza;
     }
 
     

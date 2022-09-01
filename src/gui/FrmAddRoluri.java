@@ -94,7 +94,7 @@ public class FrmAddRoluri extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalveazaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalveazaActionPerformed
-        rolController.saveUtilizator();
+        rolController.saveRol();
     }//GEN-LAST:event_btnSalveazaActionPerformed
 
     /**

@@ -124,6 +124,7 @@ public class RolController {
         for (Rol r : listaRoluri) {
             data[x][0] = r.getNume();
             data[x][1] = String.valueOf(utilizatoriRoluriService.getNrUtilizatoriCuRol(r));
+            x++;
         }
         defaultTableModel = new DefaultTableModel(data, columnNames);
         tblRoluri.setModel(defaultTableModel);
@@ -140,7 +141,7 @@ public class RolController {
         }
     }
 
-    public void saveUtilizator() {
+    public void saveRol() {
         if (isFormValid()) {
             if (rolSelectat == null) {
                 rolSelectat = new Rol();
