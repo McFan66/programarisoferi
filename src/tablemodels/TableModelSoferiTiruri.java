@@ -15,7 +15,7 @@ import models.SoferiTiruri;
  */
 public class TableModelSoferiTiruri extends AbstractTableModel{
 
-    private String[] columnNames = new String[] {"ID" , "SOFER" , "TIR", "ACTIV", "IN CURSA"};
+    private String[] columnNames = new String[] {"ID" , "SOFER" , "TIR", "ACTIV", "IN CURSA", "DATA_INCEPUT" , "DATA_SFARSIT"};
     private ArrayList<SoferiTiruri> listaSoferiTiruri;
     
     public TableModelSoferiTiruri() {
@@ -60,6 +60,11 @@ public class TableModelSoferiTiruri extends AbstractTableModel{
                 return soferiTiruri.isValid() ? "DA" : "NU";
             case 4:
                 return soferiTiruri.isInCursa() ? "DA" : "NU";
+            case 5:
+                return soferiTiruri.getDataInceput();
+            case 6:
+                if(soferiTiruri.getDataSfarsit() == null) return "Nespecificat";
+                return soferiTiruri.getDataSfarsit();
             default:
                 return "Nespecificat";
         }

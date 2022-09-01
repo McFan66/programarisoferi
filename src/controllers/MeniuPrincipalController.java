@@ -53,6 +53,8 @@ public class MeniuPrincipalController implements VObserver {
     private tablemodels.TableModelInregistrari tableModelInregistrari = new TableModelInregistrari();
     private JDateChooser dtcPlecare;
     private JDateChooser dtcSosire;
+    private MeniuPrincipalListRenderer borderRenderer = new MeniuPrincipalListRenderer();
+
 
     public void actionIndex() {
         tiruriService.addObserver(this);
@@ -263,7 +265,7 @@ public class MeniuPrincipalController implements VObserver {
             modelListe.addElement(t);
         }
         listaInterfata.setModel(modelListe);
-        listaInterfata.setCellRenderer(new MeniuPrincipalListRenderer());
+        listaInterfata.setCellRenderer(borderRenderer);
     }
 
     private void filterTable(String text) {

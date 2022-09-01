@@ -2,8 +2,8 @@ package models;
 // Generated Jun 2, 2022 6:30:51 PM by Hibernate Tools 4.3.1
 
 
+import java.util.Date;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -20,6 +20,8 @@ public class SoferiTiruri  implements java.io.Serializable {
      private boolean valid;
      private Set inregistrari = new HashSet(0);
      private boolean inCursa;
+     private Date dataInceput;
+     private Date dataSfarsit;
 
     public SoferiTiruri() {
     }
@@ -96,6 +98,22 @@ public class SoferiTiruri  implements java.io.Serializable {
 
     public boolean isInCursa() {
         return inCursa;
+    }
+
+    public void setDataInceput(Date dataInceput) {
+        this.dataInceput = dataInceput;
+    }
+
+    public void setDataSfarsit(Date dataSfarsit) {
+        this.dataSfarsit = dataSfarsit;
+    }
+
+    public Date getDataInceput() {
+        return dataInceput;
+    }
+
+    public Date getDataSfarsit() {
+        return dataSfarsit;
     }
     
     @Override

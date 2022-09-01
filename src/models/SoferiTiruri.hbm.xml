@@ -20,6 +20,12 @@
         <property name="inCursa" type="boolean">
             <column name="IN_CURSA" not-null="true" default="false"/>
         </property>
+        <property name = "dataInceput" type="date">
+            <column name="DATA_INCEPUT" length = "10" not-null = "true"/>
+        </property>
+        <property name = "dataSfarsit" type="date">
+            <column name="DATA_SFARSIT" length="10"/>
+        </property>
         <many-to-one name="sofer" class="models.Sofer" update="false" insert="false" fetch="select">
             <column name="SOFER" not-null="true" />
         </many-to-one>

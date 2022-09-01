@@ -61,6 +61,26 @@ public class Stare  implements java.io.Serializable {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Stare other = (Stare) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
+    }
+
+    
+    
+    @Override
     public String toString() {
         return "Stare{" + "id=" + id + ", nume=" + nume + ", valid=" + valid;
     }

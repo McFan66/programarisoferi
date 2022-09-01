@@ -6,14 +6,10 @@
 package renderers;
 
 import gui.CustomLabel;
-import gui.ImageAvatar;
 import java.awt.Component;
 import java.awt.Image;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import models.AppSingleTone;
@@ -22,7 +18,6 @@ import models.Tir;
 import services.PozaService;
 import services.SoferiTiruriService;
 import services.StareService;
-import utils.ImageUtils;
 
 /**
  *
@@ -43,7 +38,7 @@ public class MeniuPrincipalListRenderer extends CustomLabel implements ListCellR
         if(value == null) {
             return this;
         }
-        if(value.getIdStare() == 8) {
+        if(value.getIdStare() == stareService.getStareByNume("Cursa").getId()) {
             p = pozaService.getPozaByTipAndObiect(2, soferiTiruriService.getSoferiTiruriInCursaByTir(value).getIdSofer()).get(0);
             file = new File("./poze/soferi" + "/" + p.getImagePath());
         }
@@ -53,7 +48,7 @@ public class MeniuPrincipalListRenderer extends CustomLabel implements ListCellR
         }
     
         super.getLblTextTir().setText(value.getDescriere());
-        super.getImageAvatar1().setIcon(new ImageIcon(file.getPath()));
+        super.getImageAvatar1().setIcon(new ImageIcon(new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
         
         return this;
     }

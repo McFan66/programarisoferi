@@ -206,7 +206,7 @@ public class TirController {
                 tirSelectat.setModel(m);
                 tirSelectat.setIdModel(m.getId());
                 tirSelectat.setNrInmatriculare(frmAddTir.getTxtNrInmatriculare().getText());
-                tirSelectat.setIdStare(7);
+                tirSelectat.setIdStare(stareService.getStareByNume("Disponibil").getId());
                 tirSelectat.setStare(stareService.getStareByNume("Disponibil"));
                 tirSelectat.setValid(true);
                 tiruriService.adaugaTir(tirSelectat);
@@ -285,17 +285,17 @@ public class TirController {
                 allMatches.add(m.group());
             }
             data[x][2] = String.format("%s %s %s", allMatches.get(0), allMatches.get(1), allMatches.get(2));
-            switch (t.getIdStare()) {
-                case 6:
+            switch (t.getStare().getNume()) {
+                case "Stare test":
                     data[x][4] = "Tir test";
                     break;
-                case 7:
+                case "Disponibil":
                     data[x][4] = "Disponibil";
                     break;
-                case 8:
+                case "Cursa":
                     data[x][4] = "In cursa";
                     break;
-                case 9:
+                case "Service":
                     data[x][4] = "In service";
                     break;
             }
@@ -343,22 +343,22 @@ public class TirController {
         while (m.find()) {
             allMatches.add(m.group());
         }
-        switch (tirSelectat.getIdStare()) {
-            case 6:
+        switch (tirSelectat.getStare().getNume()) {
+            case "Stare test":
                 frmAfisareDetaliiTir.getLblStatus().setText("Tir test");
                 frmAfisareDetaliiTir.getLblStatus().setForeground(Color.BLUE);
                 break;
-            case 7:
+            case "Disponibil":
                 frmAfisareDetaliiTir.getLblStatus().setText("Disponibil");
                 Color darkGreen = new Color(0, 153, 0);
                 frmAfisareDetaliiTir.getLblStatus().setForeground(darkGreen);
                 break;
-            case 8:
+            case "Cursa":
                 frmAfisareDetaliiTir.getLblStatus().setText("In cursa");
                 frmAfisareDetaliiTir.getLblStatus().setForeground(Color.RED);
                 frmAfisareDetaliiTir.getBtnModService().setEnabled(false);
                 break;
-            case 9:
+            case "Service":
                 frmAfisareDetaliiTir.getLblStatus().setText("In service");
                 Color darkOrange = new Color(255, 143, 0);
                 frmAfisareDetaliiTir.getLblStatus().setForeground(darkOrange);
@@ -440,24 +440,24 @@ public class TirController {
     }
 
     public void modService() {
-        if (tirSelectat.getIdStare() == 7) {
+        if (tirSelectat.getStare().equals(stareService.getStareByNume("Disponibil"))) {
             int raspuns = JOptionPane.showConfirmDialog(frmAfisareDetaliiTir, "Sunteti sigur ca doriti sa plasati acest tir in service?", "Plasare tir in service", JOptionPane.YES_NO_OPTION);
             if (raspuns == JOptionPane.YES_OPTION) {
                 Session session = HibernateUtil.getSessionFactory().openSession();
                 org.hibernate.Transaction tx = session.beginTransaction();
-                tirSelectat.setIdStare(9);
+                tirSelectat.setIdStare(stareService.getStareByNume("Service").getId());
                 tiruriService.adaugaTir(tirSelectat);
                 tx.commit();
                 frmAfisareDetaliiTir.getLblStatus().setText("In service");
                 Color darkOrange = new Color(255, 143, 0);
                 frmAfisareDetaliiTir.getLblStatus().setForeground(darkOrange);
             }
-        } else if (tirSelectat.getIdStare() == 9) {
+        } else if (tirSelectat.getStare().equals(stareService.getStareByNume("Service")) ) {
             int raspuns = JOptionPane.showConfirmDialog(frmAfisareDetaliiTir, "Sunteti sigur ca doriti sa eliminati acest tir din service?", "Eliminare tir din service", JOptionPane.YES_NO_OPTION);
             if (raspuns == JOptionPane.YES_OPTION) {
                 Session session = HibernateUtil.getSessionFactory().openSession();
                 org.hibernate.Transaction tx = session.beginTransaction();
-                tirSelectat.setIdStare(7);
+                tirSelectat.setIdStare(stareService.getStareByNume("Disponibil").getId());
                 tiruriService.adaugaTir(tirSelectat);
                 tx.commit();
                 frmAfisareDetaliiTir.getLblStatus().setText("Disponibil");

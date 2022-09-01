@@ -8,6 +8,7 @@ package controllers;
 import gui.FrmAddSoferiTiruri;
 import gui.FrmAdministrareSoferiTiruri;
 import java.util.ArrayList;
+import java.util.Calendar;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -22,11 +23,8 @@ import models.Tir;
 import renderers.ItemSoferRenderer;
 import renderers.ItemTirRenderer;
 import services.SoferService;
-import services.SoferServiceImpl;
 import services.SoferiTiruriService;
-import services.SoferiTiruriServiceImpl;
 import services.TiruriService;
-import services.TiruriServiceImpl;
 import tablemodel.ColumnResizer1;
 import tablemodels.TableModelSoferiTiruri;
 
@@ -50,6 +48,7 @@ public class SoferiTiruriController {
     private Tir selectatiTirul;
     private ItemSoferRenderer soferRenderer = new ItemSoferRenderer();
     private ItemTirRenderer tirRenderer = new ItemTirRenderer();
+    private Calendar c = Calendar.getInstance();
     
     public void actionIndex(JFrame parent) {
         frmAdministrareSoferiTiruri = new FrmAdministrareSoferiTiruri();
@@ -78,6 +77,10 @@ public class SoferiTiruriController {
         listaSoferiTiruri = soferiTiruriService.getAll();
         
         this.soferiTiruriSelectat = listaSoferiTiruri.get(index);
+        if(soferiTiruriSelectat.isInCursa()) {
+            JOptionPane.showMessageDialog(parent, String.format("%s si %s sunt in cursa", soferiTiruriSelectat.getSofer().getNumeComplet() , soferiTiruriSelectat.getTir().getDescriere()));
+            return;
+        }
         
         frmAddSoferiTiruri = new FrmAddSoferiTiruri(parent, true, soferiTiruriSelectat);
         frmAddSoferiTiruri.setSoferiTiruriController(this);
@@ -158,15 +161,20 @@ public class SoferiTiruriController {
         
         
         for(Tir tir : listaTiruri) {
-//            if(tir.getStare().getNume() != "Cursa" || tir.getStare().getNume() != "Service" ) {
+            if(tir.getStare().getNume() != "Service" || tir.getStare().getNume() != "Cursa" ) {
                 cmbModelTiruri.addElement(tir);
-//            }
+            }
         }
         
         for(Sofer sofer : listaSoferi) {
 //            if(sofer.getSoferiTiruri().isEmpty()) {
                 cmbModelSoferi.addElement(sofer);
 //            }
+        }
+        
+        if(soferiTiruriSelectat != null) {
+            cmbModelSoferi.removeElement(soferiTiruriSelectat.getSofer());
+            cmbModelTiruri.removeElement(soferiTiruriSelectat.getTir());
         }
         
         dropDownSoferi.setModel(cmbModelSoferi);
@@ -180,7 +188,9 @@ public class SoferiTiruriController {
         SoferiTiruri soferTir = new SoferiTiruri();
         
         if(soferiTiruriSelectat != null) {
-            soferTir.setId(soferiTiruriSelectat.getId());
+            soferiTiruriSelectat.setDataSfarsit(c.getTime());
+            soferiTiruriSelectat.setValid(false);
+            soferiTiruriService.adaugaSoferTir(soferiTiruriSelectat);
         }
         
         soferTir.setIdSofer(sofer.getId());
@@ -188,6 +198,7 @@ public class SoferiTiruriController {
         soferTir.setSofer(sofer);
         soferTir.setTir(tir);
         soferTir.setValid(true);
+        soferTir.setDataInceput(c.getTime());
         
         listaSoferiTiruri = soferiTiruriService.getAll();
         
