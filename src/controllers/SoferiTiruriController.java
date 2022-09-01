@@ -172,11 +172,6 @@ public class SoferiTiruriController {
 //            }
         }
         
-        if(soferiTiruriSelectat != null) {
-            cmbModelSoferi.removeElement(soferiTiruriSelectat.getSofer());
-            cmbModelTiruri.removeElement(soferiTiruriSelectat.getTir());
-        }
-        
         dropDownSoferi.setModel(cmbModelSoferi);
         dropDownTiruri.setModel(cmbModelTiruri);
     }
@@ -191,6 +186,19 @@ public class SoferiTiruriController {
             soferiTiruriSelectat.setDataSfarsit(c.getTime());
             soferiTiruriSelectat.setValid(false);
             soferiTiruriService.adaugaSoferTir(soferiTiruriSelectat);
+        }
+        
+        for(SoferiTiruri sf : soferiTiruriService.getAll()) {
+            if(sf.getSofer().equals(sofer) && sf.isValid()) {
+                sf.setDataSfarsit(c.getTime());
+                sf.setValid(false);
+                soferiTiruriService.adaugaSoferTir(sf);
+            }
+            if(sf.getTir().equals(tir) && sf.isValid()) {
+                sf.setDataSfarsit(c.getTime());
+                sf.setValid(false);
+                soferiTiruriService.adaugaSoferTir(sf);
+            }
         }
         
         soferTir.setIdSofer(sofer.getId());
