@@ -53,7 +53,7 @@ public class MeniuPrincipalController implements VObserver {
     private ArrayList<Inregistrare> listaInregistrari;
     private tablemodels.TableModelInregistrari tableModelInregistrari = new TableModelInregistrari();
     private JDateChooser dtcPlecare;
-    
+
     public void actionIndex() {
         tiruriService.addObserver(this);
         inregistrariService.addObserver(this);
@@ -83,21 +83,22 @@ public class MeniuPrincipalController implements VObserver {
         inregistrareSelectata = listaInregistrari.get(index);
         Calendar c1 = Calendar.getInstance();
 
-        if (c1.getTime().compareTo(inregistrareSelectata.getDataSosire()) > 0) {
+        if (inregistrareSelectata.getDataSosire() == null) {
+            inregistrareSelectata.setDataSosire(c1.getTime());
+            inregistrareSelectata.getSoferTir().setInCursa(false);
+            inregistrareSelectata.getSoferTir().getTir().setStare(stareService.getStareByNume("Disponibil"));
+            inregistrareSelectata.getSoferTir().getTir().setIdStare(stareService.getStareByNume("Disponibil").getId());
+            tiruriService.adaugaTir(inregistrareSelectata.getSoferTir().getTir());
+            soferiTiruriService.adaugaSoferTir(inregistrareSelectata.getSoferTir());
+            inregistrariService.adaugaInregistrare(inregistrareSelectata);
+
+            updateAndSetModelToTable();
+            return;
+        }
+        if (inregistrareSelectata.getDataSosire() != null) {
             JOptionPane.showMessageDialog(frmMeniuPrincipal, "Inregistrarea selectata este deja finalizata");
             return;
         }
-
-        inregistrareSelectata.setDataSosire(c1.getTime());
-        inregistrareSelectata.getSoferTir().setInCursa(false);
-        inregistrareSelectata.getSoferTir().getTir().setStare(stareService.getStareByNume("Disponibil"));
-        inregistrareSelectata.getSoferTir().getTir().setIdStare(stareService.getStareByNume("Disponibil").getId());
-        tiruriService.adaugaTir(inregistrareSelectata.getSoferTir().getTir());
-        soferiTiruriService.adaugaSoferTir(inregistrareSelectata.getSoferTir());
-        inregistrariService.adaugaInregistrare(inregistrareSelectata);
-
-        updateAndSetModelToTable();
-
     }
 
     public void actionEdit(JFrame parent) {
@@ -155,24 +156,23 @@ public class MeniuPrincipalController implements VObserver {
             JOptionPane.showMessageDialog(frmAddInregistrare, "Va rugam sa selectati o data de plecare");
             return false;
         }
-        if(frmAddInregistrare.getCmbSoferTir().getSelectedItem() == null) {
+        if (frmAddInregistrare.getCmbSoferTir().getSelectedItem() == null) {
             JOptionPane.showMessageDialog(frmAddInregistrare, "Va rugam sa selectati soferul + tirul care vor pleca in cursa");
             return false;
         }
         return true;
     }
-    
+
 //    public void dateChooserStateChanged() {
 //        frmAddInregistrare.getDtcSosire().getDateEditor().setDate(frmAddInregistrare.getDtcPlecare().getDate());
 //    }
-    
     public void saveInregistrare() {
         if (isFormValid()) {
             Inregistrare i = new Inregistrare();
 
             this.dtcPlecare = frmAddInregistrare.getDtcPlecare();
             //this.dtcSosire = frmAddInregistrare.getDtcSosire();
-            
+
             SoferiTiruri sf = (SoferiTiruri) frmAddInregistrare.getCmbSoferTir().getSelectedItem();
             sf.setInCursa(true);
             sf.getTir().setStare(stareService.getStareByNume("Cursa"));
@@ -185,7 +185,7 @@ public class MeniuPrincipalController implements VObserver {
             }
 
             i.setDataPlecare(this.dtcPlecare.getDate());
-           // i.setDataSosire(this.dtcSosire.getDate());
+            // i.setDataSosire(this.dtcSosire.getDate());
             i.setSoferTir(sf);
             i.setIdSoferiTiruri(sf.getId());
 
