@@ -48,6 +48,11 @@ public class MeniuPrincipalController implements VObserver {
 
     private DefaultListModel<Tir> modelListe;
     private MeniuPrincipalListRenderer borderRenderer = new MeniuPrincipalListRenderer();
+    private DefaultComboBoxModel<SoferiTiruri> modelCmbSoferiTiruri = new DefaultComboBoxModel<>();
+    private ItemSoferiTiruriRenderer itemSoferiTiruriRenderer = new ItemSoferiTiruriRenderer();
+    private DefaultListModel<Sofer> modelListaSoferiLiberi = new DefaultListModel<>();
+    private ItemSoferRenderer itemSoferRenderer = new ItemSoferRenderer();
+    private DefaultListModel<Sofer> modelListaSoferiFaraTir = new DefaultListModel<>();
 
     private Inregistrare inregistrareSelectata = null;
     private ArrayList<Inregistrare> listaInregistrari;
@@ -139,15 +144,14 @@ public class MeniuPrincipalController implements VObserver {
     }
 
     public void setModelToCmb() {
-        DefaultComboBoxModel<SoferiTiruri> modelCmbSoferiTiruri = new DefaultComboBoxModel<>();
-
+        modelCmbSoferiTiruri.removeAllElements();
         ArrayList<SoferiTiruri> listaSoferiTiruri = soferiTiruriService.getSoferiTiruriByInCursa(false);
 
         for (SoferiTiruri sf : listaSoferiTiruri) {
             modelCmbSoferiTiruri.addElement(sf);
         }
 
-        frmAddInregistrare.getCmbSoferTir().setRenderer(new ItemSoferiTiruriRenderer());
+        frmAddInregistrare.getCmbSoferTir().setRenderer(itemSoferiTiruriRenderer);
         frmAddInregistrare.getCmbSoferTir().setModel(modelCmbSoferiTiruri);
     }
 
@@ -218,7 +222,8 @@ public class MeniuPrincipalController implements VObserver {
     }
 
     private void setModelToListaSoferiLiberi() {
-        DefaultListModel<Sofer> modelListaSoferiLiberi = new DefaultListModel<>();
+        modelListaSoferiLiberi.removeAllElements();
+        
         for (SoferiTiruri sf : soferiTiruriService.getSoferiTiruriByValid(true)) {
             if (!sf.isInCursa()) {
                 modelListaSoferiLiberi.addElement(sf.getSofer());
@@ -226,13 +231,13 @@ public class MeniuPrincipalController implements VObserver {
         }
 
         frmMeniuPrincipal.getLstSoferiLiberi().setModel(modelListaSoferiLiberi);
-        frmMeniuPrincipal.getLstSoferiLiberi().setCellRenderer(new ItemSoferRenderer());
+        frmMeniuPrincipal.getLstSoferiLiberi().setCellRenderer(itemSoferRenderer);
     }
 
     private void setModelToListaSoferiFaraTir() {
-        DefaultListModel<Sofer> modelListaSoferiFaraTir = new DefaultListModel<>();
         boolean found = false;
 
+        modelListaSoferiFaraTir.removeAllElements();
         for (Sofer s : soferService.getSoferByValid(false)) {
             if (s.getSoferiTiruri().isEmpty()) {
                 modelListaSoferiFaraTir.addElement(s);
@@ -250,7 +255,7 @@ public class MeniuPrincipalController implements VObserver {
         }
 
         frmMeniuPrincipal.getLstSoferiFaraTir().setModel(modelListaSoferiFaraTir);
-        frmMeniuPrincipal.getLstSoferiFaraTir().setCellRenderer(new ItemSoferRenderer());
+        frmMeniuPrincipal.getLstSoferiFaraTir().setCellRenderer(itemSoferRenderer);
     }
 
     private void setModel(ArrayList<Tir> listaTiruri, JList listaInterfata) {

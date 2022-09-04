@@ -33,6 +33,7 @@ import models.AppSingleTone;
 import models.Poza;
 import models.Sofer;
 import renderers.CellRendererImage;
+import renderers.PozaSoferRenderer;
 import services.PozaService;
 import services.PozaServiceImpl;
 import services.SoferService;
@@ -96,6 +97,7 @@ public class SoferController {
         int x = 0;
         for (Sofer s : listaSoferi) {
             data[x][0] = s.getNumeComplet();
+            data[x][1] = s.getPoze().iterator().next().getImagePath();
 
 //            try {
             //data[x][1] = new ImageIcon(s.getPoza().getCanonicalPath());
@@ -107,7 +109,7 @@ public class SoferController {
 
         defaultTableModel = new DefaultTableModel(data, columnNames);
         tblSoferi.setModel(defaultTableModel);
-        tblSoferi.getColumnModel().getColumn(1).setCellRenderer(new CellRendererImage());
+        tblSoferi.getColumnModel().getColumn(1).setCellRenderer(new PozaSoferRenderer());
         ColumnResizer1.resizeRowHeightAndColumnsWidth(tblSoferi);
         ProjectUtils.tableColumnAdjusterByHeader(tblSoferi);
     }

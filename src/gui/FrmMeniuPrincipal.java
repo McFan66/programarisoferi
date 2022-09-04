@@ -354,6 +354,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         jScrollPane8.setBorder(null);
 
         lstSoferiLiberi.setBackground(new java.awt.Color(214, 217, 223));
+        lstSoferiLiberi.setForeground(new java.awt.Color(214, 217, 223));
         lstSoferiLiberi.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane8.setViewportView(lstSoferiLiberi);
 
@@ -388,6 +389,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         jScrollPane9.setBorder(null);
 
         lstSoferiFaraTir.setBackground(new java.awt.Color(214, 217, 223));
+        lstSoferiFaraTir.setForeground(new java.awt.Color(214, 217, 223));
         lstSoferiFaraTir.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane9.setViewportView(lstSoferiFaraTir);
 
