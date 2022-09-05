@@ -5,6 +5,7 @@
  */
 package renderers;
 
+import gui.ImageAvatar;
 import java.awt.Component;
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -15,7 +16,7 @@ import javax.swing.table.TableColumn;
 
 /**
  *
- * @author gigi_
+ * @author Vlad
  */
 public class CellRendererImage implements TableCellRenderer {
 
@@ -28,12 +29,12 @@ public class CellRendererImage implements TableCellRenderer {
             int column) {
         if (column == 1) {
             TableColumn tb = table.getColumnModel().getColumn(column);
-            JLabel imageLabel = new JLabel();
-            System.out.println("sall");
-//            ImageIcon imageicon = new ImageIcon(value.toString());
-//            Image img = imageicon.getImage().getScaledInstance(100, 70, Image.SCALE_SMOOTH);
-//            imageLabel.setIcon(new ImageIcon(img));
-            return imageLabel;
+            ImageAvatar imageAvatar = new ImageAvatar();
+            ImageIcon imageicon = new ImageIcon(value.toString());
+            Image img = imageicon.getImage().getScaledInstance(100, 70, Image.SCALE_SMOOTH);
+            imageAvatar.setIcon(new ImageIcon(img));
+            imageAvatar.setBorderSize(3);
+            return imageAvatar;
         }
         return (Component) value;
     }

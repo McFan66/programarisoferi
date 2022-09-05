@@ -27,19 +27,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 import models.AppSingleTone;
 import models.Poza;
 import models.Sofer;
 import renderers.CellRendererImage;
-import renderers.PozaSoferRenderer;
 import services.PozaService;
-import services.PozaServiceImpl;
 import services.SoferService;
-import services.SoferServiceImpl;
 import tablemodel.ColumnResizer1;
-import tablemodels.TableModelSoferi;
 import utils.ProjectUtils;
 
 /**
@@ -97,7 +91,8 @@ public class SoferController {
         int x = 0;
         for (Sofer s : listaSoferi) {
             data[x][0] = s.getNumeComplet();
-            data[x][1] = s.getPoze().iterator().next().getImagePath();
+            File f = new File("./poze/soferi/" + s.getPoze().iterator().next().getImagePath());
+            data[x][1] = f.getPath();
 
 //            try {
             //data[x][1] = new ImageIcon(s.getPoza().getCanonicalPath());
@@ -109,7 +104,7 @@ public class SoferController {
 
         defaultTableModel = new DefaultTableModel(data, columnNames);
         tblSoferi.setModel(defaultTableModel);
-        tblSoferi.getColumnModel().getColumn(1).setCellRenderer(new PozaSoferRenderer());
+        tblSoferi.getColumnModel().getColumn(1).setCellRenderer(new CellRendererImage());
         ColumnResizer1.resizeRowHeightAndColumnsWidth(tblSoferi);
         ProjectUtils.tableColumnAdjusterByHeader(tblSoferi);
     }
@@ -195,10 +190,12 @@ public class SoferController {
                 soferSelectat.setNume(frmAddSofer.getTxtNume().getText().trim());
                 soferSelectat.setPrenume(frmAddSofer.getTxtPrenume().getText().trim());
                 soferSelectat.setCnp(frmAddSofer.getTxtCNP().getText().trim());
+                soferSelectat.setValid(true);
             } else {
                 soferSelectat.setNume(frmAddSofer.getTxtNume().getText().trim());
                 soferSelectat.setPrenume(frmAddSofer.getTxtPrenume().getText().trim());
                 soferSelectat.setCnp(frmAddSofer.getTxtCNP().getText().trim());
+                soferSelectat.setValid(true);
                 if (!pozaService.getPozaByTipAndObiect(2, soferSelectat.getId()).isEmpty()) {
                     soferSelectat.getPoza().delete();
                     Poza pozaDeSters = pozaService.getPozaByTipAndObiect(2, soferSelectat.getId()).get(0);

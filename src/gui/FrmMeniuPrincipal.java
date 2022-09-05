@@ -126,7 +126,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Informatii tiruri:");
 
-        java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 110, 5);
+        java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 120, 5);
         flowLayout1.setAlignOnBaseline(true);
         jPanel6.setLayout(flowLayout1);
 
@@ -207,16 +207,14 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(22, 22, 22))))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 812, Short.MAX_VALUE)
+                .addContainerGap())
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(22, 22, 22))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -292,14 +290,18 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         });
         jPanel3.add(rdbToate);
 
-        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel7.setPreferredSize(new java.awt.Dimension(270, 28));
+        jPanel7.setLayout(new javax.swing.BoxLayout(jPanel7, javax.swing.BoxLayout.LINE_AXIS));
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("FIltreaza:");
-        jPanel7.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 80, 24));
+        jLabel4.setPreferredSize(new java.awt.Dimension(64, 23));
+        jPanel7.add(jLabel4);
 
+        txtFiltreaza.setToolTipText("");
         txtFiltreaza.setMinimumSize(new java.awt.Dimension(100, 24));
+        txtFiltreaza.setPreferredSize(new java.awt.Dimension(200, 24));
         txtFiltreaza.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtFiltreazaActionPerformed(evt);
@@ -313,7 +315,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
                 txtFiltreazaKeyTyped(evt);
             }
         });
-        jPanel7.add(txtFiltreaza, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 0, 318, -1));
+        jPanel7.add(txtFiltreaza);
 
         jPanel3.add(jPanel7);
 
@@ -330,7 +332,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
                 .addGap(193, 193, 193))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 916, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()

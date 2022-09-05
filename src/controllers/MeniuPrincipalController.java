@@ -63,6 +63,7 @@ public class MeniuPrincipalController implements VObserver {
         tiruriService.addObserver(this);
         inregistrariService.addObserver(this);
         soferiTiruriService.addObserver(this);
+        soferService.addObserver(this);
         frmMeniuPrincipal = new FrmMeniuPrincipal();
         frmMeniuPrincipal.setMeniuPrincipalController(this);
         frmMeniuPrincipal.setLocationRelativeTo(null);
@@ -238,7 +239,7 @@ public class MeniuPrincipalController implements VObserver {
         boolean found = false;
 
         modelListaSoferiFaraTir.removeAllElements();
-        for (Sofer s : soferService.getSoferByValid(false)) {
+        for (Sofer s : soferService.getSoferByValid(true)) {
             if (s.getSoferiTiruri().isEmpty()) {
                 modelListaSoferiFaraTir.addElement(s);
             } else {
@@ -302,6 +303,9 @@ public class MeniuPrincipalController implements VObserver {
         }
         if (subject instanceof SoferiTiruri) {
             setModelToListaSoferiLiberi();
+            setModelToListaSoferiFaraTir();
+        }
+        if(subject instanceof Sofer) {
             setModelToListaSoferiFaraTir();
         }
     }

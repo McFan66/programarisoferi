@@ -7,12 +7,13 @@ package services;
 
 import java.util.ArrayList;
 import models.Sofer;
+import observers.Subject;
 
 /**
  *
  * @author Stefan
  */
-public interface SoferService {
+public interface SoferService extends Subject{
     public boolean salveazaSofer(Sofer sofer);
     public void stergeSofer(Sofer sofer);
     public ArrayList<Sofer> getAll();

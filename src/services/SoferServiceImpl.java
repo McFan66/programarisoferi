@@ -7,6 +7,7 @@ package services;
 
 import java.util.ArrayList;
 import models.Sofer;
+import observers.VObserver;
 import repositories.SoferiHibernateRepository;
 import repositories.SoferiRepository;
 
@@ -14,13 +15,17 @@ import repositories.SoferiRepository;
  *
  * @author Stefan
  */
-public class SoferServiceImpl implements SoferService{
+public class SoferServiceImpl implements SoferService {
 
     private final SoferiRepository soferiRepository = new SoferiHibernateRepository();
-    
+
+    private ArrayList<VObserver> observere = new ArrayList<>();
+
     @Override
     public boolean salveazaSofer(Sofer sofer) {
-        return soferiRepository.adaugaSofer(sofer);
+        soferiRepository.adaugaSofer(sofer);
+        notifyObservers(sofer);
+        return true;
     }
 
     @Override
@@ -37,5 +42,23 @@ public class SoferServiceImpl implements SoferService{
     public ArrayList<Sofer> getSoferByValid(boolean valid) {
         return soferiRepository.getSoferByValid(valid);
     }
-    
+
+    @Override
+    public void addObserver(VObserver observer) {
+        this.observere.add(observer);
+    }
+
+    @Override
+    public void removeObserver(VObserver observer) {
+        this.observere.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(Object subject) {
+        for(VObserver obs : observere) {
+             obs.update(subject);
+             System.out.println("[DEBUG]" + subject.toString());
+        }
+    }
+
 }
