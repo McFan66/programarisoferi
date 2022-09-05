@@ -57,7 +57,6 @@ public class SoferServiceImpl implements SoferService {
     public void notifyObservers(Object subject) {
         for(VObserver obs : observere) {
              obs.update(subject);
-             System.out.println("[DEBUG]" + subject.toString());
         }
     }
 
