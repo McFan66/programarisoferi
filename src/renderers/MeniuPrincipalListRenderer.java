@@ -23,33 +23,33 @@ import services.StareService;
  *
  * @author Vlad
  */
-public class MeniuPrincipalListRenderer extends CustomLabel implements ListCellRenderer<Tir>{
-    
+public class MeniuPrincipalListRenderer extends CustomLabel implements ListCellRenderer<Tir> {
+
     private final PozaService pozaService = AppSingleTone.getAppSingleToneInstance().getPozaService();
     private final SoferiTiruriService soferiTiruriService = AppSingleTone.getAppSingleToneInstance().getSoferiTiruriService();
     private final StareService stareService = AppSingleTone.getAppSingleToneInstance().getStareService();
 
-    
     @Override
     public Component getListCellRendererComponent(JList<? extends Tir> list, Tir value, int index, boolean isSelected, boolean cellHasFocus) {
-        
+
         Poza p;
         File file;
-        if(value == null) {
+        if (value == null) {
             return this;
         }
-        if(value.getIdStare() == stareService.getStareByNume("Cursa").getId()) {
-            p = pozaService.getPozaByTipAndObiect(2, soferiTiruriService.getSoferiTiruriInCursaByTir(value).getIdSofer()).get(0);
-            file = new File("./poze/soferi" + "/" + p.getImagePath());
+        if (value.getIdStare() == stareService.getStareByNume("Cursa").getId()) {
+//            p = pozaService.getPozaByTipAndObiect(2, soferiTiruriService.getSoferiTiruriInCursaByTir(value).getIdSofer()).get(0);
+  //          file = new File("./poze/soferi" + "/" + p.getImagePath());
+        } else {
+            if (pozaService.getPozaByTipAndObiect(1, value.getId()).size() > 0) {
+                p = pozaService.getPozaByTipAndObiect(1, value.getId()).get(0);
+                file = new File("./poze/tiruri/" + value.getNrInmatriculare() + "/" + p.getImagePath());
+            }
         }
-        else {
-            p = pozaService.getPozaByTipAndObiect(1, value.getId()).get(0);
-            file = new File("./poze/tiruri/" + value.getNrInmatriculare() + "/" + p.getImagePath());
-        }
-    
+
         super.getLblTextTir().setText(value.getDescriere());
-        super.getImageAvatar1().setIcon(new ImageIcon(new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
-        
+       // super.getImageAvatar1().setIcon(new ImageIcon(new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+
         return this;
     }
 }
