@@ -409,14 +409,23 @@ public class UtilizatorController {
 
     public void saveUtilizator() {
         if (isFormValid()) {
+            boolean nou = false;
             if (utilizatorSelectat == null) {
+                nou = true;
                 utilizatorSelectat = new Utilizator();
                 utilizatorSelectat.setValid(true);
             }
             utilizatorSelectat.setNume(frmAddUtilizatori.getTxtNume().getText());
             utilizatorSelectat.setPrenume(frmAddUtilizatori.getTxtPrenume().getText());
             utilizatorSelectat.setEmail(frmAddUtilizatori.getTxtEmail().getText());
-            utilizatorSelectat.setParola(new String(frmAddUtilizatori.getTxtParola().getPassword()));
+            if (nou) {
+                utilizatorSelectat.setParola(new String(frmAddUtilizatori.getTxtParola().getPassword()));
+                System.out.println("sunt aici");
+            } else if (!new String(frmAddUtilizatori.getTxtParola().getPassword()).isEmpty() && !new String(frmAddUtilizatori.getTxtConfirmaParola().getPassword()).isEmpty()) {
+                utilizatorSelectat.setParola(new String(frmAddUtilizatori.getTxtParola().getPassword()));
+                System.out.println("ba aici");
+            }else utilizatorSelectat.setParola(utilizatorSelectat.getParola());
+            System.out.println("am trecut");
             utilizatorSelectat.setValid(utilizatorSelectat.isValid());
 
             utilizatoriService.adaugaUtilizator(utilizatorSelectat);
