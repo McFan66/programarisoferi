@@ -34,22 +34,21 @@ public class MeniuPrincipalListRenderer extends CustomLabel implements ListCellR
 
         Poza p;
         File file;
-        if (value == null) {
+        if(value == null) {
             return this;
         }
-        if (value.getIdStare() == stareService.getStareByNume("Cursa").getId()) {
-//            p = pozaService.getPozaByTipAndObiect(2, soferiTiruriService.getSoferiTiruriInCursaByTir(value).getIdSofer()).get(0);
-  //          file = new File("./poze/soferi" + "/" + p.getImagePath());
-        } else {
-            if (pozaService.getPozaByTipAndObiect(1, value.getId()).size() > 0) {
-                p = pozaService.getPozaByTipAndObiect(1, value.getId()).get(0);
-                file = new File("./poze/tiruri/" + value.getNrInmatriculare() + "/" + p.getImagePath());
-            }
+        if(value.getIdStare() == stareService.getStareByNume("Cursa").getId()) {
+            p = pozaService.getPozaByTipAndObiect(2, soferiTiruriService.getSoferiTiruriInCursaByTir(value).getIdSofer()).get(0);
+            file = new File("./poze/soferi" + "/" + p.getImagePath());
         }
-
+        else {
+            p = pozaService.getPozaByTipAndObiect(1, value.getId()).get(0);
+            file = new File("./poze/tiruri/" + value.getNrInmatriculare() + "/" + p.getImagePath());
+        }
+    
         super.getLblTextTir().setText(value.getDescriere());
-       // super.getImageAvatar1().setIcon(new ImageIcon(new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
-
+        super.getImageAvatar1().setIcon(new ImageIcon(new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+        
         return this;
     }
 }
