@@ -7,6 +7,7 @@ package renderers;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 import models.Sofer;

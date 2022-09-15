@@ -28,6 +28,7 @@ import observers.VObserver;
 import renderers.ItemSoferRenderer;
 import renderers.ItemSoferiTiruriRenderer;
 import renderers.MeniuPrincipalListRenderer;
+import renderers.MeniuPrincipalSoferRenderer;
 import tablemodel.ColumnResizer1;
 import tablemodels.TableModelInregistrari;
 
@@ -53,6 +54,7 @@ public class MeniuPrincipalController implements VObserver {
     private DefaultListModel<Sofer> modelListaSoferiLiberi = new DefaultListModel<>();
     private ItemSoferRenderer itemSoferRenderer = new ItemSoferRenderer();
     private DefaultListModel<Sofer> modelListaSoferiFaraTir = new DefaultListModel<>();
+    private MeniuPrincipalSoferRenderer meniuPrincipalSoferRenderer = new MeniuPrincipalSoferRenderer();
 
     private Inregistrare inregistrareSelectata = null;
     private ArrayList<Inregistrare> listaInregistrari;
@@ -232,7 +234,7 @@ public class MeniuPrincipalController implements VObserver {
         }
 
         frmMeniuPrincipal.getLstSoferiLiberi().setModel(modelListaSoferiLiberi);
-        frmMeniuPrincipal.getLstSoferiLiberi().setCellRenderer(itemSoferRenderer);
+        frmMeniuPrincipal.getLstSoferiLiberi().setCellRenderer(meniuPrincipalSoferRenderer);
     }
 
     private void setModelToListaSoferiFaraTir() {
@@ -256,7 +258,7 @@ public class MeniuPrincipalController implements VObserver {
         }
 
         frmMeniuPrincipal.getLstSoferiFaraTir().setModel(modelListaSoferiFaraTir);
-        frmMeniuPrincipal.getLstSoferiFaraTir().setCellRenderer(itemSoferRenderer);
+        frmMeniuPrincipal.getLstSoferiFaraTir().setCellRenderer(meniuPrincipalSoferRenderer);
     }
 
     private void setModel(ArrayList<Tir> listaTiruri, JList listaInterfata) {

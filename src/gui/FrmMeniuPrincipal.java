@@ -120,6 +120,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         meniuLogOut = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Administrare");
         setPreferredSize(new java.awt.Dimension(1920, 1080));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -358,6 +359,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         lstSoferiLiberi.setBackground(new java.awt.Color(214, 217, 223));
         lstSoferiLiberi.setForeground(new java.awt.Color(214, 217, 223));
         lstSoferiLiberi.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstSoferiLiberi.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
         jScrollPane8.setViewportView(lstSoferiLiberi);
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
@@ -368,8 +370,8 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 682, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -393,6 +395,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         lstSoferiFaraTir.setBackground(new java.awt.Color(214, 217, 223));
         lstSoferiFaraTir.setForeground(new java.awt.Color(214, 217, 223));
         lstSoferiFaraTir.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstSoferiFaraTir.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
         jScrollPane9.setViewportView(lstSoferiFaraTir);
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
@@ -403,7 +406,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 684, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(

@@ -47,6 +47,7 @@ public class FrmAdministrareSoferiTiruri extends javax.swing.JFrame {
         rdbInactive = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Administrare Soferi-Tiruri");
 
         tblSoferiTiruri.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
