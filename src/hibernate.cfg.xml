@@ -47,16 +47,17 @@ Contributor(s):
     <property name="hibernate.enable_lazy_load_no_trans">true</property>
     <property name="hibernate.connection.username">fana</property>
     <property name="hibernate.connection.password">fana</property>
-    <mapping resource="models/Marca.hbm.xml"/>
-    <mapping resource="models/Stari.hbm.xml"/>
-    <mapping resource="models/Tiruri.hbm.xml"/>
-    <mapping resource="models/SoferiTiruri.hbm.xml"/>
-    <mapping resource="models/Inregistrari.hbm.xml"/>
-    <mapping resource="models/Soferi.hbm.xml"/>
-    <mapping resource="models/Modele.hbm.xml"/>
     <mapping resource="models/Poze.hbm.xml"/>
     <mapping resource="models/Utilizatori.hbm.xml"/>
     <mapping resource="models/Roluri.hbm.xml"/>
+    <mapping resource="models/Stari.hbm.xml"/>
+    <mapping resource="models/Tiruri.hbm.xml"/>
+    <mapping resource="models/Modele.hbm.xml"/>
+    <mapping resource="models/Inregistrari.hbm.xml"/>
+    <mapping resource="models/Soferi.hbm.xml"/>
+    <mapping resource="models/SoferiTiruri.hbm.xml"/>
     <mapping resource="models/UtilizatoriRoluri.hbm.xml"/>
+    <mapping resource="models/Marca.hbm.xml"/>
+    <mapping resource="models/DateRaport.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

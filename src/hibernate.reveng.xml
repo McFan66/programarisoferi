@@ -52,4 +52,5 @@ Contributor(s):
   <table-filter match-name="UTILIZATORI"/>
   <table-filter match-name="ROLURI"/>
   <table-filter match-name="UTILIZATORI_ROLURI"/>
+  <table-filter match-name="DATE_RAPORT"/>
 </hibernate-reverse-engineering>

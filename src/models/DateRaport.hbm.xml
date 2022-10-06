@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 6, 2022 9:33:13 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="models.DateRaport" table="DATE_RAPORT" schema="FANA" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="numeRaport" type="string">
+            <column name="NUME_RAPORT" not-null="true" />
+        </property>
+        <property name="utilizator" type="int">
+            <column name="UTILIZATOR" not-null="true" />
+        </property>
+        <property name="dataSubmit" type="timestamp">
+            <column name="DATA_SUBMIT" length="29" />
+        </property>
+        <property name="dataGenerare" type="timestamp">
+            <column name="DATA_GENERARE" length="29" />
+        </property>
+        <property name="stare" type="string">
+            <column name="STARE" length="50" not-null="true" />
+        </property>
+        <property name="reportPath" type="string">
+            <column name="REPORT_PATH" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
