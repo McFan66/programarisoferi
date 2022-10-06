@@ -283,6 +283,10 @@ public class UtilizatorController {
         int x = 0;
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
         Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
         Date azi = c.getTime();
 
         for (UtilizatoriRoluri ur : listaNoua) {
@@ -338,6 +342,10 @@ public class UtilizatorController {
         int x = listaUtilizatoriRoluri.size() - 1;
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
         Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
         Date azi = c.getTime();
         for (UtilizatoriRoluri ur : listaUtilizatoriRoluri) {
             data2[x][0] = ur.getRol().getNume();

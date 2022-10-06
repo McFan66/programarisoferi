@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RaportUtilizatoriFinal" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="aa156d81-a506-4014-ad0a-52300b915dae">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Tiruri Soferi Adapter"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BDBCB9">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Empty Dataset1" uuid="be4f75f8-0735-42c9-86f4-64269b085121"/>
+	<subDataset name="utilizatori" uuid="6c83ec2d-9a98-455f-89e2-b4a2109428b6">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Tiruri Soferi Adapter"/>
+		<parameter name="dataInceput" class="java.sql.Date"/>
+		<parameter name="dataSfarsit" class="java.sql.Date"/>
+		<queryString language="SQL">
+			<![CDATA[select u.nume,u.prenume,u.email,r.nume as Rol,ur.DATA_INCEPUT,ur.DATA_SFARSIT,
+    CASE WHEN  (ur.DATA_SFARSIT IS NULL OR ur.DATA_SFARSIT>=current_date) AND ur.DATA_INCEPUT<=current_date THEN 'Da' ELSE 'Nu' END as activ
+    from utilizatori u 
+    inner join utilizatori_roluri ur on u.ID=ur.UTILIZATOR
+    inner join roluri r on r.ID=ur.ROL 
+    where   ur.DATA_INCEPUT >= $P{dataInceput} and 
+            ur.DATA_INCEPUT <= $P{dataSfarsit}
+     order by r.nume]]>
+		</queryString>
+		<field name="NUME" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="NUME"/>
+			<property name="com.jaspersoft.studio.field.label" value="NUME"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="UTILIZATORI"/>
+		</field>
+		<field name="PRENUME" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="PRENUME"/>
+			<property name="com.jaspersoft.studio.field.label" value="PRENUME"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="UTILIZATORI"/>
+		</field>
+		<field name="EMAIL" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="EMAIL"/>
+			<property name="com.jaspersoft.studio.field.label" value="EMAIL"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="UTILIZATORI"/>
+		</field>
+		<field name="ROL" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="ROL"/>
+			<property name="com.jaspersoft.studio.field.label" value="ROL"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ROLURI"/>
+		</field>
+		<field name="DATA_INCEPUT" class="java.sql.Date">
+			<property name="com.jaspersoft.studio.field.name" value="DATA_INCEPUT"/>
+			<property name="com.jaspersoft.studio.field.label" value="DATA_INCEPUT"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="UTILIZATORI_ROLURI"/>
+		</field>
+		<field name="DATA_SFARSIT" class="java.sql.Date">
+			<property name="com.jaspersoft.studio.field.name" value="DATA_SFARSIT"/>
+			<property name="com.jaspersoft.studio.field.label" value="DATA_SFARSIT"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="UTILIZATORI_ROLURI"/>
+		</field>
+		<field name="ACTIV" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="ACTIV"/>
+			<property name="com.jaspersoft.studio.field.label" value="ACTIV"/>
+		</field>
+		<group name="Group1">
+			<groupExpression><![CDATA[$F{ROL}]]></groupExpression>
+		</group>
+	</subDataset>
+	<parameter name="dataInceput" class="java.sql.Date"/>
+	<parameter name="dataSfarsit" class="java.sql.Date"/>
+	<queryString>
+		<![CDATA[select u.nume,u.prenume,u.email,r.nume as Rol,ur.DATA_INCEPUT,ur.DATA_SFARSIT,
+    CASE WHEN  (ur.DATA_SFARSIT IS NULL OR ur.DATA_SFARSIT>=current_date) AND ur.DATA_INCEPUT<=current_date THEN 1 ELSE 0 END as activ
+    from utilizatori u 
+    inner join utilizatori_roluri ur on u.ID=ur.UTILIZATOR
+    inner join roluri r on r.ID=ur.ROL 
+    where   ur.DATA_INCEPUT >=  $P{dataInceput}  and 
+            ur.DATA_INCEPUT <=  $P{dataSfarsit}]]>
+	</queryString>
+	<field name="NUME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NUME"/>
+		<property name="com.jaspersoft.studio.field.label" value="NUME"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="UTILIZATORI"/>
+	</field>
+	<field name="PRENUME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="PRENUME"/>
+		<property name="com.jaspersoft.studio.field.label" value="PRENUME"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="UTILIZATORI"/>
+	</field>
+	<field name="EMAIL" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="EMAIL"/>
+		<property name="com.jaspersoft.studio.field.label" value="EMAIL"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="UTILIZATORI"/>
+	</field>
+	<field name="ROL" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ROL"/>
+		<property name="com.jaspersoft.studio.field.label" value="ROL"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ROLURI"/>
+	</field>
+	<field name="DATA_INCEPUT" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="DATA_INCEPUT"/>
+		<property name="com.jaspersoft.studio.field.label" value="DATA_INCEPUT"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="UTILIZATORI_ROLURI"/>
+	</field>
+	<field name="DATA_SFARSIT" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="DATA_SFARSIT"/>
+		<property name="com.jaspersoft.studio.field.label" value="DATA_SFARSIT"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="UTILIZATORI_ROLURI"/>
+	</field>
+	<field name="ACTIV" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ACTIV"/>
+		<property name="com.jaspersoft.studio.field.label" value="ACTIV"/>
+	</field>
+	<variable name="REPORT_PAGE" class="java.lang.Integer" resetType="None" incrementType="Page">
+		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="150" splitType="Stretch">
+			<staticText>
+				<reportElement x="127" y="50" width="300" height="40" uuid="cf7af46e-8d2f-46f8-b716-6beee658877a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="30" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Raport Utilizatori]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="100" width="340" height="30" uuid="034ec709-0742-4930-96b7-55531bc28829"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA["In perioada: "+$P{dataInceput}+" - "+$P{dataSfarsit}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="90" splitType="Stretch">
+			<componentElement>
+				<reportElement x="0" y="0" width="550" height="90" uuid="f818f70c-ef0a-4a91-bbbc-0912b4c71ba5">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+					<property name="com.jaspersoft.studio.components.autoresize.proportional" value="true"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="AllSectionsNoDetail">
+					<datasetRun subDataset="utilizatori" uuid="9be5c90e-aa5c-4a3f-b609-565274cbca47">
+						<datasetParameter name="dataInceput">
+							<datasetParameterExpression><![CDATA[$P{dataInceput}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="dataSfarsit">
+							<datasetParameterExpression><![CDATA[$P{dataSfarsit}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="107" uuid="e44b2d0e-2858-4cd4-8d00-8c0f9314580e">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:groupHeader groupName="Group1">
+							<jr:cell style="Table_CH" height="30" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="107" height="30" uuid="67f44ef6-c5e5-4cd6-b9f0-229c35238eda"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{NUME}]]></textFieldExpression>
+								</textField>
+							</jr:cell>
+						</jr:groupHeader>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="107" height="30" uuid="c97a4421-7e08-4afa-b997-0bdde8fc08cb"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="16" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Nume]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30"/>
+					</jr:column>
+					<jr:column width="107" uuid="0ce5335e-19b1-4161-a66b-a1d80e84c279">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:groupHeader groupName="Group1">
+							<jr:cell style="Table_CH" height="30" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="107" height="30" uuid="18abfba8-e7cd-48fe-a78a-820b3e5073f1"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{PRENUME}]]></textFieldExpression>
+								</textField>
+							</jr:cell>
+						</jr:groupHeader>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="107" height="30" uuid="1d449a18-31ef-4d73-9dfd-aa42b9876894"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="16" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Prenume]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30"/>
+					</jr:column>
+					<jr:column width="146" uuid="d8cf6126-8eea-411c-bb31-8de78e726c5a">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:groupHeader groupName="Group1">
+							<jr:cell style="Table_CH" height="30" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="146" height="30" uuid="d4d92a03-3637-47ca-b859-169f86f3fc7a"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{EMAIL}]]></textFieldExpression>
+								</textField>
+							</jr:cell>
+						</jr:groupHeader>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="146" height="30" uuid="b33fee23-8ded-4a90-8273-b6d283feeca2"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="16" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Email]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30"/>
+					</jr:column>
+					<jr:column width="190" uuid="dad8eaeb-0d83-4da2-ab63-e366242d8576">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:groupHeader groupName="Group1">
+							<jr:cell style="Table_CH" height="30" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="190" height="30" uuid="ad9301c6-741d-4abc-8ee3-ab20933688ab"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="11" isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{ROL} + " in perioada:"]]></textFieldExpression>
+								</textField>
+							</jr:cell>
+						</jr:groupHeader>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="190" height="30" uuid="16e2a3b9-1876-48c0-a818-5737c38f3ce3"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="16" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Rolul si perioada]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="190" height="30" uuid="eb2c6ae1-9f6b-4f86-96b5-6eeb517c061d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{DATA_INCEPUT}+" - "+$F{DATA_SFARSIT}]]></textFieldExpression>
+								<patternExpression><![CDATA["dd-mm-yyyy"]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</columnHeader>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="520" y="0" width="30" height="20" uuid="bae0190e-16af-4637-a104-dab109d43473">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{REPORT_PAGE} + "/" + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="85" splitType="Stretch"/>
+	</summary>
+</jasperReport>

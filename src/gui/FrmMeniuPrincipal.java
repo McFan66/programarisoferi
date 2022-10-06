@@ -8,6 +8,7 @@ package gui;
 import controllers.MarcaController;
 import controllers.MeniuPrincipalController;
 import controllers.ModelController;
+import controllers.RapoarteController;
 import controllers.RolController;
 import controllers.SoferController;
 import controllers.SoferiTiruriController;
@@ -37,6 +38,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     private RolController rolController = new RolController();
     private SoferiTiruriController soferiTiruriController = new SoferiTiruriController();
     private MeniuPrincipalController meniuPrincipalController;
+    private RapoarteController rapoarteController = new RapoarteController();
     
     
     public FrmMeniuPrincipal() {
@@ -68,6 +70,9 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         tableModelInregistrari1 = new tablemodels.TableModelInregistrari();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -117,7 +122,15 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         meniuManagement = new javax.swing.JMenu();
         btnAdministrareUtilizatori = new javax.swing.JMenuItem();
         btnAdministrareRoluri = new javax.swing.JMenuItem();
+        meniuRapoarte = new javax.swing.JMenu();
+        itemGenerareRapoarte = new javax.swing.JMenuItem();
         meniuLogOut = new javax.swing.JMenu();
+
+        jMenu1.setText("File");
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Administrare");
@@ -535,7 +548,34 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
 
         meniu.add(meniuManagement);
 
-        meniuLogOut.setText("jMenu1");
+        meniuRapoarte.setText("Rapoarte");
+        meniuRapoarte.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
+        meniuRapoarte.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                meniuRapoarteMenuSelected(evt);
+            }
+        });
+        meniuRapoarte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                meniuRapoarteActionPerformed(evt);
+            }
+        });
+
+        itemGenerareRapoarte.setText("Generare rapoarte");
+        itemGenerareRapoarte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemGenerareRapoarteActionPerformed(evt);
+            }
+        });
+        meniuRapoarte.add(itemGenerareRapoarte);
+
+        meniu.add(meniuRapoarte);
+
+        meniuLogOut.setText("Quit");
         meniu.add(meniuLogOut);
 
         setJMenuBar(meniu);
@@ -631,6 +671,18 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
                 meniuPrincipalController.actionFilter();
     }//GEN-LAST:event_txtFiltreazaKeyTyped
+
+    private void meniuRapoarteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meniuRapoarteActionPerformed
+        
+    }//GEN-LAST:event_meniuRapoarteActionPerformed
+
+    private void itemGenerareRapoarteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemGenerareRapoarteActionPerformed
+        rapoarteController.actionCreate(this);
+    }//GEN-LAST:event_itemGenerareRapoarteActionPerformed
+
+    private void meniuRapoarteMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_meniuRapoarteMenuSelected
+
+    }//GEN-LAST:event_meniuRapoarteMenuSelected
 
     public JList<String> getLstInCursa() {
         return lstInCursa;
@@ -742,11 +794,15 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnFinalizare;
     private javax.swing.JMenuItem btnInregistrareNoua;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JMenuItem itemGenerareRapoarte;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
@@ -776,6 +832,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu meniuLogOut;
     private javax.swing.JMenu meniuManagement;
     private javax.swing.JMenu meniuProfil;
+    private javax.swing.JMenu meniuRapoarte;
     private javax.swing.JRadioButton rdbFinalizate;
     private javax.swing.JRadioButton rdbInDesfasurare;
     private javax.swing.JRadioButton rdbToate;
