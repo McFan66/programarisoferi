@@ -15,6 +15,8 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.DefaultComboBoxModel;
@@ -23,8 +25,11 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
+import models.AppSingleTone;
+import models.DateRaport;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -33,6 +38,8 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import org.hibernate.Session;
 import org.hibernate.internal.SessionImpl;
+import services.DateRaportService;
+import services.DateRaportServiceImpl;
 import utils.HibernateUtil;
 
 /**
@@ -43,6 +50,9 @@ public class RapoarteController {
     
     private FrmRapoarte frmRapoarte;
     private FrmLoadingRaport frmLoadingRaport;
+    private ArrayList<JasperPrint> rapoarte = new ArrayList<>();
+    private DateRaportService dateRaportService = new DateRaportServiceImpl();
+    private DateRaport dateRaport = new DateRaport();
     
     
     public void actionCreate(JFrame parent){
@@ -88,6 +98,11 @@ public class RapoarteController {
         JasperDesign jasperDesign = JRXmlLoader.load(myFile);
         JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, connection);//.fillReport(jasperReport, parameters,new JRBeanCollectionDataSource(ie.test.BeanFactory.getCalcs()));
+        rapoarte.add(jasperPrint);
+        dateRaport.setNumeRaport((String) frmRapoarte.getCmbRapoarte().getSelectedItem());
+        dateRaport.setReportPath("");
+        dateRaport.setStare("In generare");
+        dateRaport.setUtilizator(AppSingleTone.getAppSingleToneInstance().getUtilizatorAutentificat().getId());
         JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
         JDialog raport = new JDialog(frmRapoarte);
         raport.setContentPane(jasperViewer.getContentPane());
@@ -105,9 +120,16 @@ public class RapoarteController {
             public void run() {
                 SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
                     @Override
-                    protected String doInBackground() throws URISyntaxException, IOException, JRException {
-                        //Thread.sleep(5000);
+                    protected String doInBackground() throws URISyntaxException, IOException, JRException, InterruptedException {
+                        dateRaport.setDataSubmit(Calendar.getInstance().getTime());
+                        Thread.sleep(5000);
                         generareRaport();
+                        System.out.println("Am intrat in doInBackground");
+                        dateRaport.setDataGenerare(Calendar.getInstance().getTime());
+                        dateRaport.setStare("Generat");
+                        dateRaportService.addDateRaport(dateRaport);
+                        System.out.println(dateRaport.toString());
+                        System.out.println("Am adaugat raportul in baza de date");
                         frmLoadingRaport.dispose();
                         return null;
                     }

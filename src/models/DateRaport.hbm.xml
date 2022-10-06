@@ -6,7 +6,7 @@
     <class name="models.DateRaport" table="DATE_RAPORT" schema="FANA" optimistic-lock="version">
         <id name="id" type="int">
             <column name="ID" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <property name="numeRaport" type="string">
             <column name="NUME_RAPORT" not-null="true" />

@@ -138,7 +138,11 @@ public class InregistrariHibernateRepository implements InregistrariRepository{
     
     public static void main(String[] args) {
         InregistrariRepository inregistrariRepository = new InregistrariHibernateRepository();
-        System.out.println(inregistrariRepository.getInregistrareByNoPlecare());
+        Inregistrare i = new Inregistrare();
+        i.setDataPlecare(Calendar.getInstance().getTime());
+        i.setIdSoferiTiruri(6);
+        inregistrariRepository.adaugaInregistrare(i);
+        System.out.println(inregistrariRepository.getAll());
     }
 
     @Override
