@@ -124,6 +124,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         btnAdministrareRoluri = new javax.swing.JMenuItem();
         meniuRapoarte = new javax.swing.JMenu();
         itemGenerareRapoarte = new javax.swing.JMenuItem();
+        itemVizualizareRapoarte = new javax.swing.JMenuItem();
         meniuLogOut = new javax.swing.JMenu();
 
         jMenu1.setText("File");
@@ -573,6 +574,14 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         });
         meniuRapoarte.add(itemGenerareRapoarte);
 
+        itemVizualizareRapoarte.setText("Vizualizare istoric rapoarte");
+        itemVizualizareRapoarte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemVizualizareRapoarteActionPerformed(evt);
+            }
+        });
+        meniuRapoarte.add(itemVizualizareRapoarte);
+
         meniu.add(meniuRapoarte);
 
         meniuLogOut.setText("Quit");
@@ -683,6 +692,11 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     private void meniuRapoarteMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_meniuRapoarteMenuSelected
 
     }//GEN-LAST:event_meniuRapoarteMenuSelected
+
+    private void itemVizualizareRapoarteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemVizualizareRapoarteActionPerformed
+//        rapoarteController.actionRead(this);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_itemVizualizareRapoarteActionPerformed
 
     public JList<String> getLstInCursa() {
         return lstInCursa;
@@ -795,6 +809,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem btnInregistrareNoua;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JMenuItem itemGenerareRapoarte;
+    private javax.swing.JMenuItem itemVizualizareRapoarte;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;

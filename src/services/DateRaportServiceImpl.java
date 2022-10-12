@@ -32,5 +32,10 @@ public class DateRaportServiceImpl implements DateRaportService{
     public ArrayList<DateRaport> getAll() {
         return dateRaportRepository.getAll();
     }
+
+    @Override
+    public DateRaport getDateRaportById(int id) {
+        return dateRaportRepository.getDateRaportById(id);
+    }
     
 }

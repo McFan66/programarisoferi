@@ -11,7 +11,7 @@
         <property name="numeRaport" type="string">
             <column name="NUME_RAPORT" not-null="true" />
         </property>
-        <property name="utilizator" type="int">
+        <property name="idUtilizator" type="int">
             <column name="UTILIZATOR" not-null="true" />
         </property>
         <property name="dataSubmit" type="timestamp">
@@ -26,5 +26,8 @@
         <property name="reportPath" type="string">
             <column name="REPORT_PATH" not-null="true" />
         </property>
+        <many-to-one class="models.Utilizator" fetch="select" insert="false" name="utilizator" update="false">
+            <column name="UTILIZATOR" not-null="true"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

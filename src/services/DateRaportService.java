@@ -16,4 +16,5 @@ public interface DateRaportService {
     public boolean addDateRaport(DateRaport dateRaport);
     public void stergeDateRaport(DateRaport dateRaport);
     public ArrayList<DateRaport> getAll();
+    public DateRaport getDateRaportById(int id);
 }

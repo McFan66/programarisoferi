@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Raport_Inregistrari_Bun" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="721c859b-668b-4097-b10f-aca5818a8a8d">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="soferi_tiruri"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="inregistrari" uuid="24da4f8b-b4b9-496c-98bd-6ccbe28d5e67">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="soferi_tiruri"/>
+		<parameter name="listaSoferi" class="java.util.Collection" nestedType="java.lang.Integer" evaluationTime="Early">
+			<defaultValueExpression><![CDATA[new ArrayList(Arrays.asList())]]></defaultValueExpression>
+		</parameter>
+		<parameter name="dataInceput" class="java.sql.Date"/>
+		<parameter name="dataSfarsit" class="java.sql.Date"/>
+		<parameter name="listaTiruri" class="java.util.Collection" nestedType="java.lang.Integer" evaluationTime="Early">
+			<defaultValueExpression><![CDATA[new ArrayList(Arrays.asList())]]></defaultValueExpression>
+		</parameter>
+		<queryString language="SQL">
+			<![CDATA[select s.NUME, s.id as id_sofer , s.PRENUME ,ma.NUME as marca , m.nume as model ,t.NR_INMATRICULARE, t.id as id_tir , i.id as id_inregistrare ,i.data_plecare , i.data_sosire from inregistrari i
+inner join 
+(soferi_tiruri sf inner join soferi s on s.ID = sf.SOFER
+inner join (
+tiruri t inner join (
+modele m  inner join marca ma on ma.ID = m.MARCA) on m.ID = t.MODEL
+) on t.ID = sf.TIR) 
+on sf.ID = i.SOFERI_TIRURI where i.data_plecare >= $P{dataInceput}  and (i.data_sosire is null or i.data_sosire <= $P{dataSfarsit}  ) 
+and ($X{IN,s.id,listaSoferi} and $X{IN, t.id , listaTiruri})
+order by i.data_plecare desc]]>
+		</queryString>
+		<field name="NUME" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="NUME"/>
+			<property name="com.jaspersoft.studio.field.label" value="NUME"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="SOFERI"/>
+		</field>
+		<field name="ID_SOFER" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.name" value="ID_SOFER"/>
+			<property name="com.jaspersoft.studio.field.label" value="ID_SOFER"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="SOFERI"/>
+		</field>
+		<field name="PRENUME" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="PRENUME"/>
+			<property name="com.jaspersoft.studio.field.label" value="PRENUME"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="SOFERI"/>
+		</field>
+		<field name="MARCA" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="MARCA"/>
+			<property name="com.jaspersoft.studio.field.label" value="MARCA"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="MARCA"/>
+		</field>
+		<field name="MODEL" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="MODEL"/>
+			<property name="com.jaspersoft.studio.field.label" value="MODEL"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="MODELE"/>
+		</field>
+		<field name="NR_INMATRICULARE" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="NR_INMATRICULARE"/>
+			<property name="com.jaspersoft.studio.field.label" value="NR_INMATRICULARE"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="TIRURI"/>
+		</field>
+		<field name="ID_TIR" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.name" value="ID_TIR"/>
+			<property name="com.jaspersoft.studio.field.label" value="ID_TIR"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="TIRURI"/>
+		</field>
+		<field name="ID_INREGISTRARE" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.name" value="ID_INREGISTRARE"/>
+			<property name="com.jaspersoft.studio.field.label" value="ID_INREGISTRARE"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="INREGISTRARI"/>
+		</field>
+		<field name="DATA_PLECARE" class="java.sql.Date">
+			<property name="com.jaspersoft.studio.field.name" value="DATA_PLECARE"/>
+			<property name="com.jaspersoft.studio.field.label" value="DATA_PLECARE"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="INREGISTRARI"/>
+		</field>
+		<field name="DATA_SOSIRE" class="java.sql.Date">
+			<property name="com.jaspersoft.studio.field.name" value="DATA_SOSIRE"/>
+			<property name="com.jaspersoft.studio.field.label" value="DATA_SOSIRE"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="INREGISTRARI"/>
+		</field>
+	</subDataset>
+	<subDataset name="dataSoferi" uuid="3b8f94a9-8b0c-4eff-95b8-89b37ff9b90f">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="soferi_tiruri"/>
+		<queryString language="SQL">
+			<![CDATA[select nume,prenume from soferi]]>
+		</queryString>
+		<field name="NUME" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="NUME"/>
+			<property name="com.jaspersoft.studio.field.label" value="NUME"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="SOFERI"/>
+		</field>
+		<field name="PRENUME" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="PRENUME"/>
+			<property name="com.jaspersoft.studio.field.label" value="PRENUME"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="SOFERI"/>
+		</field>
+	</subDataset>
+	<parameter name="listaSoferi" class="java.util.Collection" nestedType="java.lang.Integer" evaluationTime="Early">
+		<defaultValueExpression><![CDATA[new ArrayList(Arrays.asList())]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dataInceput" class="java.sql.Date"/>
+	<parameter name="dataSfarsit" class="java.sql.Date"/>
+	<parameter name="listaTiruri" class="java.util.Collection" nestedType="java.lang.Integer" evaluationTime="Early">
+		<defaultValueExpression><![CDATA[new ArrayList(Arrays.asList())]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select s.NUME , s.PRENUME ,ma.NUME as marca , m.nume as model ,t.NR_INMATRICULARE, i.data_plecare , i.data_sosire from inregistrari i
+inner join 
+(soferi_tiruri sf inner join soferi s on s.ID = sf.SOFER
+inner join (
+tiruri t inner join (
+modele m  inner join marca ma on ma.ID = m.MARCA) on m.ID = t.MODEL
+) on t.ID = sf.TIR) 
+on sf.ID = i.SOFERI_TIRURI order by i.data_plecare desc]]>
+	</queryString>
+	<field name="NUME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NUME"/>
+		<property name="com.jaspersoft.studio.field.label" value="NUME"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="SOFERI"/>
+	</field>
+	<field name="PRENUME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="PRENUME"/>
+		<property name="com.jaspersoft.studio.field.label" value="PRENUME"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="SOFERI"/>
+	</field>
+	<field name="MARCA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="MARCA"/>
+		<property name="com.jaspersoft.studio.field.label" value="MARCA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="MARCA"/>
+	</field>
+	<field name="MODEL" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="MODEL"/>
+		<property name="com.jaspersoft.studio.field.label" value="MODEL"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="MODELE"/>
+	</field>
+	<field name="NR_INMATRICULARE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NR_INMATRICULARE"/>
+		<property name="com.jaspersoft.studio.field.label" value="NR_INMATRICULARE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="TIRURI"/>
+	</field>
+	<field name="DATA_PLECARE" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="DATA_PLECARE"/>
+		<property name="com.jaspersoft.studio.field.label" value="DATA_PLECARE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="INREGISTRARI"/>
+	</field>
+	<field name="DATA_SOSIRE" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="DATA_SOSIRE"/>
+		<property name="com.jaspersoft.studio.field.label" value="DATA_SOSIRE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="INREGISTRARI"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="555" height="79" uuid="5f9d5403-bc28-4d21-b039-7e457cce5c18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Raport inregistrari " + $P{dataInceput} + " - " + $P{dataSfarsit}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="85" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="11" width="109" height="20" uuid="6c7914e7-117d-4064-95f1-daab8a759ddf"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Soferi:]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="139" y="11" width="416" height="20" uuid="9e605b77-ebf6-4947-afda-2c1ab787ce09"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Horizontal">
+					<datasetRun subDataset="dataSoferi" uuid="6a071860-f12f-4436-aad2-ad7a2715b227">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="416">
+						<textField>
+							<reportElement x="0" y="0" width="50" height="9" uuid="5b32b69e-ce68-40f3-9b9c-7b4330215054"/>
+							<textFieldExpression><![CDATA[$F{NUME}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="50" y="0" width="50" height="9" uuid="a14bfeb9-7e48-4b82-8243-36321374041b"/>
+							<textFieldExpression><![CDATA[$F{PRENUME}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="227" splitType="Stretch">
+			<printWhenExpression><![CDATA[$V{PAGE_COUNT} == 1]]></printWhenExpression>
+			<componentElement>
+				<reportElement style="Table_TD" x="0" y="40" width="555" height="150" uuid="cd154b70-ffc5-493b-ab9e-3d347958f0c2">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+					<property name="com.jaspersoft.studio.components.autoresize.proportional" value="true"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="inregistrari" uuid="163b73c4-b070-4e15-9641-bd4913cf0891">
+						<datasetParameter name="dataInceput">
+							<datasetParameterExpression><![CDATA[$P{dataInceput}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="dataSfarsit">
+							<datasetParameterExpression><![CDATA[$P{dataSfarsit}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="listaSoferi">
+							<datasetParameterExpression><![CDATA[$P{listaSoferi}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="listaTiruri">
+							<datasetParameterExpression><![CDATA[$P{listaTiruri}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="80" uuid="95a39ff9-b39c-463a-9408-e18c211a5c2b">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="80" height="30" uuid="d84a2aff-1633-4df5-b219-84fd3bf4b733"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10"/>
+								</textElement>
+								<text><![CDATA[Nume]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="80" height="30" uuid="a4e54f22-f636-48bc-9479-a2d2aa761038"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{NUME}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="0aa757a3-565e-4e1e-b331-a02dffbaf911">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="80" height="30" uuid="c18e96f9-21f9-4b05-bd3d-69dfabc5179a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10"/>
+								</textElement>
+								<text><![CDATA[Prenume]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="80" height="30" uuid="4061b09d-95dc-4ad1-936f-2929a4992aa2"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{PRENUME}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="79" uuid="79f47168-6f9e-45cd-bc66-9cab48effedc">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="79" height="30" uuid="16fe1de0-25fb-492e-8d8e-7bdf58b250a3"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10"/>
+								</textElement>
+								<text><![CDATA[Marca]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="79" height="30" uuid="4bcff6bc-8e46-486b-9f08-405542051999"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{MARCA}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="79" uuid="fb2662a9-5837-425a-85ce-83a902c4055f">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="79" height="30" uuid="1bc1570d-dfb1-40df-89be-1de1b86f53bf"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10"/>
+								</textElement>
+								<text><![CDATA[Model]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="79" height="30" uuid="e6dc8ed9-1df6-4777-ae39-13768b26879d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{MODEL}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="79" uuid="293033eb-3c59-493c-8943-e69523f36c41">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="79" height="30" uuid="72c5656a-71e7-4626-a26c-e14e38ac9128"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10"/>
+								</textElement>
+								<text><![CDATA[Numar auto]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="79" height="30" uuid="8b37b2a8-1f05-43e4-a6d3-a773f04efe05"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{NR_INMATRICULARE}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="79" uuid="6f511913-0bc0-426e-a641-10799b0dfb9e">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="79" height="30" uuid="6bdf5563-2032-4641-9584-5410aa036418"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Data plecare]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField pattern="dd/MM/yyyy">
+								<reportElement x="0" y="0" width="79" height="30" uuid="dd3a4d65-facb-4044-b5b8-eeee404f7f6e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{DATA_PLECARE}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="79" uuid="dd3e2fee-83bc-47aa-81a2-1eae95fa22f7">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+						<jr:tableHeader style="Table_TH" height="30"/>
+						<jr:tableFooter style="Table_TH" height="30"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="79" height="30" uuid="16ba7ce4-1c93-4ae6-805a-d64c4c66adb6"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Data sosire]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table_CH" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField pattern="dd.MM.yyyy">
+								<reportElement x="0" y="0" width="79" height="30" uuid="dd355ba1-9186-48f7-b56f-12490879c4fa"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{DATA_SOSIRE}==null?"Nespecificat":$F{DATA_SOSIRE}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

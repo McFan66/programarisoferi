@@ -14,11 +14,12 @@ import java.util.Date;
 public class DateRaport {
    private int id;
    private String numeRaport;
-   private int utilizator;
+   private int idUtilizator;
    private Date dataSubmit;
    private Date dataGenerare;
    private String stare;
    private String reportPath;
+   private Utilizator utilizator;
 
     public int getId() {
         return id;
@@ -36,11 +37,11 @@ public class DateRaport {
         this.numeRaport = numeRaport;
     }
 
-    public int getUtilizator() {
+    public Utilizator getUtilizator() {
         return utilizator;
     }
 
-    public void setUtilizator(int utilizator) {
+    public void setUtilizator(Utilizator utilizator) {
         this.utilizator = utilizator;
     }
 
@@ -76,6 +77,15 @@ public class DateRaport {
         this.reportPath = reportPath;
     }
 
+    public int getIdUtilizator() {
+        return idUtilizator;
+    }
+
+    public void setIdUtilizator(int idUtilizator) {
+        this.idUtilizator = idUtilizator;
+    }
+
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

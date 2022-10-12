@@ -29,5 +29,11 @@
             </key>
             <one-to-many class="models.UtilizatoriRoluri"/>
         </set>
+        <set fetch = "select" inverse = "true" lazy = "false" name="rapoarteGenerate" table = "DATE_RAPORT">
+            <key>
+                <column name = "UTILIZATOR" not-null = "true"/>
+            </key>
+            <one-to-many class="models.DateRaport" />
+        </set>
     </class>
 </hibernate-mapping>

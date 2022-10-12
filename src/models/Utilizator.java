@@ -21,6 +21,7 @@ public class Utilizator {
     private String parola;
     private boolean valid;
     private Set<UtilizatoriRoluri> utilizatoriRoluri = new HashSet<UtilizatoriRoluri>(0);
+    private Set<DateRaport> rapoarteGenerate = new HashSet<DateRaport>(0);
 
     public int getId() {
         return id;
@@ -77,6 +78,16 @@ public class Utilizator {
     public void setUtilizatoriRoluri(Set<UtilizatoriRoluri> utilizatoriRoluri) {
         this.utilizatoriRoluri = utilizatoriRoluri;
     }
+
+    public void setRapoarteGenerate(Set<DateRaport> rapoarteGenerate) {
+        this.rapoarteGenerate = rapoarteGenerate;
+    }
+
+    public Set<DateRaport> getRapoarteGenerate() {
+        return rapoarteGenerate;
+    }
+    
+    
     
     public String getNumeComplet(){
         return String.format("%s %s", nume, prenume);

@@ -92,7 +92,7 @@ public class DateRaportHibernateRepository implements DateRaportRepository{
         dateRaport.setNumeRaport("Aiausasdasda");
         dateRaport.setReportPath("");
         dateRaport.setStare("AIaus");
-        dateRaport.setUtilizator(2);
+//        dateRaport.setUtilizator(2);
         dateRaportRepository.addDateRaport(dateRaport);
         System.out.println(dateRaportRepository.getAll());
     }
