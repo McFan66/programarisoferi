@@ -79,7 +79,7 @@ public class RapoarteController {
     private File userConfig = new File("./userconfig.txt");
     private Scanner scanner;
     private SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY");
-       private SoferService soferService = new SoferServiceImpl();
+    private SoferService soferService = new SoferServiceImpl();
     private TiruriService tiruriService = new TiruriServiceImpl();
 
     public void actionCreate(JFrame parent) {
@@ -88,9 +88,10 @@ public class RapoarteController {
         DefaultComboBoxModel defaultComboBoxModel = new DefaultComboBoxModel();
         defaultComboBoxModel.addElement("--Selectati raportul--");
         defaultComboBoxModel.addElement("Raport Utilizatori");
-        defaultComboBoxModel.addElement("Raport Soferi");
+        defaultComboBoxModel.addElement("Raport Inregistrari");
         frmRapoarte.getCmbRapoarte().setModel(defaultComboBoxModel);
         frmRapoarte.getLstRapoarte().setModel(defaultListModel);
+        frmRapoarte.getPanelCustom().setVisible(false);
         try {
             scanner = new Scanner(userConfig);
         } catch (FileNotFoundException ex) {
@@ -104,36 +105,34 @@ public class RapoarteController {
         frmRapoarte.setVisible(true);
     }
 
-        public void itemChanged(){
-        if (frmRapoarte.getCmbRapoarte().getSelectedIndex()==2){
+    public void itemChanged() {
+        if (frmRapoarte.getCmbRapoarte().getSelectedIndex() == 2) {
             DefaultListModel modelListaSoferi = new DefaultListModel();
             DefaultListModel modelListaTiruri = new DefaultListModel();
             ArrayList<Sofer> listaSoferi = soferService.getSoferByValid(true);
             ArrayList<Tir> listaTiruri = tiruriService.getTirByValid(true);
-            for (Sofer s:listaSoferi){
+            for (Sofer s : listaSoferi) {
                 modelListaSoferi.addElement(s.getNumeComplet());
             }
-            for (Tir t:listaTiruri){
+            for (Tir t : listaTiruri) {
                 modelListaTiruri.addElement(String.format("%s %s - %s", t.getModel().getMarca().getNume(), t.getModel().getNume(), t.getNrInmatriculare()));
             }
-//            frmRapoarte.getLstSoferi().setModel(modelListaSoferi);
-//            frmRapoarte.getLstTiruri().setModel(modelListaTiruri);
-//            frmRapoarte.setSize(454, 438);
-//            frmRapoarte.getPanelCustom().setVisible(true);
-        }else{
-//            frmRaport.getPanelCustom().setVisible(false);
-//            frmRaport.setSize(454, 155);
+            frmRapoarte.getLstSoferi().setModel(modelListaSoferi);
+            frmRapoarte.getLstTiruri().setModel(modelListaTiruri);
+            frmRapoarte.getPanelCustom().setVisible(true);
+        } else {
+            frmRapoarte.getPanelCustom().setVisible(false);
         }
     }
-    
-    
-    public void selectAll(JList lista){
-        lista.setSelectionInterval(0, lista.getModel().getSize()-1);
+
+    public void selectAll(JList lista) {
+        lista.setSelectionInterval(0, lista.getModel().getSize() - 1);
     }
-    public void deselectAll(JList lista){
+
+    public void deselectAll(JList lista) {
         lista.clearSelection();
     }
-        
+
     public void generareRaport(int index) throws URISyntaxException, JRException {
         Session session = HibernateUtil.getSessionFactory().openSession();
         if (!session.isOpen()) {
@@ -217,9 +216,9 @@ public class RapoarteController {
     };
 
     public void runReport() {
-        if(!isFormValid()) {
+        if (!isFormValid()) {
             return;
-        } 
+        }
         int index = frmRapoarte.getCmbRapoarte().getSelectedIndex();
         int queueIndex = rapoarteInQueue.size();
         int id = addDateRaportToDatabaseAndQueue();
@@ -284,7 +283,7 @@ public class RapoarteController {
     }
 
     private boolean isFormValid() {
-        if(saveReportFolder == null) {
+        if (saveReportFolder == null) {
             JOptionPane.showMessageDialog(frmRapoarte, "Selectati o locatie valida pentru a salva rapoartele");
             return false;
         }

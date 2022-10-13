@@ -42,6 +42,10 @@ public class FrmRapoarte extends javax.swing.JDialog {
     public JComboBox<String> getCmbRapoarte() {
         return cmbRapoarte;
     }
+
+    public JList<String> getLstTiruri() {
+        return lstTiruri;
+    }
     
     
     
@@ -125,6 +129,12 @@ public class FrmRapoarte extends javax.swing.JDialog {
         lblDataSfarsit.setText("Data sfarsit:");
 
         lblDataInceput.setText("Data inceput:");
+
+        cmbRapoarte.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbRapoarteItemStateChanged(evt);
+            }
+        });
 
         lblTipRaport.setText("Tipul raportului:");
 
@@ -321,6 +331,11 @@ public class FrmRapoarte extends javax.swing.JDialog {
             Logger.getLogger(FrmRapoarte.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnConfigActionPerformed
+
+    private void cmbRapoarteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbRapoarteItemStateChanged
+        rapoarteController.itemChanged();
+// TODO add your handling code here:
+    }//GEN-LAST:event_cmbRapoarteItemStateChanged
 
     /**
      * @param args the command line arguments
