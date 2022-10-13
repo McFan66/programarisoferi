@@ -98,10 +98,10 @@ public class FrmRapoarte extends javax.swing.JDialog {
         lblTipRaport = new javax.swing.JLabel();
         btnConfig = new javax.swing.JButton();
         lblInfoFolder = new javax.swing.JLabel();
-        panelCustom1 = new javax.swing.JPanel();
+        panelCustom = new javax.swing.JPanel();
         lblSoferi1 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        lstSoferi1 = new javax.swing.JList<>();
+        lstSoferi = new javax.swing.JList<>();
         jScrollPane5 = new javax.swing.JScrollPane();
         lstTiruri = new javax.swing.JList<>();
         lblTiruri1 = new javax.swing.JLabel();
@@ -138,7 +138,7 @@ public class FrmRapoarte extends javax.swing.JDialog {
         lblSoferi1.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
         lblSoferi1.setText("Soferi:");
 
-        jScrollPane4.setViewportView(lstSoferi1);
+        jScrollPane4.setViewportView(lstSoferi);
 
         jScrollPane5.setViewportView(lstTiruri);
 
@@ -155,22 +155,22 @@ public class FrmRapoarte extends javax.swing.JDialog {
 
         btnSelecteazaTiruri1.setText("<html><center>Selecteaza<br/>tot</center></html>");
 
-        javax.swing.GroupLayout panelCustom1Layout = new javax.swing.GroupLayout(panelCustom1);
-        panelCustom1.setLayout(panelCustom1Layout);
-        panelCustom1Layout.setHorizontalGroup(
-            panelCustom1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelCustom1Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelCustomLayout = new javax.swing.GroupLayout(panelCustom);
+        panelCustom.setLayout(panelCustomLayout);
+        panelCustomLayout.setHorizontalGroup(
+            panelCustomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCustomLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelCustom1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelCustom1Layout.createSequentialGroup()
-                        .addGroup(panelCustom1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                .addGroup(panelCustomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelCustomLayout.createSequentialGroup()
+                        .addGroup(panelCustomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblSoferi1))
                         .addGap(18, 18, 18)
-                        .addGroup(panelCustom1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                        .addGroup(panelCustomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblTiruri1)))
-                    .addGroup(panelCustom1Layout.createSequentialGroup()
+                    .addGroup(panelCustomLayout.createSequentialGroup()
                         .addComponent(btnSelecteazaSoferi1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnDeselecteazaSoferi1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -180,19 +180,19 @@ public class FrmRapoarte extends javax.swing.JDialog {
                         .addComponent(btnDeselecteazaTiruri1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        panelCustom1Layout.setVerticalGroup(
-            panelCustom1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelCustom1Layout.createSequentialGroup()
+        panelCustomLayout.setVerticalGroup(
+            panelCustomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCustomLayout.createSequentialGroup()
                 .addGap(5, 5, 5)
-                .addGroup(panelCustom1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelCustomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSoferi1)
                     .addComponent(lblTiruri1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelCustom1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelCustomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
                     .addComponent(jScrollPane5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelCustom1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelCustomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDeselecteazaSoferi1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSelecteazaSoferi1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDeselecteazaTiruri1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -232,7 +232,7 @@ public class FrmRapoarte extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(27, 27, 27)
-                    .addComponent(panelCustom1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelCustom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGap(27, 27, 27)))
         );
 
@@ -264,7 +264,7 @@ public class FrmRapoarte extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(119, 119, 119)
-                    .addComponent(panelCustom1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelCustom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGap(120, 120, 120)))
         );
 
@@ -387,8 +387,8 @@ public class FrmRapoarte extends javax.swing.JDialog {
     private javax.swing.JLabel lblTipRaport;
     private javax.swing.JLabel lblTiruri1;
     private javax.swing.JList<String> lstRapoarte;
-    private javax.swing.JList<String> lstSoferi1;
+    private javax.swing.JList<String> lstSoferi;
     private javax.swing.JList<String> lstTiruri;
-    private javax.swing.JPanel panelCustom1;
+    private javax.swing.JPanel panelCustom;
     // End of variables declaration//GEN-END:variables
 }

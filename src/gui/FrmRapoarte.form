@@ -81,7 +81,7 @@
               <Group type="103" rootIndex="2" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                      <Component id="panelCustom1" max="32767" attributes="0"/>
+                      <Component id="panelCustom" max="32767" attributes="0"/>
                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -120,7 +120,7 @@
               <Group type="103" rootIndex="2" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="119" max="-2" attributes="0"/>
-                      <Component id="panelCustom1" max="32767" attributes="0"/>
+                      <Component id="panelCustom" max="32767" attributes="0"/>
                       <EmptySpace min="-2" pref="120" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -175,7 +175,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblInfoFolder">
         </Component>
-        <Container class="javax.swing.JPanel" name="panelCustom1">
+        <Container class="javax.swing.JPanel" name="panelCustom">
 
           <Layout>
             <DimensionLayout dim="0">
@@ -249,7 +249,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JList" name="lstSoferi1">
+                <Component class="javax.swing.JList" name="lstSoferi">
                   <Properties>
                     <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                       <StringArray count="0"/>
