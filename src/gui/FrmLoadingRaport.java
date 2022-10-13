@@ -22,6 +22,7 @@ public class FrmLoadingRaport extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         baraProgres.setIndeterminate(true);
+        
     }
 
     public JProgressBar getBaraProgres() {
@@ -48,9 +49,9 @@ public class FrmLoadingRaport extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(53, 53, 53)
+                .addGap(30, 30, 30)
                 .addComponent(baraProgres, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -7,6 +7,7 @@ package controllers;
 
 import gui.FrmLoadingRaport;
 import gui.FrmRapoarte;
+import gui.FrmRaport;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,14 +16,19 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
+import models.Sofer;
+import models.Tir;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -33,6 +39,10 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import org.hibernate.Session;
 import org.hibernate.internal.SessionImpl;
+import services.SoferService;
+import services.SoferServiceImpl;
+import services.TiruriService;
+import services.TiruriServiceImpl;
 import utils.HibernateUtil;
 
 /**
@@ -41,21 +51,56 @@ import utils.HibernateUtil;
  */
 public class RapoarteController {
     
-    private FrmRapoarte frmRapoarte;
+    private FrmRaport frmRaport;
     private FrmLoadingRaport frmLoadingRaport;
+    
+    private SoferService soferService = new SoferServiceImpl();
+    private TiruriService tiruriService = new TiruriServiceImpl();
     
     
     public void actionCreate(JFrame parent){
-        frmRapoarte = new FrmRapoarte(parent, true);
-        frmRapoarte.setTitle("Generare rapoarte");
+        frmRaport = new FrmRaport(parent, true);
+        frmRaport.setTitle("Generare rapoarte");
         DefaultComboBoxModel defaultComboBoxModel = new DefaultComboBoxModel();
         defaultComboBoxModel.addElement("--Selectati raportul--");
-        defaultComboBoxModel.addElement("Raport Utilizatori");
-        frmRapoarte.getCmbRapoarte().setModel(defaultComboBoxModel);
+        defaultComboBoxModel.addElement("Raport utilizatori");
+        defaultComboBoxModel.addElement("Raport inregistrari");
+        frmRaport.getPanelCustom().setVisible(false);
+        frmRaport.setSize(454, 155);
+        frmRaport.getCmbRapoarte().setModel(defaultComboBoxModel);
       //  frmRapoarte.getChooserDataInceput()
-        frmRapoarte.setRapoarteController(this);
-        frmRapoarte.setLocationRelativeTo(parent);
-        frmRapoarte.setVisible(true);
+        frmRaport.setRapoarteController(this);
+        frmRaport.setLocationRelativeTo(parent);
+        frmRaport.setVisible(true);
+    }
+    
+    public void itemChanged(){
+        if (frmRaport.getCmbRapoarte().getSelectedIndex()==2){
+            DefaultListModel modelListaSoferi = new DefaultListModel();
+            DefaultListModel modelListaTiruri = new DefaultListModel();
+            ArrayList<Sofer> listaSoferi = soferService.getSoferByValid(true);
+            ArrayList<Tir> listaTiruri = tiruriService.getTirByValid(true);
+            for (Sofer s:listaSoferi){
+                modelListaSoferi.addElement(s.getNumeComplet());
+            }
+            for (Tir t:listaTiruri){
+                modelListaTiruri.addElement(String.format("%s %s - %s", t.getModel().getMarca().getNume(), t.getModel().getNume(), t.getNrInmatriculare()));
+            }
+            frmRaport.getLstSoferi().setModel(modelListaSoferi);
+            frmRaport.getLstTiruri().setModel(modelListaTiruri);
+            frmRaport.setSize(454, 438);
+            frmRaport.getPanelCustom().setVisible(true);
+        }else{
+            frmRaport.getPanelCustom().setVisible(false);
+            frmRaport.setSize(454, 155);
+        }
+    }
+    
+    public void selectAll(JList lista){
+        lista.setSelectionInterval(0, lista.getModel().getSize()-1);
+    }
+    public void deselectAll(JList lista){
+        lista.clearSelection();
     }
     
     private void generareRaport() throws URISyntaxException, JRException{
@@ -68,8 +113,8 @@ public class RapoarteController {
         System.out.println(tt.getAbsolutePath());
         Connection connection = sessionConn.connection();
         Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("dataInceput", new Date(frmRapoarte.getChooserDataInceput().getDate().getTime()));
-        parameters.put("dataSfarsit", new Date(frmRapoarte.getChooserDataFinal().getDate().getTime()));
+        parameters.put("dataInceput", new Date(frmRaport.getChooserDataInceput().getDate().getTime()));
+        parameters.put("dataSfarsit", new Date(frmRaport.getChooserDataFinal().getDate().getTime()));
         File reportFolder = new File(getClass().getResource("/rapoarte").toURI());
         Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
         InputStream myFile = new InputStream() {
@@ -78,27 +123,29 @@ public class RapoarteController {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         };
-        if (frmRapoarte.getCmbRapoarte().getSelectedIndex()==0){
-            JOptionPane.showMessageDialog(frmRapoarte, "Va rugam sa selectati un raport.");
+        if (frmRaport.getCmbRapoarte().getSelectedIndex()==0){
+            JOptionPane.showMessageDialog(frmRaport, "Va rugam sa selectati un raport.");
             return;
         }else
-        if (frmRapoarte.getCmbRapoarte().getSelectedIndex()==1){
+        if (frmRaport.getCmbRapoarte().getSelectedIndex()==1){
             myFile = getClass().getResourceAsStream("/rapoarte/RaportUtilizatoriFinal.jrxml");
         }
         JasperDesign jasperDesign = JRXmlLoader.load(myFile);
         JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, connection);//.fillReport(jasperReport, parameters,new JRBeanCollectionDataSource(ie.test.BeanFactory.getCalcs()));
         JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
-        JDialog raport = new JDialog(frmRapoarte);
+        JDialog raport = new JDialog(frmRaport);
         raport.setContentPane(jasperViewer.getContentPane());
         raport.setSize(jasperViewer.getSize());
         raport.setVisible(true);
     }
     
     public void doWork(){
-        frmLoadingRaport = new FrmLoadingRaport(frmRapoarte, true);
-        frmLoadingRaport.setLocationRelativeTo(frmRapoarte);
+        frmLoadingRaport = new FrmLoadingRaport(frmRaport, true);
+        frmLoadingRaport.setLocationRelativeTo(frmRaport);
         frmLoadingRaport.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        
+        
         
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -118,7 +165,7 @@ public class RapoarteController {
                     }
                 };
                 worker.execute();
-                frmLoadingRaport.setLocationRelativeTo(frmRapoarte);
+                frmLoadingRaport.setLocationRelativeTo(frmRaport);
                 frmLoadingRaport.setVisible(true);
                 System.out.println(frmLoadingRaport.getWidth() + " " + frmLoadingRaport.getHeight() + " salut");
                 try {
