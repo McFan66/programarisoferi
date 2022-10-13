@@ -694,7 +694,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_meniuRapoarteMenuSelected
 
     private void itemVizualizareRapoarteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemVizualizareRapoarteActionPerformed
-//        rapoarteController.actionRead(this);
+        rapoarteController.actionRead(this);
         // TODO add your handling code here:
     }//GEN-LAST:event_itemVizualizareRapoarteActionPerformed
 

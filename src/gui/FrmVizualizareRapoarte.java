@@ -5,6 +5,8 @@
  */
 package gui;
 
+import javax.swing.JTable;
+
 /**
  *
  * @author Vlad Apostol
@@ -81,6 +83,10 @@ public class FrmVizualizareRapoarte extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public JTable getTblDateRaport() {
+        return tblDateRaport;
+    }
+    
     /**
      * @param args the command line arguments
      */

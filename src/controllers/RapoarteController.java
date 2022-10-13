@@ -7,6 +7,7 @@ package controllers;
 
 import gui.FrmLoadingRaport;
 import gui.FrmRapoarte;
+import gui.FrmVizualizareRapoarte;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -22,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -33,7 +33,7 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
+import javax.swing.JTable;
 import javax.swing.SwingWorker;
 import models.AppSingleTone;
 import models.DateRaport;
@@ -44,13 +44,14 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.fill.ReportFiller;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import org.hibernate.Session;
 import org.hibernate.internal.SessionImpl;
 import services.DateRaportService;
 import services.DateRaportServiceImpl;
+import tablemodel.ColumnResizer1;
+import tablemodels.TableModelDateRaport;
 import utils.HibernateUtil;
 
 /**
@@ -61,6 +62,8 @@ public class RapoarteController {
 
     private FrmRapoarte frmRapoarte;
     private FrmLoadingRaport frmLoadingRaport;
+    private FrmVizualizareRapoarte frmVizualizareRapoarte;
+    private TableModelDateRaport tableModelDateRaport = new TableModelDateRaport();
     private DateRaportService dateRaportService = new DateRaportServiceImpl();
     private DefaultListModel<String> defaultListModel = new DefaultListModel<>();
     private ArrayList<DateRaport> rapoarteInQueue = new ArrayList<>();
@@ -129,8 +132,8 @@ public class RapoarteController {
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, connection);//.fillReport(jasperReport, parameters,new JRBeanCollectionDataSource(ie.test.BeanFactory.getCalcs()));                                
         JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
         System.out.println(String.format("%s\\%s", reportFolder.getPath(), "Raport"));
-        JasperExportManager.exportReportToPdfFile(jasperPrint, String.format("%s\\%s(%s - %s).pdf", saveReportFolder.getPath(), frmRapoarte.getCmbRapoarte().getSelectedItem().toString()
-        ,sdf.format(frmRapoarte.getChooserDataInceput().getDate().getTime()) , sdf.format(frmRapoarte.getChooserDataFinal().getDate().getTime())));
+        JasperExportManager.exportReportToPdfFile(jasperPrint, String.format("%s\\%s(%s - %s).pdf", saveReportFolder.getPath(), frmRapoarte.getCmbRapoarte().getSelectedItem().toString(),
+                sdf.format(frmRapoarte.getChooserDataInceput().getDate().getTime()), sdf.format(frmRapoarte.getChooserDataFinal().getDate().getTime())));
         JDialog raport = new JDialog(frmRapoarte);
         raport.setContentPane(jasperViewer.getContentPane());
         raport.setSize(jasperViewer.getSize());
@@ -175,6 +178,9 @@ public class RapoarteController {
     };
 
     public void runReport() {
+        if(!isFormValid()) {
+            return;
+        } 
         int index = frmRapoarte.getCmbRapoarte().getSelectedIndex();
         int queueIndex = rapoarteInQueue.size();
         int id = addDateRaportToDatabaseAndQueue();
@@ -194,7 +200,7 @@ public class RapoarteController {
                         DateRaport dateRaport = dateRaportService.getDateRaportById(id);
                         dateRaport.setDataGenerare(Calendar.getInstance().getTime());
                         dateRaport.setStare("Generat");
-                        dateRaport.setReportPath(String.format("%s\\%s(%s-%s).pdf", saveReportFolder.getPath(), dateRaport.getNumeRaport(), sdf.format(frmRapoarte.getChooserDataInceput().getDate().getTime()) , sdf.format(frmRapoarte.getChooserDataFinal().getDate().getTime())));
+                        dateRaport.setReportPath(String.format("%s\\%s(%s-%s).pdf", saveReportFolder.getPath(), dateRaport.getNumeRaport(), sdf.format(frmRapoarte.getChooserDataInceput().getDate().getTime()), sdf.format(frmRapoarte.getChooserDataFinal().getDate().getTime())));
                         dateRaportService.addDateRaport(dateRaport);
                         rapoarteInQueue.set(queueIndex, dateRaport);
                         setModelToLst();
@@ -224,12 +230,26 @@ public class RapoarteController {
         }
     }
 
-    public void actionRead(JFrame parent) {
-        
+    private void updateAndSetModelToTable(JTable table) {
+        tableModelDateRaport.setListaDateRaport(dateRaportService.getAll());
+        table.setModel(tableModelDateRaport);
+        ColumnResizer1.resizeRowHeightAndColumnsWidth(table);
     }
-    
+
+    public void actionRead(JFrame parent) {
+        frmVizualizareRapoarte = new FrmVizualizareRapoarte();
+        frmVizualizareRapoarte.setLocationRelativeTo(parent);
+        updateAndSetModelToTable(frmVizualizareRapoarte.getTblDateRaport());
+        frmVizualizareRapoarte.setVisible(true);
+
+    }
+
     private boolean isFormValid() {
-        return saveReportFolder != null;
+        if(saveReportFolder == null) {
+            JOptionPane.showMessageDialog(frmRapoarte, "Selectati o locatie valida pentru a salva rapoartele");
+            return false;
+        }
+        return true;
     }
 
 }

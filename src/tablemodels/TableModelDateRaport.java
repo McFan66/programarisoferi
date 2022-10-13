@@ -15,8 +15,12 @@ import models.DateRaport;
  */
 public class TableModelDateRaport extends AbstractTableModel{
 
-    private ArrayList<DateRaport> listaDateRaport = new ArrayList<>();
+    private ArrayList<DateRaport> listaDateRaport;
     private String[] columnNames = {"ID" , "NUME RAPORT" , "UTILIZATOR" , "DATA SUBMIT" , "DATA GENERARE" , "STARE" , "LOCATIE"};
+    
+    public TableModelDateRaport() {
+        this.listaDateRaport = new ArrayList<>();
+    }
     
     @Override
     public int getRowCount() {
@@ -38,6 +42,15 @@ public class TableModelDateRaport extends AbstractTableModel{
         return false; //To change body of generated methods, choose Tools | Templates.
     }
 
+    public void setListaDateRaport(ArrayList<DateRaport> listaDateRaport) {
+        this.listaDateRaport = listaDateRaport;
+        fireTableDataChanged();
+    }
+
+    public ArrayList<DateRaport> getListaDateRaport() {
+        return listaDateRaport;
+    }
+    
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         DateRaport dateRaport = listaDateRaport.get(rowIndex);
