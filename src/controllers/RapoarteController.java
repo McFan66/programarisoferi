@@ -8,6 +8,7 @@ package controllers;
 import gui.FrmLoadingRaport;
 import gui.FrmRapoarte;
 import gui.FrmVizualizareRapoarte;
+import gui.FrmRaport;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -22,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -32,11 +34,14 @@ import javax.swing.DefaultListModel;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingWorker;
 import models.AppSingleTone;
 import models.DateRaport;
+import models.Sofer;
+import models.Tir;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -52,6 +57,10 @@ import services.DateRaportService;
 import services.DateRaportServiceImpl;
 import tablemodel.ColumnResizer1;
 import tablemodels.TableModelDateRaport;
+import services.SoferService;
+import services.SoferServiceImpl;
+import services.TiruriService;
+import services.TiruriServiceImpl;
 import utils.HibernateUtil;
 
 /**
@@ -61,6 +70,8 @@ import utils.HibernateUtil;
 public class RapoarteController {
 
     private FrmRapoarte frmRapoarte;
+    
+    private FrmRaport frmRaport;
     private FrmLoadingRaport frmLoadingRaport;
     private FrmVizualizareRapoarte frmVizualizareRapoarte;
     private TableModelDateRaport tableModelDateRaport = new TableModelDateRaport();
@@ -76,6 +87,14 @@ public class RapoarteController {
     public void actionCreate(JFrame parent) {
         frmRapoarte = new FrmRapoarte(parent, true);
         frmRapoarte.setTitle("Generare rapoarte");
+    
+    private SoferService soferService = new SoferServiceImpl();
+    private TiruriService tiruriService = new TiruriServiceImpl();
+    
+    
+    public void actionCreate(JFrame parent){
+        frmRaport = new FrmRaport(parent, true);
+        frmRaport.setTitle("Generare rapoarte");
         DefaultComboBoxModel defaultComboBoxModel = new DefaultComboBoxModel();
         defaultComboBoxModel.addElement("--Selectati raportul--");
         defaultComboBoxModel.addElement("Raport Utilizatori");
@@ -93,6 +112,44 @@ public class RapoarteController {
         frmRapoarte.setRapoarteController(this);
         frmRapoarte.setLocationRelativeTo(parent);
         frmRapoarte.setVisible(true);
+        defaultComboBoxModel.addElement("Raport utilizatori");
+        defaultComboBoxModel.addElement("Raport inregistrari");
+        frmRaport.getPanelCustom().setVisible(false);
+        frmRaport.setSize(454, 155);
+        frmRaport.getCmbRapoarte().setModel(defaultComboBoxModel);
+      //  frmRapoarte.getChooserDataInceput()
+        frmRaport.setRapoarteController(this);
+        frmRaport.setLocationRelativeTo(parent);
+        frmRaport.setVisible(true);
+    }
+    
+    public void itemChanged(){
+        if (frmRaport.getCmbRapoarte().getSelectedIndex()==2){
+            DefaultListModel modelListaSoferi = new DefaultListModel();
+            DefaultListModel modelListaTiruri = new DefaultListModel();
+            ArrayList<Sofer> listaSoferi = soferService.getSoferByValid(true);
+            ArrayList<Tir> listaTiruri = tiruriService.getTirByValid(true);
+            for (Sofer s:listaSoferi){
+                modelListaSoferi.addElement(s.getNumeComplet());
+            }
+            for (Tir t:listaTiruri){
+                modelListaTiruri.addElement(String.format("%s %s - %s", t.getModel().getMarca().getNume(), t.getModel().getNume(), t.getNrInmatriculare()));
+            }
+            frmRaport.getLstSoferi().setModel(modelListaSoferi);
+            frmRaport.getLstTiruri().setModel(modelListaTiruri);
+            frmRaport.setSize(454, 438);
+            frmRaport.getPanelCustom().setVisible(true);
+        }else{
+            frmRaport.getPanelCustom().setVisible(false);
+            frmRaport.setSize(454, 155);
+        }
+    }
+    
+    public void selectAll(JList lista){
+        lista.setSelectionInterval(0, lista.getModel().getSize()-1);
+    }
+    public void deselectAll(JList lista){
+        lista.clearSelection();
     }
 
     public void generareRaport(int index) throws URISyntaxException, JRException {
@@ -105,6 +162,8 @@ public class RapoarteController {
         System.out.println(tt.getAbsolutePath());
         Connection connection = sessionConn.connection();
         Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put("dataInceput", new Date(frmRaport.getChooserDataInceput().getDate().getTime()));
+        parameters.put("dataSfarsit", new Date(frmRaport.getChooserDataFinal().getDate().getTime()));
         File reportFolder = new File(getClass().getResource("/rapoarte").toURI());
         Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
         InputStream myFile = new InputStream() {
@@ -117,8 +176,12 @@ public class RapoarteController {
         parameters.put("dataSfarsit", new Date(frmRapoarte.getChooserDataFinal().getDate().getTime()));
         if (index == 0) {
             JOptionPane.showMessageDialog(frmRapoarte, "Va rugam sa selectati un raport.");
+        if (frmRaport.getCmbRapoarte().getSelectedIndex()==0){
+            JOptionPane.showMessageDialog(frmRaport, "Va rugam sa selectati un raport.");
             return;
         } else if (index == 1) {
+        }else
+        if (frmRaport.getCmbRapoarte().getSelectedIndex()==1){
             myFile = getClass().getResourceAsStream("/rapoarte/RaportUtilizatoriFinal.jrxml");
         }
         if (index == 2) {
@@ -135,6 +198,7 @@ public class RapoarteController {
         JasperExportManager.exportReportToPdfFile(jasperPrint, String.format("%s\\%s(%s - %s).pdf", saveReportFolder.getPath(), frmRapoarte.getCmbRapoarte().getSelectedItem().toString(),
                 sdf.format(frmRapoarte.getChooserDataInceput().getDate().getTime()), sdf.format(frmRapoarte.getChooserDataFinal().getDate().getTime())));
         JDialog raport = new JDialog(frmRapoarte);
+        JDialog raport = new JDialog(frmRaport);
         raport.setContentPane(jasperViewer.getContentPane());
         raport.setSize(jasperViewer.getSize());
         raport.setVisible(true);
@@ -185,6 +249,15 @@ public class RapoarteController {
         int queueIndex = rapoarteInQueue.size();
         int id = addDateRaportToDatabaseAndQueue();
         Thread t = new Thread(new Runnable() {
+    
+    public void doWork(){
+        frmLoadingRaport = new FrmLoadingRaport(frmRaport, true);
+        frmLoadingRaport.setLocationRelativeTo(frmRaport);
+        frmLoadingRaport.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        
+        
+        
+        SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 SwingWorker<String, String> worker = new SwingWorker<String, String>() {
@@ -208,6 +281,14 @@ public class RapoarteController {
                 };
 
                 worker.execute();
+                frmLoadingRaport.setLocationRelativeTo(frmRaport);
+                frmLoadingRaport.setVisible(true);
+                System.out.println(frmLoadingRaport.getWidth() + " " + frmLoadingRaport.getHeight() + " salut");
+                try {
+                    worker.get();
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
             }
         });
         t.start();

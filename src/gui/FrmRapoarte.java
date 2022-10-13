@@ -16,6 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import net.sf.jasperreports.engine.JRException;
 
 /**
@@ -68,6 +69,14 @@ public class FrmRapoarte extends javax.swing.JDialog {
         return fileChooserFolderRaport;
     }
 
+    public JPanel getPanelCustom() {
+        return panelCustom;
+    }
+
+    public JList<String> getLstSoferi() {
+        return lstSoferi;
+    }
+
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -89,6 +98,17 @@ public class FrmRapoarte extends javax.swing.JDialog {
         lblTipRaport = new javax.swing.JLabel();
         btnConfig = new javax.swing.JButton();
         lblInfoFolder = new javax.swing.JLabel();
+        panelCustom1 = new javax.swing.JPanel();
+        lblSoferi1 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        lstSoferi1 = new javax.swing.JList<>();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        lstTiruri = new javax.swing.JList<>();
+        lblTiruri1 = new javax.swing.JLabel();
+        btnSelecteazaSoferi1 = new javax.swing.JButton();
+        btnDeselecteazaSoferi1 = new javax.swing.JButton();
+        btnDeselecteazaTiruri1 = new javax.swing.JButton();
+        btnSelecteazaTiruri1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstRapoarte = new javax.swing.JList<>();
@@ -114,6 +134,71 @@ public class FrmRapoarte extends javax.swing.JDialog {
                 btnConfigActionPerformed(evt);
             }
         });
+
+        lblSoferi1.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
+        lblSoferi1.setText("Soferi:");
+
+        jScrollPane4.setViewportView(lstSoferi1);
+
+        jScrollPane5.setViewportView(lstTiruri);
+
+        lblTiruri1.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
+        lblTiruri1.setText("Tiruri:");
+
+        btnSelecteazaSoferi1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnSelecteazaSoferi1.setText("<html><center>Selecteaza<br/>tot</center></html>");
+        btnSelecteazaSoferi1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        btnDeselecteazaSoferi1.setText("<html><center>Stergere<br/>selectie</center></html>");
+
+        btnDeselecteazaTiruri1.setText("<html><center>Stergere<br/>selectie</center></html>");
+
+        btnSelecteazaTiruri1.setText("<html><center>Selecteaza<br/>tot</center></html>");
+
+        javax.swing.GroupLayout panelCustom1Layout = new javax.swing.GroupLayout(panelCustom1);
+        panelCustom1.setLayout(panelCustom1Layout);
+        panelCustom1Layout.setHorizontalGroup(
+            panelCustom1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCustom1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelCustom1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelCustom1Layout.createSequentialGroup()
+                        .addGroup(panelCustom1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblSoferi1))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelCustom1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblTiruri1)))
+                    .addGroup(panelCustom1Layout.createSequentialGroup()
+                        .addComponent(btnSelecteazaSoferi1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnDeselecteazaSoferi1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSelecteazaTiruri1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnDeselecteazaTiruri1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelCustom1Layout.setVerticalGroup(
+            panelCustom1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCustom1Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addGroup(panelCustom1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSoferi1)
+                    .addComponent(lblTiruri1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelCustom1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelCustom1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnDeselecteazaSoferi1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSelecteazaSoferi1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDeselecteazaTiruri1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSelecteazaTiruri1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -144,6 +229,11 @@ public class FrmRapoarte extends javax.swing.JDialog {
                             .addComponent(chooserDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(cmbRapoarte, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addContainerGap()))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(27, 27, 27)
+                    .addComponent(panelCustom1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGap(27, 27, 27)))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {chooserDataFinal, chooserDataInceput});
@@ -151,11 +241,12 @@ public class FrmRapoarte extends javax.swing.JDialog {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGenereaza)
-                    .addComponent(btnConfig)
-                    .addComponent(lblInfoFolder, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(517, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblInfoFolder, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnGenereaza)
+                        .addComponent(btnConfig)))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -169,7 +260,12 @@ public class FrmRapoarte extends javax.swing.JDialog {
                         .addComponent(chooserDataInceput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblDataSfarsit)
                         .addComponent(chooserDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(149, Short.MAX_VALUE)))
+                    .addContainerGap(481, Short.MAX_VALUE)))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(119, 119, 119)
+                    .addComponent(panelCustom1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGap(120, 120, 120)))
         );
 
         lstRapoarte.setModel(new javax.swing.AbstractListModel<String>() {
@@ -192,7 +288,7 @@ public class FrmRapoarte extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addContainerGap())
         );
 
@@ -207,8 +303,8 @@ public class FrmRapoarte extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -270,7 +366,11 @@ public class FrmRapoarte extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConfig;
+    private javax.swing.JButton btnDeselecteazaSoferi1;
+    private javax.swing.JButton btnDeselecteazaTiruri1;
     private javax.swing.JButton btnGenereaza;
+    private javax.swing.JButton btnSelecteazaSoferi1;
+    private javax.swing.JButton btnSelecteazaTiruri1;
     private com.toedter.calendar.JDateChooser chooserDataFinal;
     private com.toedter.calendar.JDateChooser chooserDataInceput;
     private javax.swing.JComboBox<String> cmbRapoarte;
@@ -278,10 +378,17 @@ public class FrmRapoarte extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLabel lblDataInceput;
     private javax.swing.JLabel lblDataSfarsit;
     private javax.swing.JLabel lblInfoFolder;
+    private javax.swing.JLabel lblSoferi1;
     private javax.swing.JLabel lblTipRaport;
+    private javax.swing.JLabel lblTiruri1;
     private javax.swing.JList<String> lstRapoarte;
+    private javax.swing.JList<String> lstSoferi1;
+    private javax.swing.JList<String> lstTiruri;
+    private javax.swing.JPanel panelCustom1;
     // End of variables declaration//GEN-END:variables
 }
