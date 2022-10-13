@@ -32,11 +32,14 @@ import javax.swing.DefaultListModel;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingWorker;
 import models.AppSingleTone;
 import models.DateRaport;
+import models.Sofer;
+import models.Tir;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -50,6 +53,10 @@ import org.hibernate.Session;
 import org.hibernate.internal.SessionImpl;
 import services.DateRaportService;
 import services.DateRaportServiceImpl;
+import services.SoferService;
+import services.SoferServiceImpl;
+import services.TiruriService;
+import services.TiruriServiceImpl;
 import tablemodel.ColumnResizer1;
 import tablemodels.TableModelDateRaport;
 import utils.HibernateUtil;
@@ -72,6 +79,8 @@ public class RapoarteController {
     private File userConfig = new File("./userconfig.txt");
     private Scanner scanner;
     private SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY");
+       private SoferService soferService = new SoferServiceImpl();
+    private TiruriService tiruriService = new TiruriServiceImpl();
 
     public void actionCreate(JFrame parent) {
         frmRapoarte = new FrmRapoarte(parent, true);
@@ -95,6 +104,36 @@ public class RapoarteController {
         frmRapoarte.setVisible(true);
     }
 
+        public void itemChanged(){
+        if (frmRapoarte.getCmbRapoarte().getSelectedIndex()==2){
+            DefaultListModel modelListaSoferi = new DefaultListModel();
+            DefaultListModel modelListaTiruri = new DefaultListModel();
+            ArrayList<Sofer> listaSoferi = soferService.getSoferByValid(true);
+            ArrayList<Tir> listaTiruri = tiruriService.getTirByValid(true);
+            for (Sofer s:listaSoferi){
+                modelListaSoferi.addElement(s.getNumeComplet());
+            }
+            for (Tir t:listaTiruri){
+                modelListaTiruri.addElement(String.format("%s %s - %s", t.getModel().getMarca().getNume(), t.getModel().getNume(), t.getNrInmatriculare()));
+            }
+//            frmRapoarte.getLstSoferi().setModel(modelListaSoferi);
+//            frmRapoarte.getLstTiruri().setModel(modelListaTiruri);
+//            frmRapoarte.setSize(454, 438);
+//            frmRapoarte.getPanelCustom().setVisible(true);
+        }else{
+//            frmRaport.getPanelCustom().setVisible(false);
+//            frmRaport.setSize(454, 155);
+        }
+    }
+    
+    
+    public void selectAll(JList lista){
+        lista.setSelectionInterval(0, lista.getModel().getSize()-1);
+    }
+    public void deselectAll(JList lista){
+        lista.clearSelection();
+    }
+        
     public void generareRaport(int index) throws URISyntaxException, JRException {
         Session session = HibernateUtil.getSessionFactory().openSession();
         if (!session.isOpen()) {
