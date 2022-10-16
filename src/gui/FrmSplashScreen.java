@@ -5,30 +5,24 @@
  */
 package gui;
 
-import java.awt.Color;
-import javax.swing.JDialog;
-import javax.swing.JProgressBar;
-
 /**
  *
  * @author Stefan
  */
-public class FrmLoadingRaport extends javax.swing.JDialog {
+public class FrmSplashScreen extends javax.swing.JFrame implements SplashScreenForm.OnBaraCompletata {
+
+    private FrmLogin frmLogin = new FrmLogin();
 
     /**
-     * Creates new form FrmLoadingRaport
+     * Creates new form FrmSplashScreen
      */
-    public FrmLoadingRaport(JDialog parent, boolean modal) {
-        
-        super(parent, modal);
+    public FrmSplashScreen() {
         initComponents();
-        
-      //  baraProgres.setIndeterminate(true);
-        
+        dispose();
+        setUndecorated(true);
+        setVisible(true);
+        splashScreenForm1.setOnBaraCompletata(this);
     }
-
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -39,17 +33,23 @@ public class FrmLoadingRaport extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        splashScreenForm1 = new gui.SplashScreenForm();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(splashScreenForm1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 200, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(splashScreenForm1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -72,31 +72,39 @@ public class FrmLoadingRaport extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmLoadingRaport.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmSplashScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmLoadingRaport.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmSplashScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmLoadingRaport.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmSplashScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmLoadingRaport.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmSplashScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
-        /* Create and display the dialog */
+        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FrmLoadingRaport dialog = new FrmLoadingRaport(new JDialog(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
+                new FrmSplashScreen().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private gui.SplashScreenForm splashScreenForm1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void executeOnBaraCompletata() {
+        dispose();
+        frmLogin.setLocationRelativeTo(null);
+        frmLogin.setVisible(true);
+    }
+
+    @Override
+    public void refreshFereastra() {
+        this.repaint();
+        this.revalidate();
+
+    }
 }
