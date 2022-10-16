@@ -11,24 +11,25 @@ import models.DateRaport;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import utils.HibernateUtil;
+
 /**
  *
  * @author Vlad Apostol
  */
-public class DateRaportHibernateRepository implements DateRaportRepository{
+public class DateRaportHibernateRepository implements DateRaportRepository {
 
     Session session = null;
 
     public DateRaportHibernateRepository() {
-        if(session == null || !session.isOpen()){
+        if (session == null || !session.isOpen()) {
             this.session = HibernateUtil.getSessionFactory().openSession();
         }
     }
-    
+
     @Override
     public boolean addDateRaport(DateRaport dateRaport) {
-        if(!session.isOpen()){
-           this.session = HibernateUtil.getSessionFactory().openSession();
+        if (!session.isOpen()) {
+            this.session = HibernateUtil.getSessionFactory().openSession();
         }
         org.hibernate.Transaction tx = session.beginTransaction();
 
@@ -57,33 +58,48 @@ public class DateRaportHibernateRepository implements DateRaportRepository{
 
     @Override
     public ArrayList<DateRaport> getAll() {
-       if(!session.isOpen()) { 
-           this.session = HibernateUtil.getSessionFactory().openSession();
-       }
-       ArrayList<DateRaport> listaDateRaport = new ArrayList<>();
-       org.hibernate.Transaction tx = session.beginTransaction();
-       String hql = "from DateRaport";
-       Query q = session.createQuery(hql);
-       listaDateRaport = (ArrayList<DateRaport>) q.list();
-       tx.commit();
-       session.close();
-       return listaDateRaport;
+        if (!session.isOpen()) {
+            this.session = HibernateUtil.getSessionFactory().openSession();
+        }
+        ArrayList<DateRaport> listaDateRaport = new ArrayList<>();
+        org.hibernate.Transaction tx = session.beginTransaction();
+        String hql = "from DateRaport";
+        Query q = session.createQuery(hql);
+        listaDateRaport = (ArrayList<DateRaport>) q.list();
+        tx.commit();
+        session.close();
+        return listaDateRaport;
     }
-    
+
     public DateRaport getDateRaportById(int id) {
-       if(!session.isOpen()) { 
-           this.session = HibernateUtil.getSessionFactory().openSession();
-       }
-       DateRaport dateRaport = new DateRaport();
-       org.hibernate.Transaction tx = session.beginTransaction();
-       String hql = "from DateRaport dp where dp.id = :id";
-       Query q = session.createQuery(hql).setParameter("id", id);
-       dateRaport = (DateRaport) q.uniqueResult();
-       tx.commit();
-       session.close();
-       return dateRaport;
+        if (!session.isOpen()) {
+            this.session = HibernateUtil.getSessionFactory().openSession();
+        }
+        DateRaport dateRaport = new DateRaport();
+        org.hibernate.Transaction tx = session.beginTransaction();
+        String hql = "from DateRaport dp where dp.id = :id";
+        Query q = session.createQuery(hql).setParameter("id", id);
+        dateRaport = (DateRaport) q.uniqueResult();
+        tx.commit();
+        session.close();
+        return dateRaport;
     }
-    
+
+    @Override
+    public ArrayList<DateRaport> getDateRaportFromToday() {
+        if(!session.isOpen()) {
+            this.session = HibernateUtil.getSessionFactory().openSession();
+        }
+        ArrayList<DateRaport> listaDateRaport = new ArrayList<>();
+        org.hibernate.Transaction tx = session.beginTransaction();
+        String hql = "from DateRaport dp where dp.dataSubmit = :dataSubmit";
+        Query q = session.createQuery(hql).setDate(":dataSubmit", Calendar.getInstance().getTime());
+        listaDateRaport = (ArrayList<DateRaport>) q.list();
+        tx.commit();
+        session.close();
+        return listaDateRaport;
+    }
+
     public static void main(String[] args) {
         DateRaportRepository dateRaportRepository = new DateRaportHibernateRepository();
         DateRaport dateRaport = new DateRaport();

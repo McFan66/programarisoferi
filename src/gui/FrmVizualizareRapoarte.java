@@ -5,7 +5,13 @@
  */
 package gui;
 
+import controllers.RapoarteController;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JRadioButton;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import net.sf.jasperreports.engine.JRException;
 
 /**
  *
@@ -13,6 +19,8 @@ import javax.swing.JTable;
  */
 public class FrmVizualizareRapoarte extends javax.swing.JFrame {
 
+    private RapoarteController rapoarteController;
+    
     /**
      * Creates new form FrmVizualizareRapoarte
      */
@@ -20,6 +28,11 @@ public class FrmVizualizareRapoarte extends javax.swing.JFrame {
         initComponents();
     }
 
+    public void setRapoarteController(RapoarteController rapoarteController) {
+        this.rapoarteController = rapoarteController;
+    }
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,43 +43,92 @@ public class FrmVizualizareRapoarte extends javax.swing.JFrame {
     private void initComponents() {
 
         tableModelDateRaport1 = new tablemodels.TableModelDateRaport();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         panelPrincipal = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDateRaport = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        rdb90Zile = new javax.swing.JRadioButton();
+        rdbAzi = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtFiltrare = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         tblDateRaport.setModel(tableModelDateRaport1);
+        tblDateRaport.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDateRaportMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblDateRaport);
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel1.setText("Filtreaza:");
+        buttonGroup1.add(rdb90Zile);
+        rdb90Zile.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        rdb90Zile.setText("Ultimele 90 de zile");
+        rdb90Zile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdb90ZileActionPerformed(evt);
+            }
+        });
+        jPanel3.add(rdb90Zile);
 
-        jTextField1.setText("jTextField1");
+        buttonGroup1.add(rdbAzi);
+        rdbAzi.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        rdbAzi.setSelected(true);
+        rdbAzi.setText("Astazi");
+        rdbAzi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbAziActionPerformed(evt);
+            }
+        });
+        jPanel3.add(rdbAzi);
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel1.setText("Filtreaza:");
+        jPanel3.add(jLabel1);
+
+        txtFiltrare.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        txtFiltrare.setMinimumSize(new java.awt.Dimension(100, 27));
+        txtFiltrare.setPreferredSize(new java.awt.Dimension(300, 27));
+        txtFiltrare.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtFiltrareKeyReleased(evt);
+            }
+        });
+        jPanel3.add(txtFiltrare);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
         panelPrincipal.setLayout(panelPrincipalLayout);
         panelPrincipalLayout.setHorizontalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
-            .addGroup(panelPrincipalLayout.createSequentialGroup()
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 977, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -83,8 +145,43 @@ public class FrmVizualizareRapoarte extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void tblDateRaportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDateRaportMouseClicked
+        if(evt.getClickCount() == 2) {
+            try {
+                rapoarteController.tableRapoarteDoubleClick();
+            } catch (JRException ex) {
+                Logger.getLogger(FrmVizualizareRapoarte.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_tblDateRaportMouseClicked
+
+    private void rdbAziActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbAziActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rdbAziActionPerformed
+
+    private void rdb90ZileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdb90ZileActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rdb90ZileActionPerformed
+
+    private void txtFiltrareKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltrareKeyReleased
+        rapoarteController.actionFilter();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFiltrareKeyReleased
+
+    public JTextField getTxtFiltrare() {
+        return txtFiltrare;
+    }
+    
     public JTable getTblDateRaport() {
         return tblDateRaport;
+    }
+
+    public JRadioButton getRdbAzi() {
+        return rdbAzi;
+    }
+
+    public JRadioButton getRdb90Zile() {
+        return rdb90Zile;
     }
     
     /**
@@ -123,11 +220,16 @@ public class FrmVizualizareRapoarte extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel panelPrincipal;
+    private javax.swing.JRadioButton rdb90Zile;
+    private javax.swing.JRadioButton rdbAzi;
     private tablemodels.TableModelDateRaport tableModelDateRaport1;
     private javax.swing.JTable tblDateRaport;
+    private javax.swing.JTextField txtFiltrare;
     // End of variables declaration//GEN-END:variables
 }

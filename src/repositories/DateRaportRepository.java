@@ -17,4 +17,5 @@ public interface DateRaportRepository {
     public void stergeDateRaport(DateRaport dateRaport);
      public DateRaport getDateRaportById(int id);
     public ArrayList<DateRaport> getAll();
+    public ArrayList<DateRaport> getDateRaportFromToday();
 }

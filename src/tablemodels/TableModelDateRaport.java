@@ -16,7 +16,7 @@ import models.DateRaport;
 public class TableModelDateRaport extends AbstractTableModel{
 
     private ArrayList<DateRaport> listaDateRaport;
-    private String[] columnNames = {"ID" , "NUME RAPORT" , "UTILIZATOR" , "DATA SUBMIT" , "DATA GENERARE" , "STARE" , "LOCATIE"};
+    private String[] columnNames = {"ID" , "NUME RAPORT" , "UTILIZATOR" , "DATA SUBMIT" , "DATA GENERARE" , "STARE"};
     
     public TableModelDateRaport() {
         this.listaDateRaport = new ArrayList<>();
@@ -67,8 +67,6 @@ public class TableModelDateRaport extends AbstractTableModel{
                 return dateRaport.getDataGenerare();
             case 5:
                 return dateRaport.getStare();
-            case 6:
-                return dateRaport.getReportPath();
             default:
                 return "Nespecificat";
         }
