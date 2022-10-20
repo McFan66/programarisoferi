@@ -39,7 +39,7 @@ public class DateRaportServiceImpl implements DateRaportService{
     }
 
     @Override
-    public DateRaport getDateRaportByPath(String path) {
+    public ArrayList<DateRaport> getDateRaportByPath(String path) {
         return dateRaportRepository.getDateRaportByPath(path);
     }
 

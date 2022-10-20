@@ -18,5 +18,5 @@ public interface DateRaportRepository {
      public DateRaport getDateRaportById(int id);
     public ArrayList<DateRaport> getAll();
     public ArrayList<DateRaport> getDateRaportFromToday();
-    public DateRaport getDateRaportByPath(String path);
+    public ArrayList<DateRaport> getDateRaportByPath(String path);
 }

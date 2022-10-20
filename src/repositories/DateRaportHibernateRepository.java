@@ -51,9 +51,13 @@ public class DateRaportHibernateRepository implements DateRaportRepository {
 
     @Override
     public void stergeDateRaport(DateRaport dateRaport) {
+        if(!session.isOpen()) {
+            this.session = HibernateUtil.getSessionFactory().openSession();
+        }
         org.hibernate.Transaction tx = session.beginTransaction();
         session.delete(dateRaport);
         tx.commit();
+        session.close();
     }
 
     @Override
@@ -114,15 +118,15 @@ public class DateRaportHibernateRepository implements DateRaportRepository {
     }
 
     @Override
-    public DateRaport getDateRaportByPath(String path) {
+    public ArrayList<DateRaport> getDateRaportByPath(String path) {
         if(!session.isOpen()) {
             this.session = HibernateUtil.getSessionFactory().openSession();
         }
-        DateRaport dateRaport = null;
+        ArrayList<DateRaport> dateRaport = new ArrayList<>();
         org.hibernate.Transaction tx = session.beginTransaction();
-        String hql = "from dateRaport dp where dp.reportPath = :reportPath";
+        String hql = "from DateRaport dp where dp.reportPath = :reportPath";
         Query q = session.createQuery(hql).setParameter("reportPath", path);
-        dateRaport = (DateRaport) q.uniqueResult();
+        dateRaport = (ArrayList<DateRaport>) q.list();
         tx.commit();
         session.close();
         return dateRaport;

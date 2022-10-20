@@ -182,6 +182,7 @@ public class RapoarteController {
         JDialog raport = new JDialog(frmRapoarte);
         raport.setContentPane(jasperViewer.getContentPane());
         raport.setSize(jasperViewer.getSize());
+        raport.setModal(false);
         raport.setVisible(true);
     }
 
@@ -264,7 +265,9 @@ public class RapoarteController {
             for (File f : saveReportFolder.listFiles()) {
                 long diff = Calendar.getInstance().getTimeInMillis() - f.lastModified();
                 if (diff > 90 * 24 * 60 * 60 * 1000) {
-                    dateRaportService.stergeDateRaport(dateRaportService.getDateRaportByPath(f.getPath()));
+                    for (DateRaport dp : dateRaportService.getDateRaportByPath(f.getPath())) {
+                        dateRaportService.stergeDateRaport(dp);
+                    }
                     f.delete();
                 }
             }
@@ -293,7 +296,7 @@ public class RapoarteController {
         if (frmVizualizareRapoarte.getRdbAzi().isSelected()) {
             tableModelDateRaport.setListaDateRaport(dateRaportService.getDateRaportFromToday());
         }
-        if(frmVizualizareRapoarte.getRdb90Zile().isSelected()) {
+        if (frmVizualizareRapoarte.getRdb90Zile().isSelected()) {
             tableModelDateRaport.setListaDateRaport(dateRaportService.getAll());
         }
 
@@ -314,9 +317,14 @@ public class RapoarteController {
     public void tableRapoarteDoubleClick() throws JRException {
         int rowIndex = frmVizualizareRapoarte.getTblDateRaport().convertRowIndexToModel(frmVizualizareRapoarte.getTblDateRaport().getSelectedRow());
         DateRaport dp = tableModelDateRaport.getListaDateRaport().get(rowIndex);
+        File f = new File(dp.getReportPath());
+        if (!f.exists()) {
+            JOptionPane.showMessageDialog(frmVizualizareRapoarte, "Raportul selectat este sters sau nu exista");
+            return;
+        }
         JasperPrint jp = (JasperPrint) JRLoader.loadObject(new File(dp.getReportPath()));
         JasperViewer jasperViewer = new JasperViewer(jp, false);
-        JDialog raport = new JDialog(frmRapoarte);
+        JDialog raport = new JDialog(frmVizualizareRapoarte);
         raport.setContentPane(jasperViewer.getContentPane());
         raport.setSize(jasperViewer.getSize());
         raport.setVisible(true);
