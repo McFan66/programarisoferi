@@ -13,6 +13,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -64,7 +65,7 @@ public class SplashScreenForm extends javax.swing.JPanel {
         g.fillRect(0, -20, 800, 600);
 
         try {
-            BufferedImage imagine = ImageIO.read(new File("src/resources/logoAplicatie.png"));
+            BufferedImage imagine = ImageIO.read(getClass().getResource("/resources/logoAplicatie.png").openStream());//.rea.read(new File("./src/resources/logoAplicatie.png"));
             g.drawImage(imagine, 195, 20, 300, 300, null);
         } catch (IOException ex) {
             Logger.getLogger(SplashScreenForm.class.getName()).log(Level.SEVERE, null, ex);
