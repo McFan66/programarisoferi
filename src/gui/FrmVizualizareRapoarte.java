@@ -157,9 +157,11 @@ public class FrmVizualizareRapoarte extends javax.swing.JFrame {
 
     private void rdbAziActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbAziActionPerformed
         // TODO add your handling code here:
+        rapoarteController.updateAndSetModelToTable(tblDateRaport);
     }//GEN-LAST:event_rdbAziActionPerformed
 
     private void rdb90ZileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdb90ZileActionPerformed
+       rapoarteController.updateAndSetModelToTable(tblDateRaport);
         // TODO add your handling code here:
     }//GEN-LAST:event_rdb90ZileActionPerformed
 

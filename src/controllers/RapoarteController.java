@@ -70,7 +70,7 @@ import utils.HibernateUtil;
  * @author Stefan
  */
 public class RapoarteController {
-    
+
     private FrmRapoarte frmRapoarte;
     private FrmLoadingRaport frmLoadingRaport;
     private FrmVizualizareRapoarte frmVizualizareRapoarte;
@@ -85,7 +85,7 @@ public class RapoarteController {
     private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.YYYY");
     private SoferService soferService = new SoferServiceImpl();
     private TiruriService tiruriService = new TiruriServiceImpl();
-    
+
     public void actionCreate(JFrame parent) {
         frmRapoarte = new FrmRapoarte(parent, false);
         frmRapoarte.setTitle("Generare rapoarte");
@@ -102,13 +102,14 @@ public class RapoarteController {
             Logger.getLogger(RapoarteController.class.getName()).log(Level.SEVERE, null, ex);
         }
         saveReportFolder = new File(scanner.nextLine());
+        deleteCache();
         frmRapoarte.getLblInfoFolder().setText(saveReportFolder.getPath());
         //  frmRapoarte.getChooserDataInceput()
         frmRapoarte.setRapoarteController(this);
         frmRapoarte.setLocationRelativeTo(parent);
         frmRapoarte.setVisible(true);
     }
-    
+
     public void itemChanged() {
         if (frmRapoarte.getCmbRapoarte().getSelectedIndex() == 2) {
             DefaultListModel modelListaSoferi = new DefaultListModel();
@@ -128,15 +129,15 @@ public class RapoarteController {
             frmRapoarte.getPanelCustom().setVisible(false);
         }
     }
-    
+
     public void selectAll(JList lista) {
         lista.setSelectionInterval(0, lista.getModel().getSize() - 1);
     }
-    
+
     public void deselectAll(JList lista) {
         lista.clearSelection();
     }
-    
+
     public void generareRaport(int index) throws URISyntaxException, JRException {
         Session session = HibernateUtil.getSessionFactory().openSession();
         if (!session.isOpen()) {
@@ -183,7 +184,7 @@ public class RapoarteController {
         raport.setSize(jasperViewer.getSize());
         raport.setVisible(true);
     }
-    
+
     private int addDateRaportToDatabaseAndQueue() {
         DateRaport dateRaport = new DateRaport();
         dateRaport.setDataSubmit(Calendar.getInstance().getTime());
@@ -197,7 +198,7 @@ public class RapoarteController {
         setModelToLst();
         return dateRaport.getId();
     }
-    
+
     public void setModelToLst() {
         defaultListModel.removeAllElements();
         for (DateRaport dp : rapoarteInQueue) {
@@ -205,7 +206,7 @@ public class RapoarteController {
         }
 //        frmRapoarte.getLstRapoarte().setModel(defaultListModel);
     }
-    
+
     private SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
         @Override
         protected String doInBackground() throws URISyntaxException, IOException, JRException, InterruptedException {
@@ -214,13 +215,13 @@ public class RapoarteController {
             System.out.println("Am intrat in doInBackground");
             return null;
         }
-        
+
         @Override
         protected void done() {
             setModelToLst();
         }
     };
-    
+
     public void runReport() {
         if (!isFormValid()) {
             return;
@@ -238,7 +239,7 @@ public class RapoarteController {
                         generareRaport(index);
                         return null;
                     }
-                    
+
                     @Override
                     protected void done() {
                         DateRaport dateRaport = dateRaportService.getDateRaportById(id);
@@ -251,18 +252,30 @@ public class RapoarteController {
                         setModelToLst();
                     }
                 };
-                
+
                 worker.execute();
             }
         });
         t.start();
     }
-    
+
+    private void deleteCache() {
+        if (saveReportFolder.isDirectory()) {
+            for (File f : saveReportFolder.listFiles()) {
+                long diff = Calendar.getInstance().getTimeInMillis() - f.lastModified();
+                if (diff > 90 * 24 * 60 * 60 * 1000) {
+                    dateRaportService.stergeDateRaport(dateRaportService.getDateRaportByPath(f.getPath()));
+                    f.delete();
+                }
+            }
+        }
+    }
+
     public void setConfiguration() throws IOException {
         JFileChooser chooserFolderRapoarte = frmRapoarte.getFileChooserFolderRaport();
         chooserFolderRapoarte.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         chooserFolderRapoarte.setAcceptAllFileFilterUsed(false);
-        
+
         if (chooserFolderRapoarte.showOpenDialog(frmRapoarte) == JFileChooser.APPROVE_OPTION) {
             saveReportFolder = new File(chooserFolderRapoarte.getSelectedFile().getAbsolutePath());
             frmRapoarte.getLblInfoFolder().setText(saveReportFolder.getPath());
@@ -274,27 +287,30 @@ public class RapoarteController {
             fileWriter.close();
         }
     }
-    
-    private void updateAndSetModelToTable(JTable table) {
-        
-        if(frmVizualizareRapoarte.getRdbAzi().isSelected()) {
-           tableModelDateRaport.setListaDateRaport(dateRaportService.getAll());
+
+    public void updateAndSetModelToTable(JTable table) {
+
+        if (frmVizualizareRapoarte.getRdbAzi().isSelected()) {
+            tableModelDateRaport.setListaDateRaport(dateRaportService.getDateRaportFromToday());
         }
-        
+        if(frmVizualizareRapoarte.getRdb90Zile().isSelected()) {
+            tableModelDateRaport.setListaDateRaport(dateRaportService.getAll());
+        }
+
         tableModelDateRaport.setListaDateRaport(dateRaportService.getAll());
         table.setModel(tableModelDateRaport);
         ColumnResizer1.resizeRowHeightAndColumnsWidth(table);
     }
-    
+
     public void actionRead(JFrame parent) {
         frmVizualizareRapoarte = new FrmVizualizareRapoarte();
         frmVizualizareRapoarte.setLocationRelativeTo(parent);
         updateAndSetModelToTable(frmVizualizareRapoarte.getTblDateRaport());
         frmVizualizareRapoarte.setRapoarteController(this);
         frmVizualizareRapoarte.setVisible(true);
-        
+
     }
-    
+
     public void tableRapoarteDoubleClick() throws JRException {
         int rowIndex = frmVizualizareRapoarte.getTblDateRaport().convertRowIndexToModel(frmVizualizareRapoarte.getTblDateRaport().getSelectedRow());
         DateRaport dp = tableModelDateRaport.getListaDateRaport().get(rowIndex);
@@ -305,7 +321,7 @@ public class RapoarteController {
         raport.setSize(jasperViewer.getSize());
         raport.setVisible(true);
     }
-    
+
     private boolean isFormValid() {
         if (saveReportFolder == null) {
             JOptionPane.showMessageDialog(frmRapoarte, "Selectati o locatie valida pentru a salva rapoartele");
@@ -313,11 +329,11 @@ public class RapoarteController {
         }
         return true;
     }
-    
+
     public void sort() {
         updateAndSetModelToTable(frmVizualizareRapoarte.getTblDateRaport());
     }
-    
+
     private void filterTable(String text) {
         TableRowSorter<AbstractTableModel> tr = new TableRowSorter<>(tableModelDateRaport);
         frmVizualizareRapoarte.getTblDateRaport().setRowSorter(tr);
@@ -329,5 +345,5 @@ public class RapoarteController {
         String text = frmVizualizareRapoarte.getTxtFiltrare().getText().toLowerCase().trim();
         filterTable(text);
     }
-    
+
 }

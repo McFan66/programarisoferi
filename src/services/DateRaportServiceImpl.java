@@ -37,5 +37,15 @@ public class DateRaportServiceImpl implements DateRaportService{
     public DateRaport getDateRaportById(int id) {
         return dateRaportRepository.getDateRaportById(id);
     }
+
+    @Override
+    public DateRaport getDateRaportByPath(String path) {
+        return dateRaportRepository.getDateRaportByPath(path);
+    }
+
+    @Override
+    public ArrayList<DateRaport> getDateRaportFromToday() {
+        return dateRaportRepository.getDateRaportFromToday();
+    }
     
 }

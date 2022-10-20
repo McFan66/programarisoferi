@@ -112,4 +112,19 @@ public class DateRaportHibernateRepository implements DateRaportRepository {
         dateRaportRepository.addDateRaport(dateRaport);
         System.out.println(dateRaportRepository.getAll());
     }
+
+    @Override
+    public DateRaport getDateRaportByPath(String path) {
+        if(!session.isOpen()) {
+            this.session = HibernateUtil.getSessionFactory().openSession();
+        }
+        DateRaport dateRaport = null;
+        org.hibernate.Transaction tx = session.beginTransaction();
+        String hql = "from dateRaport dp where dp.reportPath = :reportPath";
+        Query q = session.createQuery(hql).setParameter(":reportPath", path);
+        dateRaport = (DateRaport) q.uniqueResult();
+        tx.commit();
+        session.close();
+        return dateRaport;
+    }
 }
