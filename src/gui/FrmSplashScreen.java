@@ -19,7 +19,6 @@ public class FrmSplashScreen extends javax.swing.JFrame implements SplashScreenF
     public FrmSplashScreen() {
         initComponents();
         dispose();
-        setUndecorated(true);
         setVisible(true);
         splashScreenForm1.setOnBaraCompletata(this);
     }
@@ -101,10 +100,4 @@ public class FrmSplashScreen extends javax.swing.JFrame implements SplashScreenF
         frmLogin.setVisible(true);
     }
 
-    @Override
-    public void refreshFereastra() {
-        this.repaint();
-        this.revalidate();
-
-    }
 }

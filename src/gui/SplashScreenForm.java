@@ -32,22 +32,21 @@ public class SplashScreenForm extends javax.swing.JPanel {
      */
     public SplashScreenForm() {
         initComponents();
-        progressBar.setUI(new FancyProgressBar());
+    //    progressBar.setUI(new FancyProgressBar());
         progressBar.setBackground(new Color(255, 255, 255));
         //progressBar.setValue(40);
         Thread th = new Thread(new Runnable() {
             @Override
             public void run() {
                 int i = 0;
-                progressBar.setMaximum(100);
-                while (i <= 100) {
+                progressBar.setMaximum(500);
+                while (i <= 500) {
                     progressBar.setValue(i);
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(7);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(SplashScreenForm.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    onBaraCompletata.refreshFereastra();
                     i = i + 1;
                 }
                 onBaraCompletata.executeOnBaraCompletata();
@@ -76,7 +75,6 @@ public class SplashScreenForm extends javax.swing.JPanel {
 
         void executeOnBaraCompletata();
 
-        void refreshFereastra();
     }
 
     public void setOnBaraCompletata(OnBaraCompletata onBaraCompletata) {
@@ -150,7 +148,7 @@ public class SplashScreenForm extends javax.swing.JPanel {
 
             Rectangle2D rect = new Rectangle2D.Double(iStrokWidth * 2, iStrokWidth * 2, 1, iInnerHeight);
 
-            g2d.fill(rect);
+         //   g2d.fill(rect);
             g2d.dispose();
         }
 
