@@ -101,7 +101,11 @@ public class RapoarteController {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(RapoarteController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        saveReportFolder = new File(scanner.nextLine());
+        if (!scanner.hasNextLine()) {
+            saveReportFolder = null;
+        } else {
+            saveReportFolder = new File(scanner.nextLine());
+        }
         deleteCache();
         frmRapoarte.getLblInfoFolder().setText(saveReportFolder.getPath());
         //  frmRapoarte.getChooserDataInceput()
@@ -332,7 +336,7 @@ public class RapoarteController {
 
     private boolean isFormValid() {
         System.out.println(saveReportFolder.getPath());
-        if (saveReportFolder.getPath().isEmpty()) {
+        if (saveReportFolder == null || saveReportFolder.getPath().isEmpty()) {
             JOptionPane.showMessageDialog(frmRapoarte, "Selectati o locatie valida pentru a salva rapoartele");
             return false;
         }
