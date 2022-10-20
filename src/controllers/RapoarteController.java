@@ -331,7 +331,8 @@ public class RapoarteController {
     }
 
     private boolean isFormValid() {
-        if (saveReportFolder == null) {
+        System.out.println(saveReportFolder.getPath());
+        if (saveReportFolder.getPath().isEmpty()) {
             JOptionPane.showMessageDialog(frmRapoarte, "Selectati o locatie valida pentru a salva rapoartele");
             return false;
         }
