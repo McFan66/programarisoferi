@@ -106,8 +106,10 @@ public class RapoarteController {
         } else {
             saveReportFolder = new File(scanner.nextLine());
         }
-        deleteCache();
-        frmRapoarte.getLblInfoFolder().setText(saveReportFolder.getPath());
+        if (saveReportFolder != null) {
+            deleteCache();
+            frmRapoarte.getLblInfoFolder().setText(saveReportFolder.getPath());
+        }
         //  frmRapoarte.getChooserDataInceput()
         frmRapoarte.setRapoarteController(this);
         frmRapoarte.setLocationRelativeTo(parent);
@@ -265,7 +267,10 @@ public class RapoarteController {
     }
 
     private void deleteCache() {
-        if (saveReportFolder.isDirectory() && saveReportFolder != null) {
+        if (saveReportFolder == null) {
+            return;
+        }
+        if (saveReportFolder.isDirectory()) {
             for (File f : saveReportFolder.listFiles()) {
                 long diff = Calendar.getInstance().getTimeInMillis() - f.lastModified();
                 if (diff > 90 * 24 * 60 * 60 * 1000) {
@@ -335,7 +340,6 @@ public class RapoarteController {
     }
 
     private boolean isFormValid() {
-        System.out.println(saveReportFolder.getPath());
         if (saveReportFolder == null || saveReportFolder.getPath().isEmpty()) {
             JOptionPane.showMessageDialog(frmRapoarte, "Selectati o locatie valida pentru a salva rapoartele");
             return false;
