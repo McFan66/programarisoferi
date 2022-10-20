@@ -265,7 +265,7 @@ public class RapoarteController {
     }
 
     private void deleteCache() {
-        if (saveReportFolder.isDirectory()) {
+        if (saveReportFolder.isDirectory() && saveReportFolder != null) {
             for (File f : saveReportFolder.listFiles()) {
                 long diff = Calendar.getInstance().getTimeInMillis() - f.lastModified();
                 if (diff > 90 * 24 * 60 * 60 * 1000) {
