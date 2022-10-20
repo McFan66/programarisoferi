@@ -93,7 +93,7 @@ public class DateRaportHibernateRepository implements DateRaportRepository {
         ArrayList<DateRaport> listaDateRaport = new ArrayList<>();
         org.hibernate.Transaction tx = session.beginTransaction();
         String hql = "from DateRaport dp where dp.dataSubmit = :dataSubmit";
-        Query q = session.createQuery(hql).setDate(":dataSubmit", Calendar.getInstance().getTime());
+        Query q = session.createQuery(hql).setDate("dataSubmit", Calendar.getInstance().getTime());
         listaDateRaport = (ArrayList<DateRaport>) q.list();
         tx.commit();
         session.close();
@@ -121,7 +121,7 @@ public class DateRaportHibernateRepository implements DateRaportRepository {
         DateRaport dateRaport = null;
         org.hibernate.Transaction tx = session.beginTransaction();
         String hql = "from dateRaport dp where dp.reportPath = :reportPath";
-        Query q = session.createQuery(hql).setParameter(":reportPath", path);
+        Query q = session.createQuery(hql).setParameter("reportPath", path);
         dateRaport = (DateRaport) q.uniqueResult();
         tx.commit();
         session.close();
