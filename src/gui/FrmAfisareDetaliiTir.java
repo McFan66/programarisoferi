@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import models.Sofer;
 
 /**
  *
@@ -51,7 +52,7 @@ public class FrmAfisareDetaliiTir extends javax.swing.JDialog {
         this.tirController = tirController;
     }
 
-    public JList<String> getLstSoferi() {
+    public JList<Sofer> getLstSoferi() {
         return lstSoferi;
     }
 
@@ -102,19 +103,15 @@ public class FrmAfisareDetaliiTir extends javax.swing.JDialog {
         lblTextNrInmatriculare.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         lblTextNrInmatriculare.setText("Numar inmatriculare:");
 
-        lblMarca.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblMarca.setText("jLabel1");
 
-        lblModel.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblModel.setText("jLabel2");
 
-        lblNrInmatriculare.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblNrInmatriculare.setText("jLabel3");
 
         lblTextStatus.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         lblTextStatus.setText("Status:");
 
-        lblStatus.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblStatus.setText("jLabel1");
 
         lblPoze.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -150,11 +147,6 @@ public class FrmAfisareDetaliiTir extends javax.swing.JDialog {
         lblTextSoferi.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         lblTextSoferi.setText("Soferi:");
 
-        lstSoferi.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane2.setViewportView(lstSoferi);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -309,6 +301,6 @@ public class FrmAfisareDetaliiTir extends javax.swing.JDialog {
     private javax.swing.JLabel lblTextNrInmatriculare;
     private javax.swing.JLabel lblTextSoferi;
     private javax.swing.JLabel lblTextStatus;
-    private javax.swing.JList<String> lstSoferi;
+    private javax.swing.JList<Sofer> lstSoferi;
     // End of variables declaration//GEN-END:variables
 }

@@ -97,9 +97,7 @@ public class SoferiTiruriHibernateRepository implements SoferiTiruriRepository {
             this.session = HibernateUtil.getSessionFactory().openSession();
         }
         org.hibernate.Transaction tx = session.beginTransaction();
-        SoferiTiruri st = new SoferiTiruri();
-        st.setTir(tir);
-        Query q = session.createQuery("from SoferiTiruri where idTir= :idTir").setProperties(st);
+        Query q = session.createQuery("from SoferiTiruri st where st.idTir= :idTir").setParameter("idTir", tir.getId());
         listaSoferiTiruri = (ArrayList<SoferiTiruri>) q.list();
         tx.commit();
         session.close();

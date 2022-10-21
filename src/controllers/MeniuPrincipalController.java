@@ -159,6 +159,11 @@ public class MeniuPrincipalController implements VObserver {
     }
 
     public boolean isFormValid() {
+        SoferiTiruri sf = (SoferiTiruri) frmAddInregistrare.getCmbSoferTir().getSelectedItem();
+        if(sf.getTir().getStare().equals(stareService.getStareByNume("Service"))) {
+            JOptionPane.showMessageDialog(frmAddInregistrare, String.format("Tirul %s este in service. Va rugam sa selectati alt sofer-tir", sf.getTir().getNrInmatriculare()));
+            return false;
+        }
         if (frmAddInregistrare.getDtcPlecare().getDate() == null) {
             JOptionPane.showMessageDialog(frmAddInregistrare, "Va rugam sa selectati o data de plecare");
             return false;
@@ -179,14 +184,12 @@ public class MeniuPrincipalController implements VObserver {
 
             this.dtcPlecare = frmAddInregistrare.getDtcPlecare();
             //this.dtcSosire = frmAddInregistrare.getDtcSosire();
-
             SoferiTiruri sf = (SoferiTiruri) frmAddInregistrare.getCmbSoferTir().getSelectedItem();
             sf.setInCursa(true);
             sf.getTir().setStare(stareService.getStareByNume("Cursa"));
             sf.getTir().setIdStare(stareService.getStareByNume("Cursa").getId());
             tiruriService.adaugaTir(sf.getTir());
             soferiTiruriService.adaugaSoferTir(sf);
-
             if (inregistrareSelectata != null) {
                 i.setId(inregistrareSelectata.getId());
             }

@@ -116,16 +116,12 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
         btnAdministrareMarci = new javax.swing.JMenuItem();
         btnAdministrareModele = new javax.swing.JMenuItem();
         btnAdministrareSoferiTiruri = new javax.swing.JMenuItem();
-        meniuCreare = new javax.swing.JMenu();
-        btnInregistrareNoua = new javax.swing.JMenuItem();
-        meniuProfil = new javax.swing.JMenu();
         meniuManagement = new javax.swing.JMenu();
         btnAdministrareUtilizatori = new javax.swing.JMenuItem();
         btnAdministrareRoluri = new javax.swing.JMenuItem();
         meniuRapoarte = new javax.swing.JMenu();
         itemGenerareRapoarte = new javax.swing.JMenuItem();
         itemVizualizareRapoarte = new javax.swing.JMenuItem();
-        meniuLogOut = new javax.swing.JMenu();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -509,25 +505,6 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
 
         meniu.add(meniuAdministrare);
 
-        meniuCreare.setText("New");
-        meniuCreare.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-
-        btnInregistrareNoua.setText("Inregistrare");
-        btnInregistrareNoua.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInregistrareNouaActionPerformed(evt);
-            }
-        });
-        meniuCreare.add(btnInregistrareNoua);
-
-        meniu.add(meniuCreare);
-
-        meniuProfil.setText("Profil");
-        meniuProfil.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        meniuProfil.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        meniuProfil.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        meniu.add(meniuProfil);
-
         meniuManagement.setText("Management");
         meniuManagement.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
 
@@ -584,9 +561,6 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
 
         meniu.add(meniuRapoarte);
 
-        meniuLogOut.setText("Quit");
-        meniu.add(meniuLogOut);
-
         setJMenuBar(meniu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -619,10 +593,6 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     private void btnAdministrareModeleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministrareModeleActionPerformed
         modelController.actionIndex(this);
     }//GEN-LAST:event_btnAdministrareModeleActionPerformed
-
-    private void btnInregistrareNouaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInregistrareNouaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnInregistrareNouaActionPerformed
 
     private void btnAdministrareSoferiTiruriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministrareSoferiTiruriActionPerformed
         // TODO add your handling code here:
@@ -806,7 +776,6 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem btnAdministrareUtilizatori;
     private javax.swing.JButton btnEditeazaInregistrare;
     private javax.swing.JButton btnFinalizare;
-    private javax.swing.JMenuItem btnInregistrareNoua;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JMenuItem itemGenerareRapoarte;
     private javax.swing.JMenuItem itemVizualizareRapoarte;
@@ -843,10 +812,7 @@ public class FrmMeniuPrincipal extends javax.swing.JFrame {
     private javax.swing.JList lstSoferiLiberi;
     private javax.swing.JMenuBar meniu;
     private javax.swing.JMenu meniuAdministrare;
-    private javax.swing.JMenu meniuCreare;
-    private javax.swing.JMenu meniuLogOut;
     private javax.swing.JMenu meniuManagement;
-    private javax.swing.JMenu meniuProfil;
     private javax.swing.JMenu meniuRapoarte;
     private javax.swing.JRadioButton rdbFinalizate;
     private javax.swing.JRadioButton rdbInDesfasurare;

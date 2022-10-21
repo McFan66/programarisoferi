@@ -76,34 +76,6 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="meniuCreare">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="New"/>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Dialog" size="14" style="1"/>
-            </Property>
-          </Properties>
-          <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="btnInregistrareNoua">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Inregistrare"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInregistrareNouaActionPerformed"/>
-              </Events>
-            </MenuItem>
-          </SubComponents>
-        </Menu>
-        <Menu class="javax.swing.JMenu" name="meniuProfil">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Profil"/>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Dialog" size="14" style="1"/>
-            </Property>
-            <Property name="horizontalAlignment" type="int" value="4"/>
-            <Property name="horizontalTextPosition" type="int" value="4"/>
-          </Properties>
-        </Menu>
         <Menu class="javax.swing.JMenu" name="meniuManagement">
           <Properties>
             <Property name="text" type="java.lang.String" value="Management"/>
@@ -159,11 +131,6 @@
               </Events>
             </MenuItem>
           </SubComponents>
-        </Menu>
-        <Menu class="javax.swing.JMenu" name="meniuLogOut">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Quit"/>
-          </Properties>
         </Menu>
       </SubComponents>
     </Menu>

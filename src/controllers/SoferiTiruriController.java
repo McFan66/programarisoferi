@@ -161,8 +161,8 @@ public class SoferiTiruriController {
     public void updateAndSetModelToDropDowns() {
         DefaultComboBoxModel<Sofer> cmbModelSoferi = new DefaultComboBoxModel<>();
         DefaultComboBoxModel<Tir> cmbModelTiruri = new DefaultComboBoxModel<>();
-        ArrayList<Tir> listaTiruri = tiruriService.getAll();
-        ArrayList<Sofer> listaSoferi = soferService.getAll();
+        ArrayList<Tir> listaTiruri = tiruriService.getTirByValid(true);
+        ArrayList<Sofer> listaSoferi = soferService.getSoferByValid(true);
 
         dropDownSoferi.setRenderer(soferRenderer);
         dropDownTiruri.setRenderer(tirRenderer);

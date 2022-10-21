@@ -17,6 +17,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import models.Sofer;
+import models.Tir;
 import net.sf.jasperreports.engine.JRException;
 
 /**
@@ -43,7 +45,7 @@ public class FrmRapoarte extends javax.swing.JDialog {
         return cmbRapoarte;
     }
 
-    public JList<String> getLstTiruri() {
+    public JList<Tir> getLstTiruri() {
         return lstTiruri;
     }
     
@@ -73,7 +75,7 @@ public class FrmRapoarte extends javax.swing.JDialog {
         return panelCustom;
     }
 
-    public JList<String> getLstSoferi() {
+    public JList<Sofer> getLstSoferi() {
         return lstSoferi;
     }
 
@@ -151,12 +153,32 @@ public class FrmRapoarte extends javax.swing.JDialog {
         btnSelecteazaSoferi1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnSelecteazaSoferi1.setText("<html><center>Selecteaza<br/>tot</center></html>");
         btnSelecteazaSoferi1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnSelecteazaSoferi1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSelecteazaSoferi1ActionPerformed(evt);
+            }
+        });
 
         btnDeselecteazaSoferi1.setText("<html><center>Stergere<br/>selectie</center></html>");
+        btnDeselecteazaSoferi1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeselecteazaSoferi1ActionPerformed(evt);
+            }
+        });
 
         btnDeselecteazaTiruri1.setText("<html><center>Stergere<br/>selectie</center></html>");
+        btnDeselecteazaTiruri1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeselecteazaTiruri1ActionPerformed(evt);
+            }
+        });
 
         btnSelecteazaTiruri1.setText("<html><center>Selecteaza<br/>tot</center></html>");
+        btnSelecteazaTiruri1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSelecteazaTiruri1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelCustomLayout = new javax.swing.GroupLayout(panelCustom);
         panelCustom.setLayout(panelCustomLayout);
@@ -181,7 +203,7 @@ public class FrmRapoarte extends javax.swing.JDialog {
                         .addComponent(btnSelecteazaTiruri1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnDeselecteazaTiruri1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelCustomLayout.setVerticalGroup(
             panelCustomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,14 +232,12 @@ public class FrmRapoarte extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(panelCustom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panelCustom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnConfig)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblInfoFolder, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblInfoFolder, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnGenereaza)))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,16 +264,15 @@ public class FrmRapoarte extends javax.swing.JDialog {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(99, Short.MAX_VALUE)
+                .addContainerGap(83, Short.MAX_VALUE)
+                .addComponent(panelCustom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(panelCustom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnConfig)
-                            .addComponent(btnGenereaza, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addComponent(lblInfoFolder, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(115, 115, 115))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnConfig)
+                        .addComponent(btnGenereaza))
+                    .addComponent(lblInfoFolder, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 60, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -266,7 +285,7 @@ public class FrmRapoarte extends javax.swing.JDialog {
                         .addComponent(chooserDataInceput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblDataSfarsit)
                         .addComponent(chooserDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(477, Short.MAX_VALUE)))
+                    .addContainerGap(419, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -299,6 +318,26 @@ public class FrmRapoarte extends javax.swing.JDialog {
         rapoarteController.itemChanged();
 // TODO add your handling code here:
     }//GEN-LAST:event_cmbRapoarteItemStateChanged
+
+    private void btnSelecteazaSoferi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecteazaSoferi1ActionPerformed
+        rapoarteController.selectAll(lstSoferi);
+    // TODO add your handling code here:
+    }//GEN-LAST:event_btnSelecteazaSoferi1ActionPerformed
+
+    private void btnDeselecteazaSoferi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeselecteazaSoferi1ActionPerformed
+        rapoarteController.deselectAll(lstSoferi);
+    // TODO add your handling code here:
+    }//GEN-LAST:event_btnDeselecteazaSoferi1ActionPerformed
+
+    private void btnSelecteazaTiruri1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecteazaTiruri1ActionPerformed
+        rapoarteController.selectAll(lstTiruri);
+    // TODO add your handling code here:
+    }//GEN-LAST:event_btnSelecteazaTiruri1ActionPerformed
+
+    private void btnDeselecteazaTiruri1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeselecteazaTiruri1ActionPerformed
+        // TODO add your handling code here:
+        rapoarteController.deselectAll(lstTiruri);
+    }//GEN-LAST:event_btnDeselecteazaTiruri1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -362,8 +401,8 @@ public class FrmRapoarte extends javax.swing.JDialog {
     private javax.swing.JLabel lblSoferi1;
     private javax.swing.JLabel lblTipRaport;
     private javax.swing.JLabel lblTiruri1;
-    private javax.swing.JList<String> lstSoferi;
-    private javax.swing.JList<String> lstTiruri;
+    private javax.swing.JList<Sofer> lstSoferi;
+    private javax.swing.JList<Tir> lstTiruri;
     private javax.swing.JPanel panelCustom;
     // End of variables declaration//GEN-END:variables
 }

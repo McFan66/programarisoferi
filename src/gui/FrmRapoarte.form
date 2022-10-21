@@ -45,15 +45,12 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="panelCustom" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          <Component id="panelCustom" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
                           <Component id="btnConfig" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="lblInfoFolder" min="-2" pref="231" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
+                          <Component id="lblInfoFolder" min="-2" pref="231" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="btnGenereaza" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -86,19 +83,17 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="99" max="32767" attributes="0"/>
+                  <EmptySpace pref="83" max="32767" attributes="0"/>
+                  <Component id="panelCustom" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="panelCustom" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="btnConfig" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnGenereaza" alignment="1" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btnConfig" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnGenereaza" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="lblInfoFolder" alignment="1" min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="lblInfoFolder" min="-2" pref="32" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="115" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="60" max="32767" attributes="0"/>
               </Group>
               <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
@@ -114,7 +109,7 @@
                           <Component id="lblDataSfarsit" min="-2" max="-2" attributes="0"/>
                           <Component id="chooserDataFinal" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="477" max="32767" attributes="0"/>
+                      <EmptySpace pref="419" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -200,7 +195,7 @@
                               <Component id="btnDeselecteazaTiruri1" min="-2" pref="88" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="38" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -252,7 +247,7 @@
                     </Property>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Sofer&gt;"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
@@ -271,7 +266,7 @@
                     </Property>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Tir&gt;"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
@@ -294,6 +289,9 @@
                 </Property>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSelecteazaSoferi1ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnDeselecteazaSoferi1">
               <Properties>
@@ -301,6 +299,9 @@
                   <Connection code="&quot;&lt;html&gt;&lt;center&gt;Stergere&lt;br/&gt;selectie&lt;/center&gt;&lt;/html&gt;&quot;" type="code"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeselecteazaSoferi1ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnDeselecteazaTiruri1">
               <Properties>
@@ -308,6 +309,9 @@
                   <Connection code="&quot;&lt;html&gt;&lt;center&gt;Stergere&lt;br/&gt;selectie&lt;/center&gt;&lt;/html&gt;&quot;" type="code"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeselecteazaTiruri1ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnSelecteazaTiruri1">
               <Properties>
@@ -315,6 +319,9 @@
                   <Connection code="&quot;&lt;html&gt;&lt;center&gt;Selecteaza&lt;br/&gt;tot&lt;/center&gt;&lt;/html&gt;&quot;" type="code"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSelecteazaTiruri1ActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

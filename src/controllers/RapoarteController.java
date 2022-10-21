@@ -55,6 +55,8 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import org.hibernate.Session;
 import org.hibernate.internal.SessionImpl;
+import renderers.ItemSoferRenderer;
+import renderers.ItemTirRenderer;
 import services.DateRaportService;
 import services.DateRaportServiceImpl;
 import services.SoferService;
@@ -72,7 +74,6 @@ import utils.HibernateUtil;
 public class RapoarteController {
 
     private FrmRapoarte frmRapoarte;
-    private FrmLoadingRaport frmLoadingRaport;
     private FrmVizualizareRapoarte frmVizualizareRapoarte;
     private TableModelDateRaport tableModelDateRaport = new TableModelDateRaport();
     private DateRaportService dateRaportService = new DateRaportServiceImpl();
@@ -111,6 +112,7 @@ public class RapoarteController {
             frmRapoarte.getLblInfoFolder().setText(saveReportFolder.getPath());
         }
         //  frmRapoarte.getChooserDataInceput()
+        frmRapoarte.setSize(498, 230);
         frmRapoarte.setRapoarteController(this);
         frmRapoarte.setLocationRelativeTo(parent);
         frmRapoarte.setVisible(true);
@@ -123,16 +125,22 @@ public class RapoarteController {
             ArrayList<Sofer> listaSoferi = soferService.getSoferByValid(true);
             ArrayList<Tir> listaTiruri = tiruriService.getTirByValid(true);
             for (Sofer s : listaSoferi) {
-                modelListaSoferi.addElement(s.getNumeComplet());
+                modelListaSoferi.addElement(s);
             }
             for (Tir t : listaTiruri) {
-                modelListaTiruri.addElement(String.format("%s %s - %s", t.getModel().getMarca().getNume(), t.getModel().getNume(), t.getNrInmatriculare()));
+                modelListaTiruri.addElement(t);
             }
             frmRapoarte.getLstSoferi().setModel(modelListaSoferi);
             frmRapoarte.getLstTiruri().setModel(modelListaTiruri);
+            frmRapoarte.getLstSoferi().setCellRenderer(new ItemSoferRenderer());
+            frmRapoarte.getLstTiruri().setCellRenderer(new ItemTirRenderer());
+            frmRapoarte.setSize(498, 570);
             frmRapoarte.getPanelCustom().setVisible(true);
+            frmRapoarte.setLocationRelativeTo(null);
         } else {
             frmRapoarte.getPanelCustom().setVisible(false);
+            frmRapoarte.setSize(498, 230);
+            frmRapoarte.setLocationRelativeTo(null);
         }
     }
 
@@ -172,8 +180,28 @@ public class RapoarteController {
         }
         if (index == 2) {
             myFile = getClass().getResourceAsStream("/rapoarte/Raport_Inregistrari_Bun.jrxml");
-            parameters.put("listaSoferi", new ArrayList(Arrays.asList()));
-            parameters.put("listaTiruri", new ArrayList(Arrays.asList()));
+            ArrayList<Integer> idSoferi = new ArrayList<>();
+            ArrayList<Integer> idTiruri = new ArrayList<>();
+            if (frmRapoarte.getLstSoferi().getSelectedValuesList().isEmpty()) {
+                for (Sofer s : soferService.getAll()) {
+                    idSoferi.add(s.getId());
+                }
+                parameters.put("listaSoferi", idSoferi);
+            } else if (frmRapoarte.getLstTiruri().getSelectedValuesList().isEmpty()) {
+                for (Tir t : tiruriService.getAll()) {
+                    idTiruri.add(t.getId());
+                }
+                parameters.put("listaTiruri", idTiruri);
+            } else {
+                for (Sofer s : frmRapoarte.getLstSoferi().getSelectedValuesList()) {
+                    idSoferi.add(s.getId());
+                }
+                for (Tir t : frmRapoarte.getLstTiruri().getSelectedValuesList()) {
+                    idTiruri.add(t.getId());
+                }
+                parameters.put("listaSoferi", idSoferi);
+                parameters.put("listaTiruri", idTiruri);
+            }
             System.out.println("L-am luat");
         }
         JasperDesign jasperDesign = JRXmlLoader.load(myFile);

@@ -18,6 +18,8 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,6 +46,7 @@ import models.Tir;
 import org.hibernate.Session;
 import renderers.ItemMarcaRenderer;
 import renderers.ItemModelRenderer;
+import renderers.ItemSoferRenderer;
 import renderers.TiruriColorCellRenderer;
 import services.MarcaService;
 import services.ModelService;
@@ -77,6 +80,7 @@ public class TirController {
     private StareService stareService = AppSingleTone.getAppSingleToneInstance().getStareService();
     private DefaultComboBoxModel<Marca> modelCmbMarci = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<Model> modelCmbModele = new DefaultComboBoxModel<>();
+    private DefaultListModel<Sofer> modelListaSoferi = new DefaultListModel<>();
     private Tir tirSelectat;
     private JComboBox cmbMarca;
     private JComboBox cmbModel;
@@ -90,6 +94,7 @@ public class TirController {
     private String[] columnNames = new String[]{"Marca", "Model", "Nr Inmatriculare", "Poza", "Status"};
 
     public void actionCreate(JDialog parent) {
+        this.tirSelectat = null;
         frmAddTir = new FrmAddTir(parent, true);
         frmAddTir.setTitle("Adauga tir");
         cmbMarca = frmAddTir.getCmbMarca();
@@ -378,20 +383,19 @@ public class TirController {
                 frmAfisareDetaliiTir.getLblStatus().setText("In service");
                 Color darkOrange = new Color(255, 143, 0);
                 frmAfisareDetaliiTir.getLblStatus().setForeground(darkOrange);
-                frmAfisareDetaliiTir.getBtnModService().setText("Dezactiveaza mod service");
                 break;
         }
         frmAfisareDetaliiTir.getLblNrInmatriculare().setText(String.format("%s %s %s", allMatches.get(0), allMatches.get(1), allMatches.get(2)));
         ArrayList<SoferiTiruri> listaSoferiTiruri = soferiTiruriService.getSoferiTiruriByTir(tirSelectat);
-        ArrayList<Sofer> listaSoferi = new ArrayList<>();
+        Set<Sofer> uniqueSofer = new HashSet<>(0);
         for (SoferiTiruri st : listaSoferiTiruri) {
-            listaSoferi.add(st.getSofer());
+            uniqueSofer.add(st.getSofer());
         }
-        DefaultListModel defaultListModel = new DefaultListModel();
-        for (Sofer s : listaSoferi) {
-            defaultListModel.addElement(s.getNumeComplet());
+        for(Sofer s : uniqueSofer) {
+            modelListaSoferi.addElement(s);
         }
-        frmAfisareDetaliiTir.getLstSoferi().setModel(defaultListModel);
+        frmAfisareDetaliiTir.getLstSoferi().setCellRenderer(new ItemSoferRenderer());
+        frmAfisareDetaliiTir.getLstSoferi().setModel(modelListaSoferi);
         indexPozaCurenta = 0;
         pozeTir = pozaService.getPozaByTipAndObiect(1, tirSelectat.getId());
         if (pozeTir.size() == 0) {
