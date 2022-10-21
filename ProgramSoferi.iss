@@ -33,6 +33,8 @@ Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
 UninstallDisplayIcon={app}\truck.ico
+PrivilegesRequired=admin
+
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -46,5 +48,5 @@ Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\jre\bin\javaw.exe"; \
     Parameters: "-jar ProgramSoferi.jar"; IconFilename: {app}\truck.ico;  WorkingDir: "{app}"
 [Run]
-Filename: "{app}\jre\bin\javaw.exe"; Parameters: "-jar ProgramSoferi.jar"; Description: {cm:LaunchProgram,{cm:AppName}}; Flags: nowait postinstall skipifsilent; WorkingDir: "{app}"
+Filename: "{app}\jre\bin\javaw.exe"; Parameters: "-jar ProgramSoferi.jar"; Description: {cm:LaunchProgram,{cm:AppName}}; Flags: runascurrentuser nowait postinstall skipifsilent; WorkingDir: "{app}"
 
