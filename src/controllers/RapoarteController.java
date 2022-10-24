@@ -5,7 +5,6 @@
  */
 package controllers;
 
-import gui.FrmLoadingRaport;
 import gui.FrmRapoarte;
 import gui.FrmVizualizareRapoarte;
 import java.io.File;
@@ -20,7 +19,6 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;

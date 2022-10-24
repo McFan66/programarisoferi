@@ -126,6 +126,7 @@ public class MeniuPrincipalController implements VObserver {
 
         frmAddInregistrare.getCmbSoferTir().setSelectedItem(inregistrareSelectata.getSoferTir());
         frmAddInregistrare.getDtcPlecare().setDate(inregistrareSelectata.getDataPlecare());
+        frmAddInregistrare.getBtnAdauga().setText("Editeaza");
         //frmAddInregistrare.getDtcSosire().setDate(inregistrareSelectata.getDataSosire());
         frmAddInregistrare.setLocationRelativeTo(parent);
         frmAddInregistrare.setInregistrariController(this);
@@ -150,6 +151,7 @@ public class MeniuPrincipalController implements VObserver {
         modelCmbSoferiTiruri.removeAllElements();
         ArrayList<SoferiTiruri> listaSoferiTiruri = soferiTiruriService.getSoferiTiruriByInCursa(false);
 
+        modelCmbSoferiTiruri.addElement(inregistrareSelectata.getSoferTir());
         for (SoferiTiruri sf : listaSoferiTiruri) {
             modelCmbSoferiTiruri.addElement(sf);
         }
@@ -160,7 +162,7 @@ public class MeniuPrincipalController implements VObserver {
 
     public boolean isFormValid() {
         SoferiTiruri sf = (SoferiTiruri) frmAddInregistrare.getCmbSoferTir().getSelectedItem();
-        if(sf.getTir().getStare().equals(stareService.getStareByNume("Service"))) {
+        if (sf.getTir().getStare().equals(stareService.getStareByNume("Service"))) {
             JOptionPane.showMessageDialog(frmAddInregistrare, String.format("Tirul %s este in service. Va rugam sa selectati alt sofer-tir", sf.getTir().getNrInmatriculare()));
             return false;
         }
@@ -229,7 +231,7 @@ public class MeniuPrincipalController implements VObserver {
 
     private void setModelToListaSoferiLiberi() {
         modelListaSoferiLiberi.removeAllElements();
-        
+
         for (SoferiTiruri sf : soferiTiruriService.getSoferiTiruriByValid(true)) {
             if (!sf.isInCursa()) {
                 modelListaSoferiLiberi.addElement(sf.getSofer());
@@ -310,7 +312,7 @@ public class MeniuPrincipalController implements VObserver {
             setModelToListaSoferiLiberi();
             setModelToListaSoferiFaraTir();
         }
-        if(subject instanceof Sofer) {
+        if (subject instanceof Sofer) {
             setModelToListaSoferiFaraTir();
         }
     }
