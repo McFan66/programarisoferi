@@ -42,6 +42,7 @@ import models.Model;
 import models.Poza;
 import models.Sofer;
 import models.SoferiTiruri;
+import models.Stare;
 import models.Tir;
 import org.hibernate.Session;
 import renderers.ItemMarcaRenderer;
@@ -72,11 +73,11 @@ public class TirController {
     private int curImageIndex;
     private int indexPozaCurenta;
     private ArrayList<File> listaPozeDeAfisat = new ArrayList<>();
-    private TiruriService tiruriService=AppSingleTone.getAppSingleToneInstance().getTiruriService();
+    private TiruriService tiruriService = AppSingleTone.getAppSingleToneInstance().getTiruriService();
     private MarcaService marcaService = AppSingleTone.getAppSingleToneInstance().getMarcaService();
     private ModelService modelService = AppSingleTone.getAppSingleToneInstance().getModelService();
-    private PozaService pozaService=AppSingleTone.getAppSingleToneInstance().getPozaService();
-    private SoferiTiruriService soferiTiruriService=AppSingleTone.getAppSingleToneInstance().getSoferiTiruriService();
+    private PozaService pozaService = AppSingleTone.getAppSingleToneInstance().getPozaService();
+    private SoferiTiruriService soferiTiruriService = AppSingleTone.getAppSingleToneInstance().getSoferiTiruriService();
     private StareService stareService = AppSingleTone.getAppSingleToneInstance().getStareService();
     private DefaultComboBoxModel<Marca> modelCmbMarci = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<Model> modelCmbModele = new DefaultComboBoxModel<>();
@@ -109,6 +110,8 @@ public class TirController {
         for (Marca m : listaMarci) {
             modelCmbMarci.addElement(m);
         }
+        listaFisiere.clear();
+        listaPoze.clear();
         cmbMarca.setModel(modelCmbMarci);
         cmbModel.setModel(modelCmbModele);
         frmAddTir.setTirController(this);
@@ -146,14 +149,66 @@ public class TirController {
         for (Marca m : listaMarci) {
             modelCmbMarci.addElement(m);
         }
-
+        listaFisiere.clear();
+        listaPoze.clear();
         cmbMarca.setModel(modelCmbMarci);
         cmbModel.setModel(modelCmbModele);
         frmAddTir.getCmbMarca().setSelectedItem(tirSelectat.getModel().getMarca());
         frmAddTir.getCmbModel().setSelectedItem(tirSelectat.getModel());
         frmAddTir.getTxtNrInmatriculare().setText(tirSelectat.getNrInmatriculare());
+
+        curImageIndex = 0;
+        pozeTir = pozaService.getPozaByTipAndObiect(1, tirSelectat.getId());
+        if (pozeTir.size() == 0) {
+            frmAddTir.getLblCnt().setText("0/" + pozeTir.size());
+        } else {
+            frmAddTir.getLblCnt().setText("1/" + pozeTir.size());
+        }
+
+        JLabel lblPoze = frmAddTir.getLblPoze();
+        lblPoze.setMinimumSize(new Dimension(lblPoze.getWidth(), lblPoze.getHeight()));
+        lblPoze.setPreferredSize(new Dimension(lblPoze.getWidth(), lblPoze.getHeight()));
+        lblPoze.setMaximumSize(new Dimension(lblPoze.getWidth(), lblPoze.getHeight()));
+        File currentDirectory = new File(".");
+        int c = 0;
+        for (Poza p : pozeTir) {
+
+            File file = new File(currentDirectory + "/poze/tiruri/" + tirSelectat.getNrInmatriculare() + "/" + pozeTir.get(c).getImagePath());
+
+            listaFisiere.add(file);
+
+            ImageIcon imageIcon = new ImageIcon(new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(lblPoze.getWidth(), lblPoze.getHeight(), Image.SCALE_SMOOTH));
+
+            listaPoze.add(imageIcon);
+            c++;
+        }
+        File file = new File(currentDirectory + "/poze/tiruri/" + tirSelectat.getNrInmatriculare() + "/" + pozeTir.get(0).getImagePath());
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(lblPoze.getWidth(), lblPoze.getHeight(), Image.SCALE_SMOOTH));
+        lblPoze.setIcon(imageIcon);
+        lblPoze.setText(null);
+
         frmAddTir.setLocationRelativeTo(parent);
         frmAddTir.setVisible(true);
+    }
+
+    public void anterioaraImagine() {
+        JLabel lblPoze = frmAddTir.getLblPoze();
+
+        if (curImageIndex > 0 && curImageIndex < listaPoze.size()) {
+            curImageIndex--;
+            lblPoze.setIcon(listaPoze.get(curImageIndex));
+            modificaCntPoze();
+        }
+    }
+
+    public void urmatoareaImagine() {
+        JLabel lblPoze = frmAddTir.getLblPoze();
+
+        if (curImageIndex >= 0 && curImageIndex < listaPoze.size() - 1) {
+            curImageIndex++;
+            lblPoze.setIcon(listaPoze.get(curImageIndex));
+            modificaCntPoze();
+        }
     }
 
     public void actionDelete() {
@@ -197,26 +252,27 @@ public class TirController {
     }
 
     public void savePoza(Tir tir) {
-            File tiruri = makeFolderPoze();
-            File pozeTir = new File(tiruri, frmAddTir.getTxtNrInmatriculare().getText());
-            if (!pozeTir.exists()) {
-                pozeTir.mkdir();
-            }
-        
-            ArrayList<File> listaFisiereNoua = new ArrayList<>();
-            for (File pozaDeSalvat : listaFisiere) {
-                makeFile(pozaDeSalvat, pozeTir);
-                listaFisiereNoua.add(pozaCreeata);
-            }
-            for (File pozaDeSalvat : listaFisiereNoua) {
-                Poza p = new Poza();
-                p.setTipObiect(1);
-                p.setIdObiect(tir.getId());
-                p.setImagePath(pozaDeSalvat.getName());
-                pozaService.adaugaPoza(p);
-            }
+        File tiruri = makeFolderPoze();
+        File pozeTir = new File(tiruri, frmAddTir.getTxtNrInmatriculare().getText());
+        if (!pozeTir.exists()) {
+            pozeTir.mkdir();
+        }
+
+        ArrayList<File> listaFisiereNoua = new ArrayList<>();
+        System.out.println(listaFisiere.size());
+        for (File pozaDeSalvat : listaFisiere) {
+            makeFile(pozaDeSalvat, pozeTir);
+            listaFisiereNoua.add(pozaCreeata);
+        }
+        for (File pozaDeSalvat : listaFisiereNoua) {
+            Poza p = new Poza();
+            p.setTipObiect(1);
+            p.setIdObiect(tir.getId());
+            p.setImagePath(pozaDeSalvat.getName());
+            pozaService.adaugaPoza(p);
+        }
     }
-    
+
     public void saveTir() {
         if (isFormValid()) {
             if (tirSelectat == null) {
@@ -229,7 +285,7 @@ public class TirController {
                 tirSelectat.setStare(stareService.getStareByNume("Disponibil"));
                 tirSelectat.setValid(true);
                 tiruriService.adaugaTir(tirSelectat);
-                                savePoza(tirSelectat);
+                savePoza(tirSelectat);
             } else {
                 Model m = (Model) cmbModel.getSelectedItem();
                 tirSelectat.setIdModel(m.getId());
@@ -242,7 +298,7 @@ public class TirController {
                     pozaService.stergePoza(pozaDeSters);
                 }
                 tiruriService.adaugaTir(tirSelectat);
-                                                savePoza(tirSelectat);
+                savePoza(tirSelectat);
 
             }
 
@@ -391,7 +447,7 @@ public class TirController {
         for (SoferiTiruri st : listaSoferiTiruri) {
             uniqueSofer.add(st.getSofer());
         }
-        for(Sofer s : uniqueSofer) {
+        for (Sofer s : uniqueSofer) {
             modelListaSoferi.addElement(s);
         }
         frmAfisareDetaliiTir.getLstSoferi().setCellRenderer(new ItemSoferRenderer());
@@ -416,7 +472,7 @@ public class TirController {
         frmAfisareDetaliiTir.setLocationRelativeTo(frmAdministrareTiruri);
         frmAfisareDetaliiTir.setVisible(true);
     }
-    
+
     public void nextImageDetalii() {
         JLabel lblPoze = frmAfisareDetaliiTir.getLblPoze();
         if (indexPozaCurenta >= 0 && indexPozaCurenta < pozeTir.size() - 1) {
@@ -439,47 +495,28 @@ public class TirController {
         }
     }
 
-    public void anterioaraImagine() {
-        JLabel lblPoze = frmAddTir.getLblPoze();
-
-        if (curImageIndex > 0 && curImageIndex < listaPoze.size()) {
-            curImageIndex--;
-            lblPoze.setIcon(listaPoze.get(curImageIndex));
-            modificaCntPoze();
-        }
-    }
-
-    public void urmatoareaImagine() {
-        JLabel lblPoze = frmAddTir.getLblPoze();
-
-        if (curImageIndex >= 0 && curImageIndex < listaPoze.size() - 1) {
-            curImageIndex++;
-            lblPoze.setIcon(listaPoze.get(curImageIndex));
-            modificaCntPoze();
-        }
-    }
-
     public void modService() {
+        System.out.println(tirSelectat.getStare().getNume());
         if (tirSelectat.getStare().equals(stareService.getStareByNume("Disponibil"))) {
             int raspuns = JOptionPane.showConfirmDialog(frmAfisareDetaliiTir, "Sunteti sigur ca doriti sa plasati acest tir in service?", "Plasare tir in service", JOptionPane.YES_NO_OPTION);
             if (raspuns == JOptionPane.YES_OPTION) {
-                Session session = HibernateUtil.getSessionFactory().openSession();
-                org.hibernate.Transaction tx = session.beginTransaction();
                 tirSelectat.setIdStare(stareService.getStareByNume("Service").getId());
+                Stare st = new Stare();
+                st.setId(4);
+                tirSelectat.setStare(st);
                 tiruriService.adaugaTir(tirSelectat);
-                tx.commit();
                 frmAfisareDetaliiTir.getLblStatus().setText("In service");
                 Color darkOrange = new Color(255, 143, 0);
                 frmAfisareDetaliiTir.getLblStatus().setForeground(darkOrange);
             }
-        } else if (tirSelectat.getStare().equals(stareService.getStareByNume("Service")) ) {
+        } else if (tirSelectat.getStare().equals(stareService.getStareByNume("Service"))) {
             int raspuns = JOptionPane.showConfirmDialog(frmAfisareDetaliiTir, "Sunteti sigur ca doriti sa eliminati acest tir din service?", "Eliminare tir din service", JOptionPane.YES_NO_OPTION);
             if (raspuns == JOptionPane.YES_OPTION) {
-                Session session = HibernateUtil.getSessionFactory().openSession();
-                org.hibernate.Transaction tx = session.beginTransaction();
                 tirSelectat.setIdStare(stareService.getStareByNume("Disponibil").getId());
+                Stare st = new Stare();
+                st.setId(2);
+                tirSelectat.setStare(st);
                 tiruriService.adaugaTir(tirSelectat);
-                tx.commit();
                 frmAfisareDetaliiTir.getLblStatus().setText("Disponibil");
                 Color darkGreen = new Color(0, 153, 0);
                 frmAfisareDetaliiTir.getLblStatus().setForeground(darkGreen);
@@ -556,7 +593,7 @@ public class TirController {
 
     private void modificaCntPoze() {
         JLabel lblCnt = frmAddTir.getLblCnt();
-        System.out.println("aici:" + curImageIndex + " " + listaPoze.size());
+        //  System.out.println("aici:" + curImageIndex + " " + listaPoze.size());
         lblCnt.setText(String.format("%s/%s", curImageIndex + 1, listaPoze.size()));
     }
 
@@ -600,6 +637,5 @@ public class TirController {
     public void setSoferiTiruriService(SoferiTiruriService soferiTiruriService) {
         this.soferiTiruriService = soferiTiruriService;
     }
-    
-    
+
 }

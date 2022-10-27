@@ -59,7 +59,7 @@ public class ModelController {
     
     public void actionCreate(JFrame parent) {        
         frmAddModel = new FrmAddModel(parent, true);
-       
+       frmAddModel.setTitle("Adaugare model");
         initComboBoxMarci();
         
         frmAddModel.setLocationRelativeTo(parent);
@@ -81,6 +81,7 @@ public class ModelController {
     public void actionIndex(JFrame parent) {
         frmAdministrareModele = new FrmAdministrareModele();
         this.modelSelectat = null;
+        frmAdministrareModele.setTitle("Administrare modele");
         updateAndSetModelToTable();
         frmAdministrareModele.setModelController(this);
         frmAdministrareModele.setLocationRelativeTo(parent);
@@ -95,6 +96,7 @@ public class ModelController {
         this.modelSelectat = listaModele.get(index);
         
         frmAddModel = new FrmAddModel(parent, true, modelSelectat);
+        frmAddModel.setTitle("Editare model");
         frmAddModel.getTxtNume().setText(modelSelectat.getNume());
         initComboBoxMarci();
         frmAddModel.getDropDownMarca().setSelectedItem(modelSelectat.getMarca());

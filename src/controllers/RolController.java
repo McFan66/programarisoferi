@@ -47,6 +47,7 @@ public class RolController {
     public void actionIndex(JFrame parent) {
         frmAdministrareRoluri = new FrmAdministrareRoluri(parent, true);
         frmAdministrareRoluri.getRdbToate().setSelected(true);
+        frmAdministrareRoluri.setTitle("Administrare roluri");
         updateAndSetModelToTable();
         frmAdministrareRoluri.setRolController(this);
         frmAdministrareRoluri.setLocationRelativeTo(parent);
@@ -56,6 +57,7 @@ public class RolController {
     public void actionCreate(JDialog parent) {
         frmAddRoluri = new FrmAddRoluri(parent, true);
         frmAddRoluri.setRolController(this);
+        frmAddRoluri.setTitle("Adaugare rol");
         this.rolSelectat = null;
         frmAddRoluri.setLocationRelativeTo(parent);
         frmAddRoluri.setVisible(true);
@@ -77,6 +79,7 @@ public class RolController {
         Rol r = listaRoluri.get(index);
         frmAddRoluri = new FrmAddRoluri(parent, true);
         this.rolSelectat = r;
+        frmAddRoluri.setTitle("Editare rol");
         frmAddRoluri.getTxtNume().setText(r.getNume());
         frmAddRoluri.setRolController(this);
         frmAddRoluri.setLocationRelativeTo(parent);
