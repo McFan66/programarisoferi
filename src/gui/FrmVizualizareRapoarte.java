@@ -26,6 +26,7 @@ public class FrmVizualizareRapoarte extends javax.swing.JFrame {
      */
     public FrmVizualizareRapoarte() {
         initComponents();
+        setTitle("Vizualizare rapoarte");
     }
 
     public void setRapoarteController(RapoarteController rapoarteController) {

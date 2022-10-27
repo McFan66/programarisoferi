@@ -45,8 +45,8 @@ public class SoferController {
     private FrmAddSofer frmAddSofer;
     private FrmAdministrareSoferi frmAdministrareSoferi;
     private File pozaSelectata;
-    private SoferService soferService=AppSingleTone.getAppSingleToneInstance().getSoferService();
-    private PozaService pozaService=AppSingleTone.getAppSingleToneInstance().getPozaService();
+    private SoferService soferService = AppSingleTone.getAppSingleToneInstance().getSoferService();
+    private PozaService pozaService = AppSingleTone.getAppSingleToneInstance().getPozaService();
     private ArrayList<Sofer> listaSoferi;
     private Sofer soferSelectat;
 
@@ -67,6 +67,7 @@ public class SoferController {
         frmAdministrareSoferi = new FrmAdministrareSoferi(parent, true);
         this.soferSelectat = null;
         frmAdministrareSoferi.getRdbToate().setSelected(true);
+        frmAdministrareSoferi.setTitle("Administrare soferi");
         updateAndSetModelToTable();
         frmAdministrareSoferi.setSoferController(this);
         frmAdministrareSoferi.setLocationRelativeTo(parent);
@@ -111,7 +112,13 @@ public class SoferController {
 
     public void itemSelected() {
         int index = tblSoferi.convertRowIndexToModel(tblSoferi.getSelectedRow());
-        listaSoferi = soferService.getAll();
+        if (frmAdministrareSoferi.getRdbToate().isSelected()) {
+            listaSoferi = soferService.getAll();
+        }else if (frmAdministrareSoferi.getRdbActiv().isSelected()){
+            listaSoferi = soferService.getSoferByValid(true);
+        }else if (frmAdministrareSoferi.getRdbInactiv().isSelected()){
+            listaSoferi = soferService.getSoferByValid(false);
+        }
         Sofer s = listaSoferi.get(index);
         if (s.isValid()) {
             frmAdministrareSoferi.getBtnSterge().setText("Dezactiveaza");
@@ -146,9 +153,20 @@ public class SoferController {
             JOptionPane.showMessageDialog(frmAdministrareSoferi, "Va rugam selectati un sofer.");
             return;
         }
-        listaSoferi = soferService.getAll();
+        if (frmAdministrareSoferi.getRdbToate().isSelected()) {
+            listaSoferi = soferService.getAll();
+        }else if (frmAdministrareSoferi.getRdbActiv().isSelected()){
+            listaSoferi = soferService.getSoferByValid(true);
+        }else if (frmAdministrareSoferi.getRdbInactiv().isSelected()){
+            listaSoferi = soferService.getSoferByValid(false);
+        }
         Sofer s = listaSoferi.get(index);
-        int raspuns = JOptionPane.showConfirmDialog(frmAdministrareSoferi, String.format("Sunteti sigur ca doriti sa inactivati soferul %s?", s.getNumeComplet()), "Inactivare sofer", JOptionPane.YES_NO_OPTION);
+        int raspuns;
+        if (s.isValid()) {
+            raspuns = JOptionPane.showConfirmDialog(frmAdministrareSoferi, String.format("Sunteti sigur ca doriti sa inactivati soferul %s?", s.getNumeComplet()), "Inactivare sofer", JOptionPane.YES_NO_OPTION);
+        } else {
+            raspuns = JOptionPane.showConfirmDialog(frmAdministrareSoferi, String.format("Sunteti sigur ca doriti sa activati soferul %s?", s.getNumeComplet()), "Activare sofer", JOptionPane.YES_NO_OPTION);
+        }
 //        if (raspuns == JOptionPane.YES_OPTION) {
 //            if (!pozaService.getPozaByTipAndObiect(2, s.getId()).isEmpty()) {
 //                Poza pozaDeSters = pozaService.getPozaByTipAndObiect(2, s.getId()).get(0);
@@ -173,7 +191,7 @@ public class SoferController {
             }
         }
     }
-    
+
     public void saveSofer() {
         if (isFormValid()) {
             File dirCur = new File(".");
@@ -288,7 +306,5 @@ public class SoferController {
     public void setPozaService(PozaService pozaService) {
         this.pozaService = pozaService;
     }
-    
-    
 
 }

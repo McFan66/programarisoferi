@@ -6,6 +6,8 @@
 package repositories;
 
 import java.util.ArrayList;
+import java.util.List;
+import models.InfoRoluriUtilizatori;
 import models.Rol;
 import models.Utilizator;
 import models.UtilizatoriRoluri;
@@ -21,6 +23,7 @@ public interface UtilizatoriRoluriRepository {
     public ArrayList<UtilizatoriRoluri> getUtilizatoriRoluriByValid(boolean valid);
     public ArrayList<UtilizatoriRoluri> getUtilizatoriRoluriByRoluri(Rol rol);
     public int getUtilizatoriCuRol(Rol rol);
+    public List<InfoRoluriUtilizatori> getRoluriCuNumarUtilizatoriAsociati();
     public ArrayList<UtilizatoriRoluri> getUtilizatoriRoluriByUtilizator(Utilizator utilizator);
     public ArrayList<UtilizatoriRoluri> getUtilizatoriRoluriActiveAndUpcomingByUtilizator(Utilizator utilizator);
 }

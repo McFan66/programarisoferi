@@ -56,8 +56,9 @@ public class PozaHibernateRepository implements PozaRepository {
         }
         org.hibernate.Transaction tx = session.beginTransaction();
         session.delete(poza);
-        session.close();
         tx.commit();
+        session.close();
+        
     }
 
     @Override

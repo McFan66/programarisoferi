@@ -8,6 +8,8 @@ package repositories;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import models.InfoRoluriUtilizatori;
 import models.Rol;
 import models.Utilizator;
 import models.UtilizatoriRoluri;
@@ -92,12 +94,17 @@ public class UtilizatoriRoluriHibernateRepository implements UtilizatoriRoluriRe
 
     @Override
     public int getUtilizatoriCuRol(Rol rol) {
-        ArrayList<UtilizatoriRoluri> listaUtilizatoriRoluri = new ArrayList<>();
         org.hibernate.Transaction tx = session.beginTransaction();
-        Query q = session.createQuery("from UtilizatoriRoluri where idRol= :idRol").setParameter("idRol", rol.getId());
-        listaUtilizatoriRoluri = (ArrayList<UtilizatoriRoluri>) q.list();
+        Calendar c = Calendar.getInstance();
+        Date azi = c.getTime();
+        //select count(distinct utilizator) from utilizatori_roluri where rol=1 and data_inceput <= '2022-10-28' and data_sfarsit >= '2022-09-20'
+
+        Query q = session.createSQLQuery("select count(distinct utilizator) from utilizatori_roluri where rol= :idRol and data_inceput <= :azi and data_sfarsit >= :azi");
+        q.setParameter("idRol", rol.getId());
+        q.setParameter("azi", azi);
+        int numar = Integer.parseInt(q.uniqueResult().toString());
         tx.commit();
-        return listaUtilizatoriRoluri.size();
+        return numar;
     }
 
     @Override
@@ -122,6 +129,19 @@ public class UtilizatoriRoluriHibernateRepository implements UtilizatoriRoluriRe
         listaUtilizatoriRoluri = (ArrayList<UtilizatoriRoluri>) q.list();
         tx.commit();
         return listaUtilizatoriRoluri;
+    }
+
+    @Override
+    public List<InfoRoluriUtilizatori> getRoluriCuNumarUtilizatoriAsociati() {
+        org.hibernate.Transaction tx = session.beginTransaction();
+        String sql = "select r.NUME as numerol,COUNT(ur.UTILIZATOR) AS numarUtilizatori "
+                + "from roluri r left join utilizatori_roluri ur on ur.ROL=r.ID where "
+                + "(ur.data_sfarsit is null or (ur.data_sfarsit >=CURRENT_DATE AND ur.DATA_INCEPUT<=CURRENT_DATE)) "
+                + "GROUP BY ur.ROL,r.nume";
+        Query query = session.createSQLQuery(sql);
+        List<InfoRoluriUtilizatori> results = query.list();
+        tx.commit();
+        return results;
     }
 
 }

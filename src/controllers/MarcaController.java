@@ -35,6 +35,7 @@ public class MarcaController {
     
     public void actionCreate(JFrame parent) {
         frmAddMarca = new FrmAddMarca(parent, true);
+        frmAddMarca.setTitle("Adaugare marca");
         frmAddMarca.setMarcaController(this);
         frmAddMarca.setLocationRelativeTo(parent);
         frmAddMarca.setVisible(true);
@@ -43,6 +44,7 @@ public class MarcaController {
     public void actionIndex(JFrame parent) {
         frmAdministrareMarci = new FrmAdministrareMarci();
         this.marcaSelectata = null;
+        frmAdministrareMarci.setTitle("Administrare marci");
         updateAndSetModelToTable();
         frmAdministrareMarci.setMarcaController(this);
         frmAdministrareMarci.setLocationRelativeTo(parent);
@@ -67,6 +69,7 @@ public class MarcaController {
         this.marcaSelectata = listaMarci.get(index);
         
         frmAddMarca = new FrmAddMarca(parent, true, marcaSelectata);
+        frmAddMarca.setTitle("Editare marca");
         frmAddMarca.setMarcaController(this);
         frmAddMarca.setLocationRelativeTo(parent);
         frmAddMarca.getTxtMarca().setText(marcaSelectata.getNume());
