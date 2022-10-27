@@ -150,7 +150,7 @@ public class RapoarteController {
         lista.clearSelection();
     }
 
-    public void generareRaport(int index) throws URISyntaxException, JRException {
+    public void generareRaport(int index) throws URISyntaxException, JRException, IOException {
         Session session = HibernateUtil.getSessionFactory().openSession();
         if (!session.isOpen()) {
             session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -174,10 +174,10 @@ public class RapoarteController {
             JOptionPane.showMessageDialog(frmRapoarte, "Va rugam sa selectati un raport.");
             return;
         } else if (index == 1) {
-            myFile = getClass().getResourceAsStream("/rapoarte/RaportUtilizatoriFinal.jrxml");
+            myFile = getClass().getResource("/rapoarte/RaportUtilizatoriFinal.jrxml").openStream();
         }
         if (index == 2) {
-            myFile = getClass().getResourceAsStream("/rapoarte/Raport_Inregistrari_Bun.jrxml");
+            myFile = getClass().getResource("./rapoarte/Raport_Inregistrari_Bun.jrxml").openStream();
             ArrayList<Integer> idSoferi = new ArrayList<>();
             ArrayList<Integer> idTiruri = new ArrayList<>();
             if (frmRapoarte.getLstSoferi().getSelectedValuesList().isEmpty()) {
