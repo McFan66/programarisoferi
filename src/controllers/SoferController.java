@@ -45,8 +45,8 @@ public class SoferController {
     private FrmAddSofer frmAddSofer;
     private FrmAdministrareSoferi frmAdministrareSoferi;
     private File pozaSelectata;
-    private SoferService soferService=AppSingleTone.getAppSingleToneInstance().getSoferService();
-    private PozaService pozaService=AppSingleTone.getAppSingleToneInstance().getPozaService();
+    private SoferService soferService = AppSingleTone.getAppSingleToneInstance().getSoferService();
+    private PozaService pozaService = AppSingleTone.getAppSingleToneInstance().getPozaService();
     private ArrayList<Sofer> listaSoferi;
     private Sofer soferSelectat;
 
@@ -91,7 +91,7 @@ public class SoferController {
         int x = 0;
         for (Sofer s : listaSoferi) {
             data[x][0] = s.getNumeComplet();
-            File f = new File("./poze/soferi/" + s.getPoze().iterator().next().getImagePath());
+            File f = new File("./poze/soferi/" + pozaService.getPozaByTipAndObiect(2, s.getId()).get(0));
             data[x][1] = f.getPath();
 
 //            try {
@@ -173,7 +173,7 @@ public class SoferController {
             }
         }
     }
-    
+
     public void saveSofer() {
         if (isFormValid()) {
             File dirCur = new File(".");
@@ -288,7 +288,5 @@ public class SoferController {
     public void setPozaService(PozaService pozaService) {
         this.pozaService = pozaService;
     }
-    
-    
 
 }
