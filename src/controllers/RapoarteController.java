@@ -177,7 +177,7 @@ public class RapoarteController {
             myFile = getClass().getResource("/rapoarte/RaportUtilizatoriFinal.jrxml").openStream();
         }
         if (index == 2) {
-            myFile = getClass().getResource("./rapoarte/Raport_Inregistrari_Bun.jrxml").openStream();
+            myFile = getClass().getResource("/rapoarte/Raport_Inregistrari_Bun.jrxml").openStream();
             ArrayList<Integer> idSoferi = new ArrayList<>();
             ArrayList<Integer> idTiruri = new ArrayList<>();
             if (frmRapoarte.getLstSoferi().getSelectedValuesList().isEmpty()) {
