@@ -79,7 +79,7 @@ public class RapoarteController {
     private ArrayList<DateRaport> rapoarteInQueue = new ArrayList<>();
     private File saveReportFolder = null;
     private FileWriter fileWriter = null;
-    private File userConfig = new File("./userconfig.txt");
+    private File userConfig;
     private Scanner scanner;
     private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.YYYY");
     private SoferService soferService = new SoferServiceImpl();
@@ -95,6 +95,7 @@ public class RapoarteController {
         frmRapoarte.getCmbRapoarte().setModel(defaultComboBoxModel);
 //        frmRapoarte.getLstRapoarte().setModel(defaultListModel);
         frmRapoarte.getPanelCustom().setVisible(false);
+        this.userConfig = new File("./userconfig.txt");
         try {
             scanner = new Scanner(userConfig);
         } catch (FileNotFoundException ex) {
@@ -156,28 +157,23 @@ public class RapoarteController {
             session = HibernateUtil.getSessionFactory().getCurrentSession();
         }
         SessionImpl sessionConn = (SessionImpl) session;
-        File tt = new File(".");
-        System.out.println(tt.getAbsolutePath());
         Connection connection = sessionConn.connection();
         Map<String, Object> parameters = new HashMap<String, Object>();
-        File reportFolder = new File(getClass().getResource("/rapoarte").toURI());
-        Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
-        InputStream myFile = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-        };
+//        File reportFolder = new File(getClass().getResource("/rapoarte").toURI());
+//        Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
+        InputStream myFile = null;
         parameters.put("dataInceput", new Date(frmRapoarte.getChooserDataInceput().getDate().getTime()));
         parameters.put("dataSfarsit", new Date(frmRapoarte.getChooserDataFinal().getDate().getTime()));
-        if (index == 0) {
-            JOptionPane.showMessageDialog(frmRapoarte, "Va rugam sa selectati un raport.");
-            return;
-        } else if (index == 1) {
-            myFile = getClass().getResource("/rapoarte/RaportUtilizatoriFinal.jrxml").openStream();
+//        if (index == 0) {
+//            JOptionPane.showMessageDialog(frmRapoarte, "Va rugam sa selectati un raport.");
+//            return;
+//        }
+        if (index == 1) {
+            System.out.println("l-am luat");
+            myFile = getClass().getResourceAsStream("/rapoarte/RaportUtilizatoriFinal.jrxml");
         }
         if (index == 2) {
-            myFile = getClass().getResource("/rapoarte/Raport_Inregistrari_Bun.jrxml").openStream();
+            myFile = getClass().getResourceAsStream("/rapoarte/Raport_Inregistrari_Bun.jrxml");
             ArrayList<Integer> idSoferi = new ArrayList<>();
             ArrayList<Integer> idTiruri = new ArrayList<>();
             if (frmRapoarte.getLstSoferi().getSelectedValuesList().isEmpty()) {
@@ -260,6 +256,7 @@ public class RapoarteController {
             return;
         }
         int index = frmRapoarte.getCmbRapoarte().getSelectedIndex();
+        System.out.println(index);
         int queueIndex = rapoarteInQueue.size();
         int id = addDateRaportToDatabaseAndQueue();
         Thread t = new Thread(new Runnable() {
@@ -330,12 +327,13 @@ public class RapoarteController {
 
         if (frmVizualizareRapoarte.getRdbAzi().isSelected()) {
             tableModelDateRaport.setListaDateRaport(dateRaportService.getDateRaportFromToday());
+            tableModelDateRaport.fireTableDataChanged();
         }
         if (frmVizualizareRapoarte.getRdb90Zile().isSelected()) {
             tableModelDateRaport.setListaDateRaport(dateRaportService.getAll());
+            tableModelDateRaport.fireTableDataChanged();
         }
 
-        tableModelDateRaport.setListaDateRaport(dateRaportService.getAll());
         table.setModel(tableModelDateRaport);
         ColumnResizer1.resizeRowHeightAndColumnsWidth(table);
     }

@@ -7,6 +7,7 @@ package repositories;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import models.DateRaport;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -96,8 +97,13 @@ public class DateRaportHibernateRepository implements DateRaportRepository {
         }
         ArrayList<DateRaport> listaDateRaport = new ArrayList<>();
         org.hibernate.Transaction tx = session.beginTransaction();
-        String hql = "from DateRaport dp where dp.dataSubmit = :dataSubmit";
-        Query q = session.createQuery(hql).setDate("dataSubmit", Calendar.getInstance().getTime());
+        String hql = "from DateRaport dp where dp.dataSubmit >= :dataSubmit";
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.MILLISECOND ,0);
+        Query q = session.createQuery(hql).setDate("dataSubmit", c.getTime());
         listaDateRaport = (ArrayList<DateRaport>) q.list();
         tx.commit();
         session.close();
