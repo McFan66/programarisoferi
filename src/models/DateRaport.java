@@ -21,6 +21,22 @@ public class DateRaport {
    private String reportPath;
    private Utilizator utilizator;
 
+    public DateRaport() {
+    }
+
+    public DateRaport(int id, String numeRaport, int idUtilizator, Date dataSubmit, Date dataGenerare, String stare, String reportPath, Utilizator utilizator) {
+        this.id = id;
+        this.numeRaport = numeRaport;
+        this.idUtilizator = idUtilizator;
+        this.dataSubmit = dataSubmit;
+        this.dataGenerare = dataGenerare;
+        this.stare = stare;
+        this.reportPath = reportPath;
+        this.utilizator = utilizator;
+    }
+   
+   
+
     public int getId() {
         return id;
     }

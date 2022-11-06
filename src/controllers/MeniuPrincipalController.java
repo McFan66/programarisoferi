@@ -151,7 +151,9 @@ public class MeniuPrincipalController implements VObserver {
         modelCmbSoferiTiruri.removeAllElements();
         ArrayList<SoferiTiruri> listaSoferiTiruri = soferiTiruriService.getSoferiTiruriByInCursa(false);
 
-        modelCmbSoferiTiruri.addElement(inregistrareSelectata.getSoferTir());
+        if (inregistrareSelectata != null) {
+            modelCmbSoferiTiruri.addElement(inregistrareSelectata.getSoferTir());
+        }
         for (SoferiTiruri sf : listaSoferiTiruri) {
             modelCmbSoferiTiruri.addElement(sf);
         }

@@ -5,6 +5,7 @@
  */
 package models;
 
+import java.io.File;
 import services.InregistrareServiceImpl;
 import services.InregistrariService;
 import services.MarcaService;
@@ -42,6 +43,8 @@ public class AppSingleTone {
     private UtilizatoriService utilizatoriService;
     
     private Utilizator utilizatorAutentificat;
+    
+    private File userConfig;
 
     private AppSingleTone() {
     }
@@ -115,4 +118,10 @@ public class AppSingleTone {
         return utilizatoriService;
     }
     
+    public File getUserConfig() {
+        if(userConfig == null) {
+            userConfig = new File("./userconfig.txt");
+        }
+        return userConfig;
+    }
 }
