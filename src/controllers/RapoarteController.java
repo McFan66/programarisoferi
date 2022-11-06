@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigInteger;
 import java.net.URISyntaxException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -79,7 +80,7 @@ public class RapoarteController {
     private ArrayList<DateRaport> rapoarteInQueue = new ArrayList<>();
     private File saveReportFolder = null;
     private FileWriter fileWriter = null;
-    private File userConfig;
+    private File userConfig = AppSingleTone.getAppSingleToneInstance().getUserConfig();
     private Scanner scanner;
     private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.YYYY");
     private SoferService soferService = new SoferServiceImpl();
@@ -95,7 +96,6 @@ public class RapoarteController {
         frmRapoarte.getCmbRapoarte().setModel(defaultComboBoxModel);
 //        frmRapoarte.getLstRapoarte().setModel(defaultListModel);
         frmRapoarte.getPanelCustom().setVisible(false);
-        this.userConfig = new File("./userconfig.txt");
         try {
             scanner = new Scanner(userConfig);
         } catch (FileNotFoundException ex) {
@@ -107,7 +107,6 @@ public class RapoarteController {
             saveReportFolder = new File(scanner.nextLine());
         }
         if (saveReportFolder != null) {
-            deleteCache();
             frmRapoarte.getLblInfoFolder().setText(saveReportFolder.getPath());
         }
         //  frmRapoarte.getChooserDataInceput()
@@ -236,21 +235,6 @@ public class RapoarteController {
 //        frmRapoarte.getLstRapoarte().setModel(defaultListModel);
     }
 
-    private SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
-        @Override
-        protected String doInBackground() throws URISyntaxException, IOException, JRException, InterruptedException {
-            Thread.sleep(3000);
-            generareRaport(1);
-            System.out.println("Am intrat in doInBackground");
-            return null;
-        }
-
-        @Override
-        protected void done() {
-            setModelToLst();
-        }
-    };
-
     public void runReport() {
         if (!isFormValid()) {
             return;
@@ -293,12 +277,15 @@ public class RapoarteController {
         if (saveReportFolder == null) {
             return;
         }
+        long timeInMilis = Calendar.getInstance().getTimeInMillis();
         if (saveReportFolder.isDirectory()) {
             for (File f : saveReportFolder.listFiles()) {
-                long diff = Calendar.getInstance().getTimeInMillis() - f.lastModified();
-                if (diff > 90 * 24 * 60 * 60 * 1000) {
+                long diff = timeInMilis - f.lastModified();
+                BigInteger days = new BigInteger("7776000000");
+                if (BigInteger.valueOf(diff).compareTo(days) > 0) {
                     for (DateRaport dp : dateRaportService.getDateRaportByPath(f.getPath())) {
                         dateRaportService.stergeDateRaport(dp);
+//                          System.out.println(dp.getReportPath());
                     }
                     f.delete();
                 }
@@ -341,6 +328,7 @@ public class RapoarteController {
     public void actionRead(JFrame parent) {
         frmVizualizareRapoarte = new FrmVizualizareRapoarte();
         frmVizualizareRapoarte.setLocationRelativeTo(parent);
+        deleteCache();
         updateAndSetModelToTable(frmVizualizareRapoarte.getTblDateRaport());
         frmVizualizareRapoarte.setRapoarteController(this);
         frmVizualizareRapoarte.setVisible(true);
