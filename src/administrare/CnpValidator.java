@@ -10,7 +10,8 @@ import java.util.Date;
 import java.text.ParseException;
 
 public class CnpValidator {
-    
+    private SimpleDateFormat sdfrmt = new SimpleDateFormat("yyMMdd");
+	
     private static boolean validateData(String cnp) {
         String date = cnp.substring(1 , 7);
         if (date.trim().equals(""))
@@ -19,7 +20,6 @@ public class CnpValidator {
 	}
 	else
 	{
-	    SimpleDateFormat sdfrmt = new SimpleDateFormat("yyMMdd");
 	    sdfrmt.setLenient(false);
 	    try
 	    {
